@@ -11,7 +11,7 @@ const router = express.Router();
 router
     .route('/')
         .get(controller.getManyUsers) // GET request to fetch many users
-        .post(controller.addOneUser); // POST request to add a new user
+        .post(controller.registerOneUser); // POST request to add a new user
 
 router
     .route('/:userID')
