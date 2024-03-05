@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg bg-dark  text-uppercase fw-bold navbar-dark fixed-top">
+    <nav class="navbar navbar-expand-md bg-dark text-uppercase fw-bold navbar-dark fixed-top" id="navbar">
       <div class="container-fluid">
           <a class="navbar-brand">BSS</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
@@ -16,7 +16,8 @@
                                            <router-link to="/about">About</router-link> 
                                        <router-link to="/resume">Products</router-link> 
                                   <router-link to="/project">Contact</router-link> 
-                              <router-link to="/testimonial"><i class="fa-solid fa-cart-arrow-down"></i></router-link> 
+                            <router-link to="/project">Login</router-link> 
+                        <router-link to="/testimonial"><i class="fa-solid fa-cart-arrow-down"></i></router-link> 
                    </ul>
               </div>
           </div>
@@ -34,11 +35,13 @@
   nav a{
       text-decoration: none;
       color: white;
-      padding-left: 10px;
-      margin-right: 0px;
+      padding-left: 14px;
       font-size: 1rem;
-  }
-  nav{
-      letter-spacing: 1px;
+    }
+    nav{
+      letter-spacing: 3px;
+    }
+    #navbar{
+      background:linear-gradient(#232323);
   }
   </style>
