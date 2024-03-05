@@ -2,7 +2,6 @@ import { config } from 'dotenv';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { verifyExistingUser } from '../models/users.js';
-
 config();
 
 const verifyToken = async (req,res,next)=>{
@@ -18,12 +17,11 @@ const verifyToken = async (req,res,next)=>{
                 msg:'You have login succesfully'
             })
             next()
-        }else{
+        } else{
             res.json({msg:'Password or Email address doesnt match'})
         }
     })
 }
-
 const createToken = async (req, res, next) => {
     try {
         const { emailAdd, userPass } = req.body;
@@ -33,16 +31,13 @@ const createToken = async (req, res, next) => {
             console.log("User not found");
             return res.status(401).send({ msg: "User not found" });
         }
-
         const result = await bcrypt.compare(userPass, hashedUserPass);
-
         if (result === true) {
             console.log("Password matched. Creating token...");
             const token = jwt.sign({ emailAdd: emailAdd }, process.env.SECRET_KEY, { expiresIn: '1h' });
             res.cookie('jwt', token, { httpOnly: false });
             console.log("Token created successfully");
-            // Do not send a response here
-            next(); // Proceed to the next middleware
+            next(); 
         } else {
             console.log("Password does not match");
             return res.status(401).send({ msg: "The username or password does not match" });

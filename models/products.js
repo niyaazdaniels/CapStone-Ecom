@@ -5,7 +5,7 @@ import { pool } from '../config/index.js';
 const getExistingProducts = async () => {
     const [result] = await pool.query(`
         SELECT * 
-        FROM products`);
+        FROM Products`);
     return result;
 };
 
@@ -13,27 +13,27 @@ const getExistingProducts = async () => {
 const getExistingProduct = async (prodID) => {
     const [result] = await pool.query(`
         SELECT * 
-        FROM products
+        FROM Products
         WHERE prodID = ?`, [prodID]);
     return result;
 };
 
 // Add a new product to the database
-const addNewProduct = async (prodName, prodDesc, quantity, price, category, prodImage) => {
+const addNewProduct = async (prodName, prodDesc, category, price, quantity, prodImage) => {
     const [product] = await pool.query(`
-        INSERT INTO products (prodName, prodDesc, quantity, price, category, prodImage) 
-        VALUES (?, ?, ?, ?, ?)`,
-        [prodName, prodDesc, quantity, price, category, prodImage]);
+        INSERT INTO Products (prodName, prodDesc, category, price, quantity, prodImage) 
+        VALUES (?, ?, ?, ?, ?, ?)`,
+        [prodName, prodDesc, category, price, quantity, prodImage]);
     return getExistingProduct(product.insertId);
 };
 
 // Edit an individual product in the database
-const editExistingProduct = async (prodID, prodName, prodDesc, quantity, price, category, prodImage) => {
+const editExistingProduct = async (prodID, prodName, prodDesc, category, price, quantity, prodImage) => {
     await pool.query(`
-        UPDATE products
-        SET prodName = ?, prodDesc = ? ,quantity = ?, price = ? , category = ?, prodImage = ?
+        UPDATE Products
+        SET prodName = ?, prodDesc = ? ,category = ?, price = ? , quantity = ?, prodImage = ?
         WHERE prodID = ?`,
-        [prodName, prodDesc, quantity, price, category, prodImage, prodID]);
+        [prodName, prodDesc, category, price, quantity, prodImage, prodID]);
     const editedProduct = await getExistingProduct(prodID);
     return editedProduct;
 }; 
@@ -41,7 +41,7 @@ const editExistingProduct = async (prodID, prodName, prodDesc, quantity, price, 
 // Delete an individual product from the database
 const removeExistingProduct = async (prodID) => {
     const [product] = await pool.query(`
-        DELETE FROM products
+        DELETE FROM Products
         WHERE prodID = ?`,
         [prodID]);
     return getExistingProducts(product);

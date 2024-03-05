@@ -5,7 +5,7 @@ import { pool } from '../config/index.js';
 const getExistingUsers = async () => {
     const [result] = await pool.query(`
         SELECT * 
-        FROM users`);
+        FROM Users`);
     return result;
 };
 
@@ -13,31 +13,31 @@ const getExistingUsers = async () => {
 const getExistingUser = async (userID) => {
     const [result] = await pool.query(`
         SELECT * 
-        FROM users
+        FROM Users
         WHERE userID = ?`, [userID]);
     return result;
 };
 // Add a new user to the database
-const addNewUser = async (firstName, lastName, userRole, emailAdd, userPass, userImage) => {
+const registerNewUser = async (firstName, lastName, userRole, emailAdd, userPass, userImage, gender, age) => {
     const [user] = await pool.query(`
-        INSERT INTO users (firstName, lastName, userRole, emailAdd, userPass, userImage) 
-        VALUES (?, ?, ?, ?, ?, ?)`,
-        [firstName, lastName, userRole, emailAdd, userPass, userImage]);
+        INSERT INTO Users (firstName, lastName, userRole, emailAdd, userPass, userImage, gender, age) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [firstName, lastName, userRole, emailAdd, userPass, userImage, gender, age]);
     return getExistingUser(user.insertId);
 };
 // Edit an individual user in the database
-const editExistingUser = async (firstName, lastName, userRole, emailAdd, userPass, userImage, userID) => {
+const editExistingUser = async (firstName, lastName, userRole, emailAdd, userPass, userImage, gender, age, userID) => {
     const [user] = await pool.query(`
-        UPDATE users 
-        SET firstName = ?, lastName = ?, userRole = ?, emailAdd = ?, userPass = ?, userImage = ?
+        UPDATE Users 
+        SET firstName = ?, lastName = ?, userRole = ?, emailAdd = ?, userPass = ?, userImage = ?, gender = ?, age = ?
         WHERE userID = ?`,
-        [firstName, lastName, userRole, emailAdd, userPass, userImage, userID]);
+        [firstName, lastName, userRole, emailAdd, userPass, userImage, gender, age, userID]);
     return getExistingUsers(user);
 };
 // Delete an individual user from the database
 const deleteExistingUser = async (userID) => {
     const [user] = await pool.query(`
-        DELETE FROM users
+        DELETE FROM Users
         WHERE userID = ?`,
         [userID]);
     return getExistingUsers(user);
@@ -46,7 +46,7 @@ const deleteExistingUser = async (userID) => {
 const verifyExistingUser = async (emailAdd) => {
     try {
         const [[{ userPass }]] = await pool.query(`
-            SELECT userPass FROM users WHERE emailAdd = ?`,
+            SELECT userPass FROM Users WHERE emailAdd = ?`,
             [emailAdd]);
         return userPass;
     } catch (error) {
@@ -54,12 +54,12 @@ const verifyExistingUser = async (emailAdd) => {
         throw new Error('User not found');
     }
 };
-const registerNewUser = async (emailAdd, userPass) => {
-    await pool.query(`
-    INSERT INTO users (emailAdd, userPass) 
-    VALUES (?, ?)
-    `,[emailAdd, userPass])
-}
+// const registerNewUser = async (emailAdd, userPass) => {
+//     await pool.query(`
+//     INSERT INTO Users (emailAdd, userPass) 
+//     VALUES (?, ?)
+//     `,[emailAdd, userPass])
+// }
 
 // Exporting functions to make them globally accessible
-export { getExistingUsers, getExistingUser, addNewUser, editExistingUser, deleteExistingUser, verifyExistingUser, registerNewUser };
+export { getExistingUsers, getExistingUser, editExistingUser, deleteExistingUser, verifyExistingUser, registerNewUser };

@@ -19,9 +19,9 @@ export default {
     addOneProduct: async (req, res) => {
         try {
             // Extract product data from the request body
-            const { prodName, prodDesc, quantity, price, category, prodImage } = req.body;
+            const { prodName, prodDesc, category, price, quantity, prodImage } = req.body;
             // Add the product to the database
-            const post = await addNewProduct(prodName, prodDesc, quantity, price, category, prodImage);
+            const post = await addNewProduct(prodName, prodDesc, category, price, quantity, prodImage);
             // Send updated list of products as response
             res.send(await getExistingProducts());
         } catch (error) {
@@ -59,12 +59,12 @@ export default {
             // Set updated values or keep existing values if not provided
             prodName = prodName || product.prodName;
             prodDesc = prodDesc || product.prodDesc;
-            quantity = quantity || product.quantity;
-            price = price || product.price;
             category = category || product.category;
+            price = price || product.price;
+            quantity = quantity || product.quantity;
             prodImage = prodImage || product.prodImage;
             // Update the product in the database
-            await editExistingProduct(prodName, prodDesc, quantity, price, category, prodImage, +req.params.prodID);
+            await editExistingProduct(prodName, prodDesc, category, price, quantity, prodImage, +req.params.prodID);
             // Send updated list of products as response
             res.json(await getExistingProducts());
         } catch (error) {
