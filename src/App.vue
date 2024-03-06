@@ -49,18 +49,14 @@ nav a {
 nav a.router-link-exact-active {
   color: #BD0000;
   font-weight: bold;
-  border-bottom: 3px solid rgb(176, 115, 0);
 
 }
 html::-webkit-scrollbar {
   display: none;
 }
-
 /* Hide scrollbar for IE, Edge and Firefox */
 html {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
-
-
 </style>

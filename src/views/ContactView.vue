@@ -1,8 +1,8 @@
 <template>
   <section class="contact-background">
     <div class="contact-heading-background position-relative">
-        <div class="container contact-text position-relative ">
-            <h1 class="d-flex justify-content-end text-white fw-medium">Contact Us</h1>
+        <div class="container m-0 row-sm contact-text position-relative">
+            <h1 class="d-flex ms-auto justify-content-center text-white fw-medium">Contact Us</h1>
         </div>
     </div>
   </section>
@@ -26,8 +26,10 @@ export default {
     height: 100vh;
 }
 .contact-text{
-    border: 1px solid red;
-    top: 40px;
-
+    top: 45px;
+    background: #7A0000;
+    height: 40%;
+    max-width: 500px;
 }
+
 </style>
