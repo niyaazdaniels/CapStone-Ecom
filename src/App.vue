@@ -31,6 +31,7 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
 }
 
 nav {
@@ -41,10 +42,25 @@ nav a {
   word-spacing: 10px;
   font-weight: bold;
   color: white;
+  padding-left: 0;
+  margin-left: 7px;
 }
 
 nav a.router-link-exact-active {
   color: #BD0000;
   font-weight: bold;
+  border-bottom: 3px solid rgb(176, 115, 0);
+
 }
+html::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+html {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+
 </style>

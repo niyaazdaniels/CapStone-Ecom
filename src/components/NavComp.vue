@@ -14,10 +14,11 @@
                                                   <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                                               <router-link to="/">Home</router-link> 
                                            <router-link to="/about">About</router-link> 
-                                       <router-link to="/resume">Products</router-link> 
-                                  <router-link to="/project">Contact</router-link> 
-                            <router-link to="/project">Login</router-link> 
-                        <router-link to="/testimonial"><i class="fa-solid fa-cart-arrow-down"></i></router-link> 
+                                       <router-link to="/products">Products</router-link> 
+                                  <router-link to="/contact">Contact</router-link> 
+                                  <router-link to="/admin">Admin</router-link> 
+                            <router-link to="/login">Login</router-link> 
+                        <router-link to="/checkout"><i class="fa-solid fa-cart-arrow-down"></i></router-link> 
                    </ul>
               </div>
           </div>
@@ -37,6 +38,7 @@
       color: white;
       padding-left: 14px;
       font-size: 1rem;
+      transition: all ease-in .5s;
     }
     nav{
       letter-spacing: 3px;
@@ -44,4 +46,5 @@
     #navbar{
       background:linear-gradient(#232323);
   }
+ 
   </style>
