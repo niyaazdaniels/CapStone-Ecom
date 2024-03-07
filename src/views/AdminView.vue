@@ -39,10 +39,10 @@
                   <updateUserComp :user="user"/><button class="btn" @click="deleteUser(user.userID)">Delete</button>
                 </td>
               </tr>
-              <!-- Show spinner component if data is loading -->
               <tr v-else>
                 <SpinnerComp />
               </tr>
+              <!-- Show spinner component if data is loading -->
             </tbody>
           </table>
         </div>
