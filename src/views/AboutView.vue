@@ -60,7 +60,7 @@ export default {
 
 }
 .content-holder{
-  top: 80px;
+  top: 50px;
   position: relative;
   display: inline-flex;
   flex-flow: row wrap;

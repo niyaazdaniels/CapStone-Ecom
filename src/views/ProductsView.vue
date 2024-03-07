@@ -1,6 +1,5 @@
 <template>
     <section class="body overflow-hidden">
-
         <div class="container-fluid background-header-image">
             <div class="container-fluid inner-text position-relative m-0 ms-auto">
                 <h2 class="heading display-6 text-center m-0 me-auto d-flex justify-content-center pt-3">Products</h2>
@@ -9,16 +8,16 @@
             <!-- This section represents the visual layout of the Products page -->
   <div class="cards">
     <!-- Heading for the Products page -->
-    <h1 class="Products-Range">Products Range</h1>
+    <h1 class="Products-Range">Product Range</h1>
     <!-- Search form for filtering products -->
     <form class="d-inline-flex mx-2 w-auto search-button" role="search">
       <!-- Input field for searching products -->
       <input class="form-control" type="search" id="search" placeholder="Search" aria-label="Search" v-model="searchDBProducts" />
     </form>
     <!-- Sort dropdown -->
-    <div class="sort-dropdown ">
-      <label for="sort" id="sortTitle">Filter by: </label>
-      <select id="sort" v-model="sortBy">
+    <div class="sort-dropdown">
+      <label for="sort" class="sortHeading">Filter by: </label>
+      <select class="sort" v-model="sortBy">
         <option value="default">Default</option>
         <option value="price">Price</option>
         <option value="category">Category</option>
@@ -182,12 +181,12 @@ sortToggle() {
 }
 /* Styling specific to this component */
 
-#sortTitle{
+.sortHeading{
   font-size:17px;
   margin-right: 1.5rem;
 }
 
-#sort{
+.sort{
   margin-top: 1rem;
   margin-right: 1rem;
   margin-bottom: 2rem;
@@ -212,7 +211,7 @@ sortToggle() {
 
 #image {
   aspect-ratio: 1/1;
-  width: 15rem;
+  width: 10rem;
   height: auto;
   margin-top: .5rem;
   filter: grayscale(100%);
@@ -257,7 +256,7 @@ sortToggle() {
   overflow: auto;
 }
 .title {
-  height: 15%;
+  height: 10%;
 }
 .button {
   height: 10%;

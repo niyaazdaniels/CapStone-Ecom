@@ -1,7 +1,7 @@
 <template>
     <section class="container-fluid background overflow-hidden">
             <div class="container-lg row text text-uppercase d-flex  ">
-                <h1 class="display-6 fw-bold ">Solar Backup <br> Power Solutions</h1>
+                <h1 class="display-6 fw-bold">Solar Backup <br> Power Solutions</h1>
                 <div class="subtext">
                     <h5 class="text-uppercase fw-semibold">Find the right setup for you now!</h5>
                     <button>

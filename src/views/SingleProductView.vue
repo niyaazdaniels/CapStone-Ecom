@@ -58,7 +58,6 @@
     margin-top: 1rem;
     padding: 2rem;
     margin-bottom: 1rem;
-    border: 1px solid red;
   }
   
   h1 {

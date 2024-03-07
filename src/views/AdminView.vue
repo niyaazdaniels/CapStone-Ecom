@@ -1,6 +1,6 @@
 <template>
     <!-- Main container -->
-    <div>
+    <div class="container main-container">
       <!-- Section for Users -->
       <div>
         <!-- Title -->
@@ -9,14 +9,13 @@
         <addUserComp />
         <!-- Responsive table for displaying users -->
         <div class="table-responsive">
-          <table class="table">
+          <table class="table table-secondary table-hover caption-top">
             <thead>
               <!-- Table header -->
               <tr>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Surname</th>
-                <th>Age</th>
                 <th>Gender</th>
                 <th>Role</th>
                 <th>Email address</th>
@@ -28,14 +27,13 @@
               <!-- Render user data if available -->
               <tr v-if="users">
                 <!-- User details -->
-                <td>{{ user.userID }}</td>
-                <td>{{ user.firstName }}</td>
-                <td>{{ user.lastName }}</td>
-                <td>{{ user.userAge }}</td>
-                <td>{{ user.gender }}</td>
-                <td>{{ user.userRole }}</td>
-                <td>{{ user.emailAdd }}</td>
-                <td>{{ user.userProfile }}</td>
+                <td data-label="ID">{{ user.userID }}</td>
+                <td data-label="Name">{{ user.firstName }}</td>
+                <td data-label="Surname">{{ user.lastName }}</td>
+                <td data-label="Gender">{{ user.gender }}</td>
+                <td data-label="Role">{{ user.userRole }}</td>
+                <td data-label="Email">{{ user.emailAdd }}</td>
+                <td data-label="Image"><img :src="user.userImage" :alt="user.userImage" class="img-fluid image rounded-5 d-inline-flex" loading="lazy"/></td>
                 <!-- Buttons for updating and deleting user -->
                 <td>
                   <updateUserComp :user="user"/><button class="btn" @click="deleteUser(user.userID)">Delete</button>
@@ -62,7 +60,7 @@
         <addProductComp />
         <!-- Responsive table for displaying products -->
         <div class="table-responsive">
-          <table class="table">
+          <table class="table table-secondary table-hover caption-top">
             <thead>
               <!-- Table header -->
               <tr>
@@ -79,12 +77,12 @@
               <!-- Render product data if available -->
               <tr v-if="products">
                 <!-- Product details -->
-                <td>{{ product.prodID }}</td>
-                <td>{{ product.prodName }}</td>
-                <td>{{ product.quantity }}</td>
-                <td>R {{ product.price }}</td>
-                <td>{{ product.category }}</td>
-                <td><img :src="product.prodImage" :alt="product.prodImage" class="img-fluid image" loading="lazy"/></td>
+                <td data-label="ID">{{ product.prodID }}</td>
+                <td data-label="Product Name">{{ product.prodName }}</td>
+                <td data-label="Quantity">{{ product.quantity }}</td>
+                <td data-label="Price">R {{ product.price }}</td>
+                <td data-label="Category">{{ product.category }}</td>
+                <td data-label="Image"><img :src="product.prodImage" :alt="product.prodImage" class="img-fluid image" loading="lazy"/></td>
                 <!-- Buttons for updating and deleting product -->
                 <td><updateProductComp :product="product"/>
                   <button @click="deleteProduct(product.prodID)" class="btn">Delete</button>
@@ -210,17 +208,56 @@
   }
   /* General button styling */
   .btn {
-    border: 2px solid #f7f4f1;
-    background-color: #717171;
+    background-color: #7A0000;
     color: white;
     margin-bottom: 1rem;
   }
-  
+  .main-container{
+    min-height: 100vh;
+    margin-top: 60px;
+  }
   /* Responsive styling for small screens */
   @media screen and (max-width: 300px) {
     .table {
       width: 280px !important;
     }
   }
+  @media  (max-width: 980px ) {
+
+.table thead{
+  display: none !important;
+
+}
+
+.table, .table tbody, .table tr, .table td{
+  display: block !important;
+  width: 100% !important;
+}
+
+.table tr{
+  margin-bottom: 20px !important;
+}
+
+.table tbody{
+  background: white;
+}
+
+.table tbody tr td{
+  text-align: right;
+  position: relative;
+  width: 100%;
+}
+
+.table td:before{
+  display: block;
+  color: black;
+  content: attr(data-label) !important;
+  text-align: left;
+}
+
+.modal-body p{
+  text-align: left;
+}
+}
   </style>
   
