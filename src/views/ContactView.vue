@@ -18,7 +18,7 @@
       Enquiries <span>+10 624 2828</span> <br>
       Tech Support <span>support@bss.co.za</span></p>
 </div>
-        <form class="colorful-form container form m-0">
+        <form action="https://formspree.io/f/mayrbqgy" method="POST" class="colorful-form container form m-0">
   <div class="form-group">
     <label class="form-label" for="name">Name:</label>
     <input required="Name" placeholder="Enter your name" class="form-input" type="text" >

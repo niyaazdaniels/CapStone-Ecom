@@ -1,7 +1,7 @@
 // Importing necessary modules
 import { createStore } from "vuex"; // Importing Vuex's createStore function
 import axios from "axios"; // Importing Axios for making HTTP requests
-
+axios.defaults.withCredentials = true;
 // URL for the database API
 const DB = "https://capstone-ecom.onrender.com/";
 
@@ -13,6 +13,7 @@ export default createStore({
     selectedProduct: null, // Placeholder for selected product data
     products: null, // Placeholder for product data
     product: null, // Placeholder for a single product data
+    LoggedIn: true
   },
   getters: {}, // Getters for computed properties based on state
   mutations: { // Mutations to directly mutate the state
@@ -32,6 +33,9 @@ export default createStore({
     setSelectedProduct(state, product) {
       state.selectedProduct = product; // Setting selected product data in the state
     },
+    setLogged(state, payload) {
+      state.LoggedIn = payload;
+    }
   },
   actions: { // Actions for asynchronous operations
     // Action to fetch all users data
@@ -151,6 +155,19 @@ export default createStore({
         alert("An error occurred while deleting the product"); // Alerting user in case of failure
       }
     },
-  },
-  modules: {}, // Modules for structuring Vuex store into separate modules
-});
+    async login({commit}, login) {
+        try {
+          const {data} = await axios.post(`{DB}login`, login)
+          $cookies.set('jwt',data.token)
+          alert(data.msg);
+          await router.push('/home') // push keeps browser history, replace removes history and takes you back oto home
+          window.location.reload()
+          commit('setLogged', true)
+        } catch (error) {
+          console.error('Error during login:', error)
+        }
+      },
+    },
+  modules: {
+    },
+})

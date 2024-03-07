@@ -50,7 +50,7 @@
   
   <style scoped>
   #image{
-    height: auto;
+    height: 14rem;
     margin-bottom: 3rem;
   }
   
@@ -58,6 +58,7 @@
     margin-top: 1rem;
     padding: 2rem;
     margin-bottom: 1rem;
+    border: none;
   }
   
   h1 {

@@ -49,7 +49,7 @@ export default {
   justify-content: center;
   align-items: center;
   height: 7vh;
-  top: 120px;
+  top: 100px;
   background: #7A0000;
 }
 .about-us-heading{
