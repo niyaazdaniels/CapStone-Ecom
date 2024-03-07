@@ -18,7 +18,10 @@ const PORT = process.env.PORT || 7070;
 // Create an instance of Express application
 const app = express();
 // Middleware for enabling CORS
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:8080",
+    credentials: true 
+  }));
 // Middleware for parsing JSON body
 app.use(express.json());
 // Middleware for serving static files from the 'public' directory
