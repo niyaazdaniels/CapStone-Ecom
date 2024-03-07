@@ -58,8 +58,8 @@
   
   <style scoped>
   .btn {
-    border: 2px solid #7b6651;
-    background-color: #f7f4f1;
+    background-color: #7a4f00;
+    color: white;
     margin-bottom: 1rem;
   }
   

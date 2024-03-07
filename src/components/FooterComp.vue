@@ -48,13 +48,17 @@
   .header {
     color: #BD0000;
     font-weight: bold;
+    font-size: 12px;
+
   }
  footer {
-    background: linear-gradient(10deg,#232323, grey)
+    background: linear-gradient(10deg,#232323, grey);
+    font-size: 12px;
  }
  p {
     color: white;
-    font-size: 12px;
+    font-size: 10px;
+
  }
  .copyright{
     color: white;

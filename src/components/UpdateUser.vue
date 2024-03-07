@@ -1,7 +1,7 @@
 <template>
     <div>
       <!-- Button trigger modal -->
-      <button type="button" class="btn" @click="openEditModal(user.userID)" data-bs-toggle="modal" :data-bs-target="'#texampleModal' + user.userID">Edit</button>
+      <button type="button" class="btn" @click="openEditUserModal(user.userID)" data-bs-toggle="modal" :data-bs-target="'#texampleModal' + user.userID">Edit</button>
   
       <!-- Modal -->
       <div class="modal fade" :id="'texampleModal' + user.userID" tabindex="-1" :aria-labelledby="'texampleModalLabel' + user.userID" aria-hidden="true">
@@ -18,8 +18,6 @@
               <input type="text" placeholder="first name" v-model="editingUser.firstName"/>
               <label>last name:</label>
               <input type="text" placeholder="last name" v-model="editingUser.lastName"/>
-              <label>Age:</label>
-              <input type="number" placeholder="age" v-model="editingUser.userAge"/>
               <label>gender:</label>
               <input type="text" placeholder="gender" v-model="editingUser.gender"/>
               <label>user role:</label>
@@ -67,7 +65,7 @@
       },
     },
     methods: {
-      openEditModal(id) {
+      openEditUserModal(id) {
         this.editingUserID = id;
         this.editingUser = {...this.$store.state.users.find((user) => user.userID === id),
         };

@@ -30,17 +30,25 @@ export default {
   scroll-behavior:smooth;
   margin: 0;
   padding: 0;
+  font-weight: light;
+  font-size: 12px;
   box-sizing: border-box;
+
+}
+.btn {
+  font-size: 12px;
 
 }
 
 nav {
   padding: 30px;
+  
 }
 
 nav a {
+  font-size: 12px;
   word-spacing: 10px;
-  font-weight: bold;
+  font-weight: lighter;
   color: white;
   padding-left: 0;
   margin-left: 7px;

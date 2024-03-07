@@ -13,21 +13,21 @@
             </div>
             <div class="modal-body">
               <label for="firstName">First Name:</label>
-              <input required id="firstName" type="text" placeholder="first name" autocomplete="off" v-model="model.user.firstName"/>
+              <input required id="firstName" type="text" placeholder="Name" autocomplete="off" v-model="model.user.firstName"/>
               <label for="lastName">Last Name:</label>
-              <input required id="lastName" type="text" placeholder="last name" autocomplete="off" v-model="model.user.lastName"/>
+              <input required id="lastName" type="text" placeholder="Surname" autocomplete="off" v-model="model.user.lastName"/>
               <label for="userAge">Age:</label>
-              <input required id="userAge" type="number" placeholder="age" autocomplete="off" v-model="model.user.userAge"/>
+              <input required id="userAge" type="number" placeholder="Age" autocomplete="off" v-model="model.user.userAge"/>
               <label for="gender">Gender:</label>
-              <input required id="gender" type="text" placeholder="gender" autocomplete="off" v-model="model.user.gender"/>
+              <input required id="gender" type="text" placeholder="Gender" autocomplete="off" v-model="model.user.gender"/>
               <label for="userRole">Role:</label>
-              <input required id="userRole" type="text" placeholder="role" autocomplete="off" v-model="model.user.userRole"/>
+              <input required id="userRole" type="text" placeholder="Role" autocomplete="off" v-model="model.user.userRole"/>
               <label for="email">Email Address</label>
-              <input required  id="email"  type="text" placeholder="email address" autocomplete="off" v-model="model.user.emailAdd"/>
+              <input required  id="email"  type="text" placeholder="Email" autocomplete="off" v-model="model.user.emailAdd"/>
               <label for="password">Password:</label>
-              <input required id="password" type="text" placeholder="password" autocomplete="off" v-model="model.user.userPass"/>
+              <input required id="password" type="text" placeholder="Password" autocomplete="off" v-model="model.user.userPass"/>
               <label for="profilePic">Profile Image:</label>
-              <input required id="profilePic" type="text" placeholder="profile image" autocomplete="off" v-model="model.user.userImage"/>
+              <input required id="profilePic" type="text" placeholder="Profile Image" autocomplete="off" v-model="model.user.userImage"/>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
@@ -69,12 +69,16 @@
   
   <style scoped>
   button {
-    border: 2px solid #f7f4f1;
-    background-color: #717171;
+    background-color: #696201;
     color: white;
     margin-bottom: 1rem;
   }
-  
+ 
+  .btn:hover{
+    background: black;
+    color: white;
+  }
+  /* input for filling areas within the modal */
   input {
     width: 100%;
     height: 3rem;
