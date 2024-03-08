@@ -44,7 +44,7 @@ export default createStore({
         const res = await axios.get(`${DB}users`); // Making HTTP GET request to fetch users
         commit("setUsers", res.data); // Committing mutation to set users data in the state
       } catch (e) {
-        alert("Request Failed! Could not retrieve all users!"); // Alerting user in case of failure
+        ("Request Failed! Could not retrieve all users!"); // Alerting user in case of failure
       }
     },
     // Action to fetch a single user data

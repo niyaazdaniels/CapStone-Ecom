@@ -129,7 +129,7 @@
     // Retrieve users data from the store
     users() {
       // Return users data from Vuex store or an empty array if no data is available
-      return this.$store.state.users || [];
+      return this.$store.state.users || []; 
     },
     // Retrieve products data from the store
     products() {

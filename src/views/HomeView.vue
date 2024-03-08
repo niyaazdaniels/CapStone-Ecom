@@ -27,7 +27,7 @@ export default {
 .background{
     background-image: url(https://i.postimg.cc/3rpQy1Bq/Upscales-ai-1709639906381.webp);
     background-position: center;
-    min-height: 83vh;
+    min-height: 80.9vh;
     background-size: cover;
 }
 
@@ -46,9 +46,9 @@ button {
   font-weight: bold;
   color: white;
   background-color: #171717;
-  padding: 1em 2em;
+  padding: 0.6em 2em;
   border: none;
-  width: 150px;
+  width: 140px;
   border-radius: 3rem;
   position: relative;
   cursor: pointer;
