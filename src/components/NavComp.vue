@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-md bg-dark text-uppercase fw-bold navbar-dark fixed-top" id="navbar">
+    <nav class="navbar navbar-expand-lg bg-dark text-uppercase fw-bold navbar-dark fixed-top" id="navbar">
       <div class="container-fluid">
           <a class="navbar-brand">BSS</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
@@ -44,7 +44,7 @@
       letter-spacing: 3px;
     }
     #navbar{
-      background:linear-gradient(#232323);
+      background:linear-gradient(#232323,rgb(82, 82, 82));
   }
  
   </style>

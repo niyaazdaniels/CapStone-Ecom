@@ -14,6 +14,7 @@
       <!-- Input field for searching products -->
       <input class="form-control" type="search" id="search" placeholder="Search" aria-label="Search" v-model="searchDBProducts" />
     </form>
+    
     <!-- Sort dropdown -->
     <div class="sort-dropdown">
       <label for="sort" class="sortHeading">Filter by: </label>
@@ -30,7 +31,6 @@
 
     <!-- Displaying products in a grid layout -->
     <div class="row row-cols-1 row-cols-sm-3 row-cols-md-3 flex" v-if="products">
-      <!-- Iterating over filtered products -->
       <div class="col flex" v-for="product in filterDBProducts" :key="product">
 
         <!--  product card -->
@@ -43,7 +43,7 @@
               <h5 class="card-title fw-semibold fs-4 fs">{{ product.prodName }}</h5>
             </div>
             <div class="card-body overflow-y-hidden h-auto ">
-              <h5 class="card-text">{{ product.prodDesc }}</h5>
+              <h5 class="card-text fs-6">{{ product.prodDesc }}</h5>
             </div>
             <div class="category">
               <p class="card-text">Category: {{ product.category }}</p>
@@ -59,7 +59,6 @@
         </div>
       </div>
     </div>
-    <!-- Placeholder for Spinner component while loading products -->
     <div class="row" v-else>
       <SpinnerComp />
     </div>

@@ -4,7 +4,7 @@
         <div class="container login-heading position-relative">
             <h1>Sign In</h1>
         </div>
-        <div class="form-container container-fluid d-flex justify-content-center align-items-center flex-column position-relative">
+        <div class="form-container container d-flex justify-content-center align-items-center flex-column position-relative">
             <form class="form">
     <div class="header d-flex justify-content-center align-items-center position-relative">Welcome Back</div>
     <div class="inputs d-flex flex-column">
@@ -157,4 +157,18 @@ export default {
     background-position: 0% 50%;
   }
 }
-</style>
+@media (max-width: 351px) {
+  .form{
+    display: flex;
+    font-size: 10px;
+    max-width: 290px;
+  }
+  .header{
+    display: flex;
+    height: 250px;
+    flex-direction: column;
+    font-size: 12px;
+  }
+
+}
+</style>.

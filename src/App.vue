@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import  NavComp from './components/NavComp.vue'
+import NavComp from './components/NavComp.vue'
 import FooterComp from './components/FooterComp.vue';
 
 export default {
@@ -13,10 +13,9 @@ export default {
     NavComp,
     FooterComp
   }
-
 }
 </script>
-
+window.scrollTo(0,0);
 <style>
 
 @import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
@@ -33,7 +32,7 @@ export default {
   font-weight: light;
   font-size: 12px;
   box-sizing: border-box;
-
+  
 }
 .btn {
   font-size: 12px;
