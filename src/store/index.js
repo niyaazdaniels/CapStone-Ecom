@@ -101,7 +101,7 @@ export default createStore({
       try {
         const res = await axios.patch(`${DB}users/${payload.userID}`, payload.data);
         if (res.data) {
-          commit.dispatch("fetchUsers");
+          commit("fetchUsers"); // Assuming fetchUsers is a mutation, otherwise use dispatch if it's an action
           commit("setUser", res.data);
           alert("Update Successful");
         }
@@ -109,12 +109,12 @@ export default createStore({
         console.error(e);
         alert("Request Failed: An error occurred while trying to update the user.");
       }
-    },
+    },    
     // Action to delete a user
     async deleteUser({ commit }, id) {
       try {
         await axios.delete(`${DB}users/${id}`);
-        commit.dispatch("fetchUsers");
+        commit("fetchUsers");
         console.log("User deleted successfully");
       } catch (e) {
         console.error(e);
@@ -126,7 +126,7 @@ export default createStore({
       try {
         const res = await axios.post(`${DB}products`, payload);
         if (res.data) {
-          commit.dispatch("fetchProducts");
+          commit("fetchProducts");
           commit("setProduct", res.data);
         }
       } catch (e) {
@@ -137,28 +137,29 @@ export default createStore({
     // Action to update an existing product
     async updateProduct({ commit }, payload) {
       try {
-        const res = await axios.patch(`${DB}products/${payload.prodID}`, payload);
-        if (res.data) {
-          commit.dispatch("fetchProducts");
+        const res  = await axios.patch(`${DB}products/${payload.prodID}`, payload); 
+        console.log(res.data);        
+        if (res) {
+          commit("fetchProducts"); 
           alert("Successfully updated product!");
         } else {
-          throw new Error("Failed to update product: ");
+          throw new Error("Failed to update product");
         }
       } catch (error) {
         console.error("An error occurred:", error);
-        alert("An error occurred: " + error);
+        alert("An error occurred: " + error.message);
       }
-    },
-    // Action to delete a product
-    async deleteProduct({ commit }, prodID) {
-      try {
-        await axios.delete(`${DB}products/${prodID}`);
-        commit.dispatch("fetchProducts");
-        console.log("Product deleted successfully");
-      } catch (e) {
-        alert("An error occurred while deleting the product");
-      }
-    },
+    },        
+   // Action to delete a product
+async deleteProduct({ commit }, prodID) {
+  try {
+    await axios.delete(`${DB}products/${prodID}`);
+    commit("fetchProducts");
+    console.log("Product deleted successfully");
+  } catch (e) {
+    alert("An error occurred while deleting the product");
+  }
+},
     async login({ commit }, loginUser) {
       try {
         const { data } = await axios.post(`${DB}login`, loginUser);
@@ -175,7 +176,7 @@ export default createStore({
     },
       async getCart({ commit }, userID) {
         try {
-          const res = await axios.get(`${DB}users/${userID}/cart`);
+          const res = await axios.get(`${DB}cart`, userID);
           const data = res.data;
           if (data != null) {
             commit("setCart", data);
@@ -189,7 +190,7 @@ export default createStore({
     
       async addToCart({ commit }, { userID, item }) {
         try {
-          await axios.post(`${DB}users/${userID}/cart`, item);
+          await axios.post(`${DB}users/${userID}cart`, item);
           commit("getCart", userID);
         } catch (error) {
           console.error('Error adding to cart:', error);
@@ -198,7 +199,7 @@ export default createStore({
     
       async deleteFromCart({ commit }, { userID, cart }) {
         try {
-          await axios.delete(`${DB}users/${userID}/cart/${cart}`);
+          await axios.delete(`${DB}users/${userID}cart/${cart}`);
           commit("getCart", userID);
         } catch (error) {
           console.error('Error deleting from cart:', error);
@@ -207,7 +208,7 @@ export default createStore({
     
       async deleteCart({ commit }, userID) {
         try {
-          await axios.delete(`${DB}users/${userID}/cart`);
+          await axios.delete(`${DB}cart`);
           commit("getCart", userID);
         } catch (error) {
           console.error('Error deleting cart:', error);

@@ -47,7 +47,6 @@ export default {
     this.$store.dispatch("fetchUsers");
   },
   mounted() {
-    console.log(VueCookies.get("RealUser"));
  },
 }
 
