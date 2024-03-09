@@ -5,14 +5,14 @@
             <h1>Sign In</h1>
         </div>
         <div class="form-container container d-flex justify-content-center align-items-center flex-column position-relative">
-            <form class="form">
+            <form class="form" @submit.prevent>
     <div class="header d-flex justify-content-center align-items-center position-relative">Welcome Back</div>
     <div class="inputs d-flex flex-column">
         <input placeholder="Email" class="input fw-light" type="text" required autocomplete="off"  v-model="loginUser.emailAdd" oninvalid="this.setCustomValidity('Please enter your email')"
                     oninput="this.setCustomValidity('')">
         <input placeholder="Password" class="input fw-light" type="password" required autocomplete="off" v-model="loginUser.userPass" oninvalid="this.setCustomValidity('Please enter your password')"
                     oninput="this.setCustomValidity('')">
-    <button class="sigin-btn d-flex justify-content-center align-items-center" @click="login">Log In</button>
+    <button class="sigin-btn d-flex justify-content-center align-items-center" @click="logIn">Log In</button>
     <p class="signup-link">Don't have an account? <router-link to="/register" class="fw-medium fst-italic">Sign up</router-link></p> 
     </div>
 </form>
@@ -23,6 +23,7 @@
 
 <script>
 import VueCookies  from 'vue-cookies';
+import router from '@/router/index';
 export default {
   data() {
     return {
@@ -36,17 +37,16 @@ export default {
     user() {
       return this.$store.state.user;
     },
-    login() {
-      this.$store.dispatch("login", this.payload);
+    logIn() {
+      this.$store.dispatch('login')
     },
   },
   methods: {
-      beforeCreate() {
-        this.$store.dispatch("fetchUsers");
-      },
+  },
+  beforeCreate() {
+    this.$store.dispatch("fetchUsers");
   },
   mounted() {
-    console.log(VueCookies.get("RealUser"));
  },
 }
 
@@ -157,9 +157,10 @@ export default {
     background-position: 0% 50%;
   }
 }
-@media (max-width: 351px) {
+@media (max-width: 433px) {
   .form{
     display: flex;
+    left: -15px;
     font-size: 10px;
     max-width: 290px;
   }
@@ -169,6 +170,12 @@ export default {
     flex-direction: column;
     font-size: 12px;
   }
-
 }
-</style>.
+@media (max-width: 355px) {
+  .form {
+    left: 0px;
+    display: flex;
+    position: relative;
+  }
+}
+</style>

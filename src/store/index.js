@@ -1,5 +1,6 @@
 // Importing necessary modules
 import { createStore } from "vuex"; // Importing Vuex's createStore function
+import router from '../router/index.js'
 import axios from "axios"; // Importing Axios for making HTTP requests
 axios.defaults.withCredentials = true;
 // URL for the database API
@@ -13,7 +14,8 @@ export default createStore({
     selectedProduct: null, // Placeholder for selected product data
     products: null, // Placeholder for product data
     product: null, // Placeholder for a single product data
-    LoggedIn: true
+    isLoggedIn: false,
+    cart: null,
   },
   getters: {}, // Getters for computed properties based on state
   mutations: { // Mutations to directly mutate the state
@@ -33,138 +35,193 @@ export default createStore({
     setSelectedProduct(state, product) {
       state.selectedProduct = product; // Setting selected product data in the state
     },
-    setLogged(state, payload) {
-      state.LoggedIn = payload;
-    }
+    setLoggedIn(state, isLoggedIn) {
+      state.isLoggedIn = isLoggedIn;
+    },
+    setCart: (state, cart) => {
+      if (cart === null) {
+        state.cart = null;
+      } else {
+        state.cart = cart;
+      }
+    },
   },
-  actions: { // Actions for asynchronous operations
+  actions: {
     // Action to fetch all users data
     async fetchUsers({ commit }) {
       try {
-        const res = await axios.get(`${DB}users`); // Making HTTP GET request to fetch users
-        commit("setUsers", res.data); // Committing mutation to set users data in the state
+        const res = await axios.get(`${DB}users`);
+        commit("setUsers", res.data);
       } catch (e) {
-        ("Request Failed! Could not retrieve all users!"); // Alerting user in case of failure
+        alert("Request Failed! Could not retrieve all users!");
       }
     },
     // Action to fetch a single user data
     async fetchUser({ commit }) {
       try {
-        const res = await axios.get(`${DB}user`); // Making HTTP GET request to fetch a user
-        commit("setUser", res.data); // Committing mutation to set user data in the state
+        const res = await axios.get(`${DB}user`);
+        commit("setUser", res.data);
       } catch (e) {
-        alert("Request Failed: Could not retrieve user!"); // Alerting user in case of failure
+        alert("Request Failed: Could not retrieve user!");
       }
     },
     // Action to fetch all products data
     async fetchProducts({ commit }) {
       try {
-        const res = await axios.get(`${DB}products`); // Making HTTP GET request to fetch products
-        commit("setProducts", res.data); // Committing mutation to set products data in the state
+        const res = await axios.get(`${DB}products`);
+        commit("setProducts", res.data);
       } catch (e) {
-        alert("Request Failed: Could not retrieve products from the database."); // Alerting user in case of failure
+        alert("Request Failed: Could not retrieve products from the database.");
       }
     },
     // Action to fetch a single product data
     async fetchProduct({ commit }) {
       try {
-        const res = await axios.get(`${DB}product`); // Making HTTP GET request to fetch a product
-        commit("setProduct", res.data); // Committing mutation to set product data in the state
+        const res = await axios.get(`${DB}product`);
+        commit("setProduct", res.data);
       } catch (e) {
-        alert("Requested Failed: Could not fetch product."); // Alerting user in case of failure
+        alert("Requested Failed: Could not fetch product.");
       }
     },
     // Action to register a new user
     async registerNewUser({ commit }, payload) {
       try {
-        const res = await axios.post(`${DB}users`, payload); // Making HTTP POST request to register a new user
-        const { msg } = await res.data; // Destructuring the response data
+        const res = await axios.post(`${DB}users`, payload);
+        const { msg } = await res.data;
         if (msg) {
-          commit.dispatch("fetchUsers"); // Dispatching fetchUsers action to update users data
-          commit("setUser", msg); // Committing mutation to set user data in the state
+          commit.dispatch("fetchUsers");
+          commit("setUser", msg);
         }
       } catch (e) {
-        alert("Request Failed: Could not register user."); // Alerting user in case of failure
+        alert("Request Failed: Could not register user.");
       }
     },
     // Action to update an existing user
     async updateUser({ commit }, payload) {
       try {
-        const res = await axios.patch(`${DB}users/${payload.userID}`, payload.data); // Making HTTP PATCH request to update user
+        const res = await axios.patch(`${DB}users/${payload.userID}`, payload.data);
         if (res.data) {
-          commit.dispatch("fetchUsers"); // Dispatching fetchUsers action to update users data
-          commit("setUser", res.data); // Committing mutation to set updated user data in the state
-          alert("Update Successful"); // Notifying user of successful update
+          commit("fetchUsers"); // Assuming fetchUsers is a mutation, otherwise use dispatch if it's an action
+          commit("setUser", res.data);
+          alert("Update Successful");
         }
       } catch (e) {
-        console.error(e); // Logging error to console
-        alert("Request Failed: An error occurred while trying to update the user."); // Alerting user in case of failure
+        console.error(e);
+        alert("Request Failed: An error occurred while trying to update the user.");
       }
-    },
+    },    
     // Action to delete a user
     async deleteUser({ commit }, id) {
       try {
-        const res = await axios.delete(`${DB}users/${id}`); // Making HTTP DELETE request to delete a user
-        if (res.data) {
-          commit("fetchUsers"); // Committing mutation to fetch updated users data
-          commit("setUser", res.data); // Committing mutation to set user data in the state
-          console.log("User deleted successfully"); // Logging success message
-        }
+        await axios.delete(`${DB}users/${id}`);
+        commit("fetchUsers");
+        console.log("User deleted successfully");
       } catch (e) {
-        console.error(e); // Logging error to console
-        alert("Request Failed: An error occurred while deleting user."); // Alerting user in case of failure
+        console.error(e);
+        alert("Request Failed: An error occurred while deleting user.");
       }
     },
     // Action to add a new product
     async addProduct({ commit }, payload) {
       try {
-        const res = await axios.post(`${DB}products`, payload); // Making HTTP POST request to add a new product
+        const res = await axios.post(`${DB}products`, payload);
         if (res.data) {
-          commit.dispatch("fetchProducts"); // Dispatching fetchProducts action to update products data
-          commit("setProduct", res.data); // Committing mutation to set product data in the state
+          commit("fetchProducts");
+          commit("setProduct", res.data);
         }
       } catch (e) {
-        console.error(e); // Logging error to console
-        alert("Request Failed: An error occurred while adding a new product."); // Alerting user in case of failure
+        console.error(e);
+        alert("Request Failed: An error occurred while adding a new product.");
       }
     },
     // Action to update an existing product
     async updateProduct({ commit }, payload) {
       try {
-        const res = await axios.patch(`${DB}products/${payload.prodID}`, payload); // Making HTTP PATCH request to update a product
+        const res  = await axios.patch(`${DB}products/${payload.prodID}`, payload); 
+        console.log(res.data);        
         if (res) {
-          commit.dispatch("fetchProducts"); // Dispatching fetchProducts action to update products data
-          alert("Successfully updated product!"); // Notifying user of successful update
+          commit("fetchProducts"); 
+          alert("Successfully updated product!");
         } else {
-          throw new Error("Failed to update product: "); // Throwing error in case of failure
+          throw new Error("Failed to update product");
         }
       } catch (error) {
-        console.error("An error occurred:", error); // Logging error to console
-        alert("An error occurred: " + error); // Alerting user in case of failure
+        console.error("An error occurred:", error);
+        alert("An error occurred: " + error.message);
       }
-    },
-    // Action to delete a product
-    async deleteProduct({ commit }, prodID) {
+    },        
+   // Action to delete a product
+async deleteProduct({ commit }, prodID) {
+  try {
+    await axios.delete(`${DB}products/${prodID}`);
+    commit("fetchProducts");
+    console.log("Product deleted successfully");
+  } catch (e) {
+    alert("An error occurred while deleting the product");
+  }
+},
+    async login({ commit }, loginUser) {
       try {
-        const res = await axios.delete(`${DB}products/${prodID}`); // Making HTTP DELETE request to delete a product
-        if (res) {
-          commit.dispatch("fetchProducts"); // Dispatching fetchProducts action to update products data
-          commit("setProduct", res); // Committing mutation to set product data in the state
-        }
-      } catch (e) {
-        alert("An error occurred while deleting the product"); // Alerting user in case of failure
+        const { data } = await axios.post(`${DB}login`, loginUser);
+        const token = data.token;
+        $cookies.set('jwt', token);
+        alert(data.msg);
+        // await router.push('/');
+        commit('setLoggedIn', true);
+        // console.log(await router.push('/'));
+      } catch (error) {
+        console.error('Error during login:', error);
+        console.log('err');
       }
     },
-    async login({commit}, login) {
+      async getCart({ commit }, userID) {
         try {
-          const {data} = await axios.post(`{DB}login`, login)
-          $cookies.set('jwt',data.token)
-          alert(data.msg);
-          await router.push('/home') // push keeps browser history, replace removes history and takes you back oto home
-          window.location.reload()
-          commit('setLogged', true)
+          const res = await axios.get(`${DB}cart`, userID);
+          const data = res.data;
+          if (data != null) {
+            commit("setCart", data);
+          } else {
+            commit("setCart", null);
+          }
         } catch (error) {
-          console.error('Error during login:', error)
+          console.error('Error getting cart:', error);
+        }
+      },
+    
+      async addToCart({ commit }, { userID, item }) {
+        try {
+          await axios.post(`${DB}users/${userID}cart`, item);
+          commit("getCart", userID);
+        } catch (error) {
+          console.error('Error adding to cart:', error);
+        }
+      },
+    
+      async deleteFromCart({ commit }, { userID, cart }) {
+        try {
+          await axios.delete(`${DB}users/${userID}cart/${cart}`);
+          commit("getCart", userID);
+        } catch (error) {
+          console.error('Error deleting from cart:', error);
+        }
+      },
+    
+      async deleteCart({ commit }, userID) {
+        try {
+          await axios.delete(`${DB}cart`);
+          commit("getCart", userID);
+        } catch (error) {
+          console.error('Error deleting cart:', error);
+        }
+      },
+    
+      checkAdmin(context) {
+        if (context.state.user != null) {
+          if (context.state.user.userRole === "Admin") {
+            context.state.admin = true;
+          } else {
+            context.state.admin = false;
+          }
         }
       },
     },
