@@ -6,7 +6,7 @@ import productsRouter from "./routes/products.js";
 import usersRouter from "./routes/users.js";
 import loginRouter from "./routes/login.js";
 import signUpRouter from "./routes/signup.js";
-import ordersRoute from "./routes/orders.js";
+import cartRouter from "./routes/cart.js";
 import cookieParser from 'cookie-parser';
 import { verifyToken, createToken } from "./middleware/AuthenticateUser.js";
 
@@ -29,10 +29,10 @@ app.use(cookieParser());
 app.use(express.static('static'));
 // Routes 
 app.use('/products', productsRouter); 
-app.use('/users', usersRouter);
+app.use('/users', verifyToken, usersRouter);
 app.use('/login', createToken, verifyToken, loginRouter); 
 app.use('/signup', signUpRouter); 
-app.use('/orders', ordersRoute);
+app.use('/cart', verifyToken, cartRouter);
 // Middleware for parsing cookies
  
 // Start the server and listen on the defined port

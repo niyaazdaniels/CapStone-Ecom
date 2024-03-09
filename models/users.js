@@ -18,20 +18,20 @@ const getExistingUser = async (userID) => {
     return result;
 };
 // Add a new user to the database
-const registerNewUser = async (firstName, lastName, userRole, emailAdd, userPass, userImage, gender, age) => {
+const registerNewUser = async (firstName, lastName, gender, userRole, emailAdd, userPass, userImage, age) => {
     const [user] = await pool.query(`
-        INSERT INTO Users (firstName, lastName, userRole, emailAdd, userPass, userImage, gender, age) 
+        INSERT INTO Users (firstName, lastName, gender, userRole, emailAdd, userPass, userImage, age) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-        [firstName, lastName, userRole, emailAdd, userPass, userImage, gender, age]);
+        [firstName, lastName, gender, userRole, emailAdd, userPass, userImage, age]);
     return getExistingUser(user.insertId);
 };
 // Edit an individual user in the database
-const editExistingUser = async (firstName, lastName, userRole, emailAdd, userPass, userImage, gender, age, userID) => {
+const editExistingUser = async (firstName, lastName, gender, userRole, emailAdd, userPass, userImage, age, userID) => {
     const [user] = await pool.query(`
         UPDATE Users 
-        SET firstName = ?, lastName = ?, userRole = ?, emailAdd = ?, userPass = ?, userImage = ?, gender = ?, age = ?
+        SET firstName = ?, lastName = ?, gender = ?, userRole = ?, emailAdd = ?, userPass = ?, userImage = ?, age = ?
         WHERE userID = ?`,
-        [firstName, lastName, userRole, emailAdd, userPass, userImage, gender, age, userID]);
+        [firstName, lastName, gender, userRole, emailAdd, userPass, userImage, age, userID]);
     return getExistingUsers(user);
 };
 // Delete an individual user from the database
