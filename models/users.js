@@ -54,6 +54,17 @@ const verifyExistingUser = async (emailAdd) => {
         throw new Error('User not found');
     }
 };
+
+const getSingleUser = async (userID) => {
+    try {
+        const [user] = await pool.query (`
+            SELECT * FROM Users WHERE emailAdd =?`,
+            [userID])
+            return user
+    } catch (error) {
+        throw new Error ('Could not retrieve user Data')
+    }
+}
 // const registerNewUser = async (emailAdd, userPass) => {
 //     await pool.query(`
 //     INSERT INTO Users (emailAdd, userPass) 
@@ -62,4 +73,4 @@ const verifyExistingUser = async (emailAdd) => {
 // }
 
 // Exporting functions to make them globally accessible
-export { getExistingUsers, getExistingUser, editExistingUser, deleteExistingUser, verifyExistingUser, registerNewUser };
+export { getExistingUsers, getExistingUser, editExistingUser, deleteExistingUser, verifyExistingUser, registerNewUser, getSingleUser };

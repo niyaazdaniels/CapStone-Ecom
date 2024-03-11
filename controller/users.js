@@ -1,5 +1,5 @@
 // Importing necessary functions for user management from the users model
-import { getExistingUsers, getExistingUser, editExistingUser, deleteExistingUser, verifyExistingUser, registerNewUser } from '../models/users.js';
+import { getExistingUsers, getExistingUser, editExistingUser, deleteExistingUser, verifyExistingUser, registerNewUser, getSingleUser } from '../models/users.js';
 // Importing bcrypt for password hashing
 import bcrypt from 'bcrypt';
 
@@ -112,6 +112,7 @@ registerOneUser: async (req, res) => {
     // Controller to login a user by comparing passwords
     logInUser: async (req, res, next) => {
         try {
+            const user = (req.body.emailAdd);
             // Extract email and password from request body
             const { emailAdd, userPass } = req.body;
             // Retrieve hashed password for the provided email
@@ -121,7 +122,10 @@ registerOneUser: async (req, res) => {
             // If passwords match, proceed to the next middleware
             if (result === true) {
                 res.send({
-                    msg:  `Welcome back ${emailAdd}!`
+                    msg:  `Welcome back ${emailAdd}!`,
+                    token: req.token,
+                    user: getSingleUser(emailAdd),
+                    
                 });
             } else {
                 // If passwords do not match, send error response
