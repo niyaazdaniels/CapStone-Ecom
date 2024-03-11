@@ -2,7 +2,7 @@
     <div class="body">
         <div class="login-container">
             <h1 class="my-5 head">Sign Up</h1>
-            <form @submit.prevent="registerUser" method="POST" class="mx-4 my-5">
+            <form @submit.prevent="registerUser" method="POST" class="mx-4 my-5"  autocomplete="off">
                 <div class="row">
         <div class="col">
             <p>Name</p>
@@ -17,23 +17,30 @@
           <input type="text" class="form-control" v-model="register.gender" name="lastName" placeholder="Enter Gender" aria-label="Last name" required="">
         </div>
         <div class="col">
-            <p>Role</p>
-          <input type="text" class="form-control" v-model="register.userRole" name="Role" placeholder="Role" aria-label="Last name" required="">
+            <p>Age </p>
+          <input type="text" class="form-control" v-model="register.age" name="Age" placeholder="Age" aria-label="Age" required="">
+        </div>
+        <div class="col">
+            <p>Role </p>
+          <input type="text" class="form-control" v-model="register.userRole" name="Role" placeholder="Role" aria-label="Role" required="">
         </div>
       </div>
       <div class="row">
         <div class="col">
             <p>Email</p>
-          <input type="text" class="form-control" v-model="register.userEmail" name="userEmail" placeholder="Enter Email" aria-label="First name" required="">
+          <input type="text" class="form-control" v-model="register.emailAdd" name="userEmail" placeholder="Enter Email" aria-label="First name" required="">
         </div>
       </div>
       <div class="row">
         <div class="col">
             <p>Password</p>
-          <input type="password" class="form-control"  v-model="register.userPass" name="userPass" placeholder="Enter Password" aria-label="Last name" required="">
+          <input type="password" class="form-control"  v-model="register.userPass" name="userPass" placeholder="Enter Password" aria-label="Password" required="">
+        </div>
+        <div class="col">
+            <p>Image</p>
+          <input type="text" class="form-control"  v-model="register.userImage" name="userImage" placeholder="Image URL" aria-label="Image" required="">
         </div>
       </div>
-
 <div>
 <button type="submit" class="btn text-white reg" value="register" v-on:click="toggle"><span id="logs">Register</span><i class="fa fa-spinner fa-spin" id="icon"></i></button>
 </div>
@@ -49,7 +56,7 @@
 
 <script>
     export default {
-        name: 'registerUser',
+        name: 'RegisterView',
         data() {
         return {
             register: {
@@ -57,21 +64,25 @@
             lastName: "",
             gender: "",
             userRole: "",
-            userEmail: "",
+            age: "",
+            emailAdd: "",
             userPass: "", 
+            userImage: "", 
             }
             
         };
     },
     methods: {
-        async registerUser() {
-           await this.$store.dispatch("registerUser", this.register);
+        registerUser() {
+            this.$store.dispatch("registerNewUser", this.register);
             this.register.firstName = "";
             this.register.lastName = "";
             this.register.gender = "";
-            this.register.role = "";
-            this.register.userEmail = "";
+            this.register.userRole = "";
+            this.register.age = "";
+            this.register.emailAdd = "";
             this.register.userPass = "";
+            this.register.userImage = "";
             },
 
         }
@@ -121,6 +132,8 @@ h1{
     color: white ;
     font-weight: lighter;
     text-align: center;
+    font-style: italic;
+    font-size: 10px;
 }
 .login-container form input{
     margin-bottom: 20px;
@@ -131,7 +144,10 @@ h1{
     height: 30px;
     color: white;
     border-radius: 0px;
+    font-weight: lighter;
+    font-size: 12px;
 }
+
 
 .login-container button{
     width: 100%;

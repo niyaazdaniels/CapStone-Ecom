@@ -1,78 +1,85 @@
 <template>
-    <div v-if="user">
-       <Navbar/>
-    <div class="profile">
-        <div class="single">
-           <div class="main container justify-content-center">
-                <div class="row justify-content-center">
-                    <div class="col-md-4 my-5 mt-1 prof">
-                        <div class="card text-center sidebar">
-                            <div class="card-body">
-                                <img :src="user.userProfile" alt="" class="my-4">
-                                <div class="card-text">
-                                    <h3 class="my-4">{{ user.firstName }} {{ user.lastName }}</h3>
-                                    <a href="" class="logBut bg-white my-3 p-2 px-5" @click="LogOut()">Log Out</a>
-                                </div>
-                            </div>
-                        </div>
+    <div>
+      <div v-if="user">
+        <div class="profile-background">
+        <div class="profile">
+          <div class="single">
+            <div class="main container justify-content-center">
+              <div class="row justify-content-center">
+                <div class="col-md-4 my-5 mt-1 prof">
+                  <div class="card text-center sidebar">
+                    <div class="card-body">
+                      <img :src="user.userImage" alt="" class="my-4">
+                      <div class="card-text">
+                        <h3 class="my-4">{{ user.firstName }} {{ user.lastName }}</h3>
+                        <a href="#" class="logBut bg-white my-3 p-2 px-5" @click="logOut">Log Out</a>
+                      </div>
                     </div>
-                    <div class="col-md-8 my-5 mt-1 about">
-                        <div class=" mx">
-                            <h1>Profile</h1>
-            <form autocomplete="off" @submit.prevent="editUser" method="POST">
-                <p>First Name</p>
-                <input class="col-12 my-3" id="Name" type="text" v-model="user.firstName" required>
-                <p>Last Name</p>
-                <input class="col-12 my-3" id="Brand" type="text" v-model="user.lastName" required>
-                <p>Email Address</p>
-                <input class="col-12 my-3 emailAdd" id="Price" type="text" v-model="user.userEmail" required>
-                <p>Profile Image</p>
-                <input class="col-12 my-3" id="img" type="text" v-model="user.userProfile" required>
-                <div class="modal-footer">
-                    <button @click="this.$store.dispatch('editUser', user)" class="btn btn-dark" id="submit">Save Changes</button>
+                  </div>
                 </div>
-            </form>
+                <div class="col-md-8 my-5 mt-1 about">
+                  <div class=" mx">
+                    <h1>Profile</h1>
+                    <form autocomplete="off" @submit.prevent="updateUser" method="POST">
+                      <p>First Name</p>
+                      <input class="col-12 my-3" id="Name" type="text" v-model="user.firstName" required>
+                      <p>Last Name</p>
+                      <input class="col-12 my-3" id="Surname" type="text" v-model="user.lastName" required>
+                      <p>Email Address</p>
+                      <input class="col-12 my-3 emailAdd" id="text" type="text" v-model="user.emailAdd" required>
+                      <p>Profile Image</p>
+                      <input class="col-12 my-3" id="img" type="text" v-model="user.userImage" required>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-dark" id="submit">Save Changes</button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
-        </div>
-        </div>
-        <Footer/>
-        </div> 
+      </div>
     </div>
-
     <div v-else>
-      <Spinner />
+      <SpinnerComp/>
     </div>
-    
-</template>
+</div>
+  </template>
+  
+  <script>
+  import SpinnerComp from '../components/SpinnerComp.vue';
+  
+  export default {
 
-<script>
-import SpinnerComp from '../components/SpinnerComp.vue'
-    export default {
-        name: 'Profile', 
-        components:  SpinnerComp,
-        computed: {
-
-        user() {
-            return this.$store.state.user;
-        },
-    },
-    created() {
-        console.log();
+    name: 'Profile', 
+    components: { SpinnerComp },
+    computed: {
+      user() {
+        return this.$store.state.user;
+      }
     },
     methods: {
-        LogOut() {
-       this.$store.state.user = null
-       localStorage.clear()
-       this.$router.push("/");
+      logOut() {
+        this.$store.dispatch("logOut");
+        router.push("/");
+      },
+      updateUser() {
+        // Dispatch action to update user data
+        this.$store.dispatch('updateUser', this.user);
+      }
+    }, 
+    mounted(){
+    this.$store.dispatch('fetchUser', this.user)
     }
-}
-}
-</script>
+  }
+  </script>
 
 <style scoped>
 
+.profile-background{
+    min-height: 100vh;
+}
 .prof{
     justify-content: center !important;
 }
