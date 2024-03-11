@@ -26,11 +26,11 @@ export default {
 registerOneUser: async (req, res) => {
     try {
         // Extract user details from the request body
-        const { firstName, lastName, userRole, emailAdd, userPass, userImage, gender, age } = req.body;
+        const { firstName, lastName, gender, userRole, emailAdd, userPass, userImage, age } = req.body;
         // Hash the password using bcrypt
         const hash = await bcrypt.hash(userPass, 10);
         // Add user with hashed password to the database
-        await registerNewUser(firstName, lastName, userRole, emailAdd, hash, userImage, gender, age);
+        await registerNewUser(firstName, lastName, gender, userRole, emailAdd, hash, userImage, age);
         // Send success response
         res.send('User has been registered successfully!');
     } catch (error) {
@@ -64,20 +64,20 @@ registerOneUser: async (req, res) => {
         try {
             // Retrieve user details and ID from request parameters
             const [user] = await getExistingUser(+req.params.userID);
-            let { firstName, lastName, userRole, emailAdd, userPass, userImage, gender, age } = req.body;
+            let { firstName, lastName, gender, userRole, emailAdd, userPass, userImage, age } = req.body;
             
             // Update user details if provided, otherwise keep the existing details
             firstName = firstName || user.firstName;
             lastName = lastName || user.lastName;
+            gender = gender || user.gender;
             userRole = userRole || user.userRole;
             emailAdd = emailAdd || user.emailAdd;
             userPass = userPass || user.userPass;
             userImage = userImage || user.userImage;
-            gender = gender || user.gender;
             age = age || user.age;
             
             // Update user in the database
-            await editExistingUser(firstName, lastName, userRole, emailAdd, userPass, userImage, gender, age, +req.params.userID);
+            await editExistingUser(firstName, lastName, gender, userRole, emailAdd, userPass, userImage, age, +req.params.userID);
             
             const updatedUser = await getExistingUsers();
 
@@ -122,15 +122,15 @@ registerOneUser: async (req, res) => {
             if (result === true) {
                 res.send({
                     msg:  `Welcome back ${emailAdd}!`
-                })
+                });
             } else {
                 // If passwords do not match, send error response
                 res.status(401).send({ msg: "Password does not match, please try again." });
             }
         } catch (error) {
             // Handle errors
-            res.status(500).send('Error logging in user: ' + error);
+            console.error('Error logging in user: ', error);
+            res.status(500).send('Error logging in user.');
         }
-    }
-    
+    }    
 }
