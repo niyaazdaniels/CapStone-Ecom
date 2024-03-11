@@ -5,7 +5,7 @@ import axios from "axios"; // Importing Axios for making HTTP requests
 import sweet from "sweetalert"
 axios.defaults.withCredentials = true;
 // URL for the database API
-const DB = "https://capstone-ecom.onrender.com";
+const DB = "https://capstone-ecom.onrender.com/";
 
 // Creating and exporting the Vuex store
 export default createStore({
@@ -175,7 +175,8 @@ async deleteProduct({ commit }, prodID) {
         $cookies.set('jwt', token);
         sweet(data.msg);
         await router.push('/');
-        commit( 'setUser', res.data );
+        const res = await axios.get(`${DB}users/${id}}`)
+        commit('setUser', res.data );
         commit('setLoggedIn', true);
         window.location.reload()
       } catch (error) {
@@ -191,7 +192,7 @@ async deleteProduct({ commit }, prodID) {
     },
       async getCart({ commit }, userID) {
         try {
-          const res = await axios.get(`${DB}cart`, userID);
+          const res = await axios.get(`${DB}/cart`, userID);
           const data = res.data;
           if (data != null) {
             commit("setCart", data);
@@ -230,16 +231,13 @@ async deleteProduct({ commit }, prodID) {
         }
       },
       checkAdmin(context) {
-        if (context.state.user != null) {
-          if (context.state.user.userRole === "Admin") {
-            return true;
-          } else {
-            return false;
-          }
+        if (context.state.user != null && context.state.user.userRole === "Admin") {
+          return true;
+        } else {
+          return false;
         }
-        return false;
       },
-    },
+    },      
   modules: {
     },
 })

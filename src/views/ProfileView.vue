@@ -52,7 +52,7 @@
   
   export default {
 
-    name: 'Profile', 
+    name: 'ProfileView', 
     components: { SpinnerComp },
     computed: {
       user() {
@@ -65,7 +65,6 @@
         router.push("/");
       },
       updateUser() {
-        // Dispatch action to update user data
         this.$store.dispatch('updateUser', this.user);
       }
     }, 
@@ -77,17 +76,14 @@
 
 <style scoped>
 
-.profile-background{
-    min-height: 100vh;
-}
 .prof{
     justify-content: center !important;
 }
 .profile{
     justify-content: center;
     align-items: center;
-    margin-top: 130px;
-    min-height: 120vh;
+    margin-top: 170px;
+    min-height: 90vh;
 }
 
 .card{

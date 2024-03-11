@@ -30,29 +30,20 @@
   
   <script>
   export default {
-  data() {
-    return {
-            isAdmin: false 
-        };
-  },
   computed: {
-    logOut(){
-      this.$store.dispatch("logOut")
+    isAdmin() {
+      return this.$store.getters.checkAdmin;
     },
-     user() {
-            return this.$store.state.user;
-        },
-        mounted() {
-        this.checkUserRole();
-    },
-    methods: {
-        checkUserRole() {
-            const userRole = checkUserAdmin();
-            this.isAdmin = userRole === 'Admin';
-        },
+    user() {
+      return this.$store.state.user;
+    }
+  },
+  methods: {
+    logOut() {
+      this.$store.dispatch("logOut");
     }
   }
-  }
+};
   </script>
   
   <style>
