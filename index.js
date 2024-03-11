@@ -29,10 +29,10 @@ app.use(cookieParser());
 app.use(express.static('static'));
 // Routes 
 app.use('/products', productsRouter); 
-app.use('/users', verifyToken, usersRouter);
+app.use('/users', usersRouter);
 app.use('/login', createToken, verifyToken, loginRouter); 
 app.use('/signup', signUpRouter); 
-app.use('/cart', verifyToken, cartRouter);
+app.use('/cart', cartRouter);
 // Middleware for parsing cookies
  
 // Start the server and listen on the defined port
