@@ -2,9 +2,10 @@
 import { createStore } from "vuex"; // Importing Vuex's createStore function
 import router from '../router/index.js'
 import axios from "axios"; // Importing Axios for making HTTP requests
+import sweet from "sweetalert"
 axios.defaults.withCredentials = true;
 // URL for the database API
-const DB = "https://capstone-ecom.onrender.com/";
+const DB = "https://capstone-ecom.onrender.com";
 
 // Creating and exporting the Vuex store
 export default createStore({
@@ -14,10 +15,12 @@ export default createStore({
     selectedProduct: null, // Placeholder for selected product data
     products: null, // Placeholder for product data
     product: null, // Placeholder for a single product data
-    isLoggedIn: false,
+    LoggedIn: false,
     cart: null,
   },
-  getters: {}, // Getters for computed properties based on state
+  getters: {
+    getUser: (state) => state.user,
+  }, // Getters for computed properties based on state
   mutations: { // Mutations to directly mutate the state
     // Mutations to set various data in the state
     setUsers(state, users) {
@@ -35,8 +38,8 @@ export default createStore({
     setSelectedProduct(state, product) {
       state.selectedProduct = product; // Setting selected product data in the state
     },
-    setLoggedIn(state, isLoggedIn) {
-      state.isLoggedIn = isLoggedIn;
+    setLoggedIn(state, LoggedIn) {
+      state.LoggedIn = LoggedIn;
     },
     setCart: (state, cart) => {
       if (cart === null) {
@@ -59,10 +62,10 @@ export default createStore({
     // Action to fetch a single user data
     async fetchUser({ commit }) {
       try {
-        const res = await axios.get(`${DB}user`);
+        const res = await axios.get(`${DB}users`);
         commit("setUser", res.data);
       } catch (e) {
-        alert("Request Failed: Could not retrieve user!");
+        sweet("Request Failed: Could not retrieve user!");
       }
     },
     // Action to fetch all products data
@@ -71,31 +74,36 @@ export default createStore({
         const res = await axios.get(`${DB}products`);
         commit("setProducts", res.data);
       } catch (e) {
-        alert("Request Failed: Could not retrieve products from the database.");
+        sweet("Request Failed: Could not retrieve products from the database.");
       }
     },
     // Action to fetch a single product data
     async fetchProduct({ commit }) {
       try {
-        const res = await axios.get(`${DB}product`);
+        const res = await axios.get(`${DB}products`);
         commit("setProduct", res.data);
       } catch (e) {
-        alert("Requested Failed: Could not fetch product.");
+        sweet("Requested Failed: Could not fetch product.");
       }
     },
     // Action to register a new user
-    async registerNewUser({ commit }, payload) {
+    async registerNewUser({ commit, dispatch }, registerUser) {
       try {
-        const res = await axios.post(`${DB}users`, payload);
-        const { msg } = await res.data;
+        const res = await axios.post(`${DB}signup`, registerUser);
+        const msg = await res.data.msg;
         if (msg) {
-          commit.dispatch("fetchUsers");
+          sweet("Successfully registered");
+
+          await router.push('/')
+    
+          dispatch("fetchUsers");
           commit("setUser", msg);
         }
       } catch (e) {
-        alert("Request Failed: Could not register user.");
+        sweet("Request Failed: Could not register user.");
       }
     },
+    
     // Action to update an existing user
     async updateUser({ commit }, payload) {
       try {
@@ -103,11 +111,11 @@ export default createStore({
         if (res.data) {
           commit("fetchUsers"); // Assuming fetchUsers is a mutation, otherwise use dispatch if it's an action
           commit("setUser", res.data);
-          alert("Update Successful");
+          sweet("Update Successful");
         }
       } catch (e) {
         console.error(e);
-        alert("Request Failed: An error occurred while trying to update the user.");
+        sweet("Request Failed: An error occurred while trying to update the user.");
       }
     },    
     // Action to delete a user
@@ -118,7 +126,7 @@ export default createStore({
         console.log("User deleted successfully");
       } catch (e) {
         console.error(e);
-        alert("Request Failed: An error occurred while deleting user.");
+        sweet("Request Failed: An error occurred while deleting user.");
       }
     },
     // Action to add a new product
@@ -131,7 +139,7 @@ export default createStore({
         }
       } catch (e) {
         console.error(e);
-        alert("Request Failed: An error occurred while adding a new product.");
+        sweet("Request Failed: An error occurred while adding a new product.");
       }
     },
     // Action to update an existing product
@@ -141,13 +149,13 @@ export default createStore({
         console.log(res.data);        
         if (res) {
           commit("fetchProducts"); 
-          alert("Successfully updated product!");
+          sweet("Successfully updated product!");
         } else {
           throw new Error("Failed to update product");
         }
       } catch (error) {
-        console.error("An error occurred:", error);
-        alert("An error occurred: " + error.message);
+        sweet("An error occurred:", error);
+        console.error("An error occurred: " + error.message);
       }
     },        
    // Action to delete a product
@@ -157,7 +165,7 @@ async deleteProduct({ commit }, prodID) {
     commit("fetchProducts");
     console.log("Product deleted successfully");
   } catch (e) {
-    alert("An error occurred while deleting the product");
+    sweet("An error occurred while deleting the product");
   }
 },
     async login({ commit }, loginUser) {
@@ -165,14 +173,21 @@ async deleteProduct({ commit }, prodID) {
         const { data } = await axios.post(`${DB}login`, loginUser);
         const token = data.token;
         $cookies.set('jwt', token);
-        alert(data.msg);
-        // await router.push('/');
+        sweet(data.msg);
+        await router.push('/');
+        commit( 'setUser', res.data );
         commit('setLoggedIn', true);
-        // console.log(await router.push('/'));
+        window.location.reload()
       } catch (error) {
-        console.error('Error during login:', error);
-        console.log('err');
+        sweet('Error during login:', error);
       }
+    },
+    async logOut (context) {
+      let cookies = $cookies.keys()
+       $cookies.remove('jwt')
+         await router.push('/');
+          window.location.reload()  
+
     },
       async getCart({ commit }, userID) {
         try {
@@ -184,16 +199,16 @@ async deleteProduct({ commit }, prodID) {
             commit("setCart", null);
           }
         } catch (error) {
-          console.error('Error getting cart:', error);
+          sweet('Error getting cart:', error);
         }
       },
     
-      async addToCart({ commit }, { userID, item }) {
+      async addToCart({ commit }, { userID, products }) {
         try {
-          await axios.post(`${DB}users/${userID}cart`, item);
+          await axios.post(`${DB}users/${userID}cart`, products);
           commit("getCart", userID);
         } catch (error) {
-          console.error('Error adding to cart:', error);
+          sweet('Error adding to cart:', error);
         }
       },
     
@@ -202,7 +217,7 @@ async deleteProduct({ commit }, prodID) {
           await axios.delete(`${DB}users/${userID}cart/${cart}`);
           commit("getCart", userID);
         } catch (error) {
-          console.error('Error deleting from cart:', error);
+          sweet('Error deleting from cart:', error);
         }
       },
     
@@ -211,18 +226,18 @@ async deleteProduct({ commit }, prodID) {
           await axios.delete(`${DB}cart`);
           commit("getCart", userID);
         } catch (error) {
-          console.error('Error deleting cart:', error);
+          sweet('Error deleting cart:', error);
         }
       },
-    
       checkAdmin(context) {
         if (context.state.user != null) {
           if (context.state.user.userRole === "Admin") {
-            context.state.admin = true;
+            return true;
           } else {
-            context.state.admin = false;
+            return false;
           }
         }
+        return false;
       },
     },
   modules: {

@@ -22,8 +22,6 @@
 </template>
 
 <script>
-import VueCookies  from 'vue-cookies';
-import router from '@/router/index';
 export default {
   data() {
     return {
@@ -38,13 +36,10 @@ export default {
       return this.$store.state.user;
     },
     logIn() {
-      this.$store.dispatch('login')
+      this.$store.dispatch('login',this.loginUser)
     },
   },
   methods: {
-  },
-  beforeCreate() {
-    this.$store.dispatch("fetchUsers");
   },
   mounted() {
  },

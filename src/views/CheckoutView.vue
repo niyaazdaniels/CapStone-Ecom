@@ -14,9 +14,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="prodRow my-5" v-for="item in cart" :key="item.id">
-                            <td><img :src="item.imgURL" alt="" class="img"></td>
-                            <td class="text-success"><h5 class="my-4">${{ item.price }}</h5></td>
+                            <tr class="prodRow my-5" v-for="product in cart" :key="product.prodID">
+                            <td><img :src="product.prodImage" alt="" class="img"></td>
+                            <td class="text-success"><h5 class="my-4">${{ product.price }}</h5></td>
                             <th><button class="btn btn-danger my-3" @click="deleteFromCart(item.id)">Del</button></th>
                             </tr>
                         </tbody>
@@ -39,8 +39,8 @@
                         </thead>
                         <tbody>
                             <tr class="prodRow my-5">
-                            <td><img src="https://i.postimg.cc/7ZXKpZ68/nikesb-dunk-paris-020d4294749750daa11b9b866154bc17.jpg" alt="" class="img"></td>
-                            <td class="text-success"><h5 class="my-4">$130000</h5></td>
+                            <td><img :src="product.prodImage" alt="" class="img"></td>
+                            <td class="text-success"><h5 class="my-4">{{ product.price }}</h5></td>
                             <th><button class="btn btn-danger my-3" @click="deleteFromCart(item.id)">Del</button></th>
                             </tr>
                         </tbody>
@@ -66,7 +66,7 @@
 
 <script>
     export default {
-        name: 'Checkout',
+        name: 'CheckoutView',
     computed: {
         user() {
             return this.$store.state.user;
@@ -84,7 +84,7 @@
     methods: {
         deleteFromCart(id) {
           this.$store.dispatch("deleteFromCart", id);
-           alert("Product was deleted");
+           sweet("Product was deleted");
         },
     }
 }

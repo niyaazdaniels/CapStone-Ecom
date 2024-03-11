@@ -17,6 +17,7 @@
                 <th>Name</th>
                 <th>Surname</th>
                 <th>Gender</th>
+                <th>Age</th>
                 <th>Role</th>
                 <th>Email address</th>
                 <th>Profile</th>
@@ -31,6 +32,7 @@
                 <td data-label="Name">{{ user.firstName }}</td>
                 <td data-label="Surname">{{ user.lastName }}</td>
                 <td data-label="Gender">{{ user.gender }}</td>
+                <td data-label="Age">{{ user.age }}</td>
                 <td data-label="Role">{{ user.userRole }}</td>
                 <td data-label="Email">{{ user.emailAdd }}</td>
                 <td data-label="Image"><img :src="user.userImage" :alt="user.userImage" class="img-fluid image rounded-5 d-inline-flex" loading="lazy"/></td>
