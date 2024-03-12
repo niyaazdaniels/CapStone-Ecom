@@ -41,7 +41,7 @@ registerOneUser: async (req, res) => {
     // Controller to fetch a single user from the database
     getOneUser: async (req, res) => {
         try {
-            const userId = req.params.userID;
+            const userId = req.params.emailAdd;
             const user = await getExistingUser(userId);
             if (user) {
                 res.send(user);
@@ -104,7 +104,7 @@ registerOneUser: async (req, res) => {
     // Controller to login a user by comparing passwords
     logInUser: async (req, res, next) => {
         try {
-            const user = (req.body.emailAdd);
+            const [user] = req.body.emailAdd;
             // Extract email and password from request body
             const { emailAdd, userPass } = req.body;
             // Retrieve hashed password for the provided email
@@ -113,10 +113,11 @@ registerOneUser: async (req, res) => {
             const result = await bcrypt.compare(userPass, hashedPassword);
             // If passwords match, proceed to the next middleware
             if (result === true) {
+                let currentUser = await getSingleUser(emailAdd)
                 res.send({
                     msg:  `Welcome back ${emailAdd}!`,
                     token: req.token,
-                    user: getSingleUser(emailAdd),
+                    user: currentUser,
                     
                 });
             } else {

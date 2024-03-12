@@ -55,16 +55,24 @@ const verifyExistingUser = async (emailAdd) => {
     }
 };
 
-const getSingleUser = async (userID) => {
+const getSingleUser = async (emailAdd) => {
     try {
         const [user] = await pool.query (`
             SELECT * FROM Users WHERE emailAdd =?`,
-            [userID])
+            [emailAdd])
             return user
     } catch (error) {
         throw new Error ('Could not retrieve user Data')
     }
 }
+
+// admin check
+const checkUserRole = async (userID) => {
+    const [[{userRole}]] = await pool.query(`
+       SELECT * FROM users WHERE userRole = ?
+    ` , [userID]);
+       return userRole;
+   }
 // const registerNewUser = async (emailAdd, userPass) => {
 //     await pool.query(`
 //     INSERT INTO Users (emailAdd, userPass) 
@@ -73,4 +81,4 @@ const getSingleUser = async (userID) => {
 // }
 
 // Exporting functions to make them globally accessible
-export { getExistingUsers, getExistingUser, editExistingUser, deleteExistingUser, verifyExistingUser, registerNewUser, getSingleUser };
+export { getExistingUsers, getExistingUser, editExistingUser, deleteExistingUser, verifyExistingUser, registerNewUser, getSingleUser , checkUserRole};
