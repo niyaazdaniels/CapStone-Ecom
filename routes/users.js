@@ -10,14 +10,14 @@ const router = express.Router();
 // Grouping together routes with similar paths
 router
     .route('/')
-        .get(adminRole.controller.getManyUsers) // GET request to fetch many users
-        .post(adminRole.controller.registerOneUser); // POST request to add a new user
+        .get(controller.getManyUsers) // GET request to fetch many users
+        .post(controller.registerOneUser); // POST request to add a new user
 
 router
     .route('/:userID')
-        .get(adminRole.controller.getOneUser) // GET request to fetch a single user by ID
-        .patch(adminRole.controller.editOneUser) // PATCH request to edit a user by ID
-        .delete(adminRole.controller.deleteOneUser); // DELETE request to delete a user by ID
+        .get(controller.getOneUser) // GET request to fetch a single user by ID
+        .patch(controller.editOneUser) // PATCH request to edit a user by ID
+        .delete(controller.deleteOneUser); // DELETE request to delete a user by ID
 
 // Exporting the router to be used globally
 export default router;
