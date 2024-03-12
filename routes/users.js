@@ -10,7 +10,7 @@ const router = express.Router();
 // Grouping together routes with similar paths
 router
     .route('/')
-        .get(adminRole.adcontroller.getManyUsers) // GET request to fetch many users
+        .get(adminRole.controller.getManyUsers) // GET request to fetch many users
         .post(adminRole.controller.registerOneUser); // POST request to add a new user
 
 router
