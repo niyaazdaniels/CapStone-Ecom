@@ -41,20 +41,14 @@ registerOneUser: async (req, res) => {
     // Controller to fetch a single user from the database
     getOneUser: async (req, res) => {
         try {
-            // Extract user ID from request parameters
-            const userId = +req.params.userID;
-            // Retrieve user details from the database
+            const userId = req.params.userID;
             const user = await getExistingUser(userId);
-            // Check if user exists
             if (user) {
-                // Send user details as response
                 res.send(user);
             } else {
-                // Handle case where user is not found
                 res.status(404).send({ error: "User not found" });
             }
         } catch (error) {
-            // Handle errors
             res.status(500).send({ error: "Internal Server Error" });
         }
     },
@@ -62,11 +56,9 @@ registerOneUser: async (req, res) => {
     // Controller to edit an existing user in the database
     editOneUser: async (req, res) => {
         try {
-            // Retrieve user details and ID from request parameters
             const [user] = await getExistingUser(+req.params.userID);
             let { firstName, lastName, gender, userRole, emailAdd, userPass, userImage, age } = req.body;
             
-            // Update user details if provided, otherwise keep the existing details
             firstName = firstName || user.firstName;
             lastName = lastName || user.lastName;
             gender = gender || user.gender;
