@@ -22,6 +22,11 @@ app.use(cors({
     origin: "http://localhost:8080",
     credentials: true 
   }));
+  app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 // Middleware for parsing JSON body
 app.use(express.json());
 // Middleware for serving static files from the 'public' directory
