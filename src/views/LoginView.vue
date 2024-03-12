@@ -37,6 +37,7 @@ export default {
     },
     logIn() {
       this.$store.dispatch('login',this.loginUser)
+      this.$store.dispatch('fetchUser')
     },
   },
   methods: {

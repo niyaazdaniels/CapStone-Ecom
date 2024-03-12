@@ -1,50 +1,40 @@
 <template>
-    <div>
+  <div>
       <div v-if="user">
-        <div class="profile-background">
-        <div class="profile">
-          <div class="single">
-            <div class="main container justify-content-center">
-              <div class="row justify-content-center">
-                <div class="col-md-4 my-5 mt-1 prof">
-                  <div class="card text-center sidebar">
-                    <div class="card-body">
-                      <img :src="user.userImage" alt="" class="my-4">
-                      <div class="card-text">
-                        <h3 class="my-4">{{ user.firstName }} {{ user.lastName }}</h3>
-                        <a href="#" class="logBut bg-white my-3 p-2 px-5" @click="logOut">Log Out</a>
-                      </div>
-                    </div>
-                  </div>
+      <div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" :src=user.userImage><span class="text-black-50">{{ user.firstName }}</span><span> </span></div>
+        </div>
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Profile Settings</h4>
                 </div>
-                <div class="col-md-8 my-5 mt-1 about">
-                  <div class=" mx">
-                    <h1>Profile</h1>
-                    <form autocomplete="off" @submit.prevent="updateUser" method="POST">
-                      <p>First Name</p>
-                      <input class="col-12 my-3" id="Name" type="text" v-model="user.firstName" required>
-                      <p>Last Name</p>
-                      <input class="col-12 my-3" id="Surname" type="text" v-model="user.lastName" required>
-                      <p>Email Address</p>
-                      <input class="col-12 my-3 emailAdd" id="text" type="text" v-model="user.emailAdd" required>
-                      <p>Profile Image</p>
-                      <input class="col-12 my-3" id="img" type="text" v-model="user.userImage" required>
-                      <div class="modal-footer">
-                        <button type="submit" class="btn btn-dark" id="submit">Save Changes</button>
-                      </div>
-                    </form>
-                  </div>
+                <div class="row mt-2">
+                    <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" placeholder="Name" value="">{{ user.firstName }}</div>
+                    <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control" value="" placeholder="surname">{{ user.lastName }}</div>
                 </div>
+                <div class="row mt-3">
+                    <div class="col-md-12"><label class="labels">Email ID</label><input type="text" class="form-control" placeholder="Enter email " value="">{{ user.emailAdd}}</div>
+                    <div class="col-md-12"><label class="labels">Gender</label><input type="text" class="form-control" placeholder="Gender" value="">{{ user.gender }}</div>
+                    <div class="col-md-12"><label class="labels">Age</label><input type="text" class="form-control" placeholder="Age" value="">{{ user.age }}</div>
+                    <div class="col-md-12"><label class="labels">Role</label><input type="text" class="form-control" placeholder="Role" value="">{{ user.userRole }}</div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6"><label class="labels">Password</label><input type="text" class="form-control" placeholder="password" value="">{{ user.userPass }}</div>
+                    <div class="col-md-6"><label class="labels">Image</label><input type="text" class="form-control" value="" placeholder="Image URL"></div>
+                </div>
+                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Save Profile</button></div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <div v-else>
+        <SpinnerComp/>
+      </div>
     </div>
-    <div v-else>
-      <SpinnerComp/>
-    </div>
-</div>
   </template>
   
   <script>
@@ -52,11 +42,11 @@
   
   export default {
 
-    name: 'ProfileView', 
-    components: { SpinnerComp },
+    name: 'profile', 
+    components: SpinnerComp,
     computed: {
       user() {
-        return this.$store.state.user;
+        return this.$store.state.user || [];
       }
     },
     methods: {
@@ -67,77 +57,55 @@
       updateUser() {
         this.$store.dispatch('updateUser', this.user);
       }
-    }, 
-    mounted(){
-    this.$store.dispatch('fetchUser', this.user)
     }
   }
   </script>
 
 <style scoped>
 
-.prof{
-    justify-content: center !important;
-}
-.profile{
-    justify-content: center;
-    align-items: center;
-    margin-top: 170px;
-    min-height: 90vh;
+body {
+    background: rgb(99, 39, 120)
 }
 
-.card{
-    max-width: 100%;
+.form-control:focus {
+    box-shadow: none;
+    border-color: #BA68C8
 }
 
-.card-body{
-    height: 445px;
-    background-color: black;
-    color: white;
+.profile-button {
+    background: rgb(99, 39, 120);
+    box-shadow: none;
+    border: none
 }
 
-.card-body img{
-    margin-top: 15px;
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
+.profile-button:hover {
+    background: #682773
 }
 
-.logOut{
-    margin-top: 30px !important;
+.profile-button:focus {
+    background: #682773;
+    box-shadow: none
 }
 
-.about{
-    max-width: 100%;
+.profile-button:active {
+    background: #682773;
+    box-shadow: none
 }
 
-.aboutRow{
-    padding: 10px;
-    border-bottom: 1px solid black;
+.back:hover {
+    color: #682773;
+    cursor: pointer
 }
 
-.aboutHead{
-    font-size: 20px;
-    font-weight: bold;
+.labels {
+    font-size: 11px
 }
 
-.col-8{
-    word-wrap: break-word;   
-    font-size: 18px;
+.add-experience:hover {
+    background: #BA68C8;
+    color: #fff;
+    cursor: pointer;
+    border: solid 1px #BA68C8
 }
-
-
-
-.logBut{
-            text-align: center;
-            text-decoration: none;
-            max-width: 100px !important;
-            color: rgb(0, 0, 0);
-        }
-
-        .logBut:hover{
-            color: rgb(0, 0, 0);
-           opacity: 90%;
-        }
 
 </style>
