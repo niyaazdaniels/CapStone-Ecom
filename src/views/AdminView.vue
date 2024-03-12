@@ -126,53 +126,38 @@
         sortMode: "prodID",
       };
     },
-   // Computed properties for dynamic data retrieval and manipulation
   computed: {
-    // Retrieve users data from the store
     users() {
-      // Return users data from Vuex store or an empty array if no data is available
       return this.$store.state.users || []; 
     },
-    // Retrieve products data from the store
     products() {
-      // Return products data from Vuex store or an empty array if no data is available
       return this.$store.state.products || [];
     },
-    // Calculate filtered products based on the selected sorting criteria
     filterDBProducts() {
-      // Create a copy of the products array to avoid mutating the original data
       let filter = [...this.products];
-      // Sort products based on the selected sorting criteria
       if (this.sortBy === "name") {
-        // Sort products by name in ascending or descending order
         filter = filter.sort(
           (a, b) => a.prodName.localeCompare(b.prodName) * (this.sort === "asc" ? 1 : -1)
         );
       } else if (this.sortBy === "id") {
-        // Sort products by ID in ascending or descending order
         filter = filter.sort(
           (a, b) => (this.sort === "asc" ? 1 : -1) * (a.prodID - b.prodID)
         );
       }
-      // Return the filtered products based on sorting criteria
       return filter;
     },
     },
-    // Lifecycle hook
     async mounted() {
-      // Fetch products and users data from store
       await this.$store.dispatch("fetchProducts");
       await this.$store.dispatch("fetchUsers");
     },
-    // Methods
     methods: {
       // Delete a product
       deleteProduct(prodID) {
-        if (confirm("Are you sure you want to delete this product?")) { //method of confirm to whether the user wishes to delete the product
+        if (confirm("Are you sure you want to delete this product?")) { 
           this.$store.dispatch("deleteProduct", prodID);
-          // Reload page after deletion
           setTimeout(() => {location.reload();
-          }, 500);
+          }, 1000);
         }
       },
       // Refresh products list
@@ -186,11 +171,10 @@
       },
       // Delete a user
       deleteUser(userID) {
-        if (confirm("Are you sure you want to delete this user?")) { //method of confirming action with user
+        if (confirm("Are you sure you want to delete this user?")) { 
           this.$store.dispatch("deleteUser", userID);
-          // Reload page after deletion
           setTimeout(() => {location.reload();
-          }, 500);
+          }, 1000);
         }
       },
     },
