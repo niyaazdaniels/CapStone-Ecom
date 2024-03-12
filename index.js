@@ -9,7 +9,6 @@ import signUpRouter from "./routes/signup.js";
 import cartRouter from "./routes/cart.js";
 import cookieParser from 'cookie-parser';
 import { verifyToken, createToken } from "./middleware/AuthenticateUser.js";
-import adminRole from "./middleware/RoleAuthentication.js";
 
 config();
 
@@ -30,7 +29,7 @@ app.use(express.static('static'));
 // Routes 
 app.use('/products', productsRouter); 
 app.use('/users', usersRouter);
-app.use('/login', createToken, verifyToken, adminRole, loginRouter); 
+app.use('/login', createToken, verifyToken, loginRouter); 
 app.use('/signup', signUpRouter); 
 app.use('/cart', cartRouter);
 // Middleware for parsing cookies
