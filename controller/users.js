@@ -105,27 +105,20 @@ registerOneUser: async (req, res) => {
     logInUser: async (req, res, next) => {
         try {
             const [user] = req.body.emailAdd;
-            // Extract email and password from request body
             const { emailAdd, userPass } = req.body;
-            // Retrieve hashed password for the provided email
             const hashedPassword = await verifyExistingUser(emailAdd);
-            // Compare provided password with hashed password
             const result = await bcrypt.compare(userPass, hashedPassword);
-            // If passwords match, proceed to the next middleware
             if (result === true) {
                 let currentUser = await getSingleUser(emailAdd)
                 res.send({
                     msg:  `Welcome back ${emailAdd}!`,
                     token: req.token,
                     user: currentUser,
-                    
                 });
             } else {
-                // If passwords do not match, send error response
                 res.status(401).send({ msg: "Password does not match, please try again." });
             }
         } catch (error) {
-            // Handle errors
             console.error('Error logging in user: ', error);
             res.status(500).send('Error logging in user.');
         }

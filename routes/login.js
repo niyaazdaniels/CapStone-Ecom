@@ -8,7 +8,7 @@ import { verifyToken , createToken } from "../middleware/AuthenticateUser.js";
 // Creating an instance of the Express Router
 const router = express.Router();
 router  
-    .route('/',createToken,verifyToken) // Route for user login with token creation middleware
+    .route('/', createToken,verifyToken) // Route for user login with token creation middleware
     .post(controller.logInUser); // POST request to log in a user
 
 // Exporting the router to be used globally
