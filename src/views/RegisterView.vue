@@ -20,10 +20,6 @@
             <p>Age </p>
           <input type="text" class="form-control" v-model="register.age" name="Age" placeholder="Age" aria-label="Age" required="">
         </div>
-        <div class="col">
-            <p>Role </p>
-          <input type="text" class="form-control" v-model="register.userRole" name="Role" placeholder="Role" aria-label="Role" required="">
-        </div>
       </div>
       <div class="row">
         <div class="col">
@@ -63,7 +59,6 @@
             firstName: "",
             lastName: "",
             gender: "",
-            userRole: "",
             age: "",
             emailAdd: "",
             userPass: "", 
@@ -78,7 +73,6 @@
             this.register.firstName = "";
             this.register.lastName = "";
             this.register.gender = "";
-            this.register.userRole = "";
             this.register.age = "";
             this.register.emailAdd = "";
             this.register.userPass = "";
