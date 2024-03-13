@@ -41,17 +41,20 @@ registerOneUser: async (req, res) => {
     // Controller to fetch a single user from the database
     getOneUser: async (req, res) => {
         try {
-            const userId = req.params.emailAdd;
+            const userId = +req.params.userID;
             const user = await getExistingUser(userId);
             if (user) {
                 res.send(user);
             } else {
+                // Handle case where user is not found
                 res.status(404).send({ error: "User not found" });
             }
         } catch (error) {
+            // Handle errors
             res.status(500).send({ error: "Internal Server Error" });
         }
     },
+
 
     // Controller to edit an existing user in the database
     editOneUser: async (req, res) => {

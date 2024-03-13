@@ -2,7 +2,6 @@
 import express from "express";
 // Importing functions from the users controller
 import controller from "../controller/users.js";
-import adminRole from "../middleware/RoleAuthentication.js"
 
 // Creating an instance of the Express Router
 const router = express.Router();

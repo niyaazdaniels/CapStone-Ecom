@@ -14,8 +14,9 @@ const getExistingUser = async (userID) => {
     const [result] = await pool.query(`
         SELECT * 
         FROM Users
-        WHERE userID = ?`, [userID]);
-    return result;
+        WHERE userID = ?`, 
+        [userID]);
+    return result[0];
 };
 // Add a new user to the database
 const registerNewUser = async (firstName, lastName, gender, emailAdd, userPass, userImage, age) => {
@@ -43,7 +44,7 @@ const deleteExistingUser = async (userID) => {
     return getExistingUsers(user);
 };
 // Verify a user on login by retrieving their password from the database
-const verifyExistingUser = async (emailAdd) => {
+const verifyExistingUser = async (emailAdd) => {     
     try {
         const [[{ userPass }]] = await pool.query(`
             SELECT userPass FROM Users WHERE emailAdd = ?`,
