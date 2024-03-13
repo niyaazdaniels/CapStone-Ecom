@@ -16,7 +16,7 @@ const getExistingUser = async (userID) => {
         FROM Users
         WHERE userID = ?`, 
         [userID]);
-    return result;
+    return result[0];
 };
 // Add a new user to the database
 const registerNewUser = async (firstName, lastName, gender, emailAdd, userPass, userImage, age) => {
