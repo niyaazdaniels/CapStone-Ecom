@@ -16,8 +16,18 @@ const getExistingUser = async (userID) => {
         FROM Users
         WHERE userID = ?`, 
         [userID]);
-    return result[0];
+    return result;
 };
+
+const getExistingUserEmailAdd = async (emailAdd) => {
+    const [result] = await pool.query(`
+        SELECT * 
+        FROM Users
+        WHERE emailAdd = ?`, 
+        [emailAdd]);
+    return result;
+};
+
 // Add a new user to the database
 const registerNewUser = async (firstName, lastName, gender, emailAdd, userPass, userImage, age) => {
     const [user] = await pool.query(`
@@ -26,6 +36,7 @@ const registerNewUser = async (firstName, lastName, gender, emailAdd, userPass, 
         [firstName, lastName, gender, emailAdd, userPass, userImage, age]);
     return getExistingUser(user.insertId);
 };
+
 // Edit an individual user in the database
 const editExistingUser = async (firstName, lastName, gender, userRole, emailAdd, userPass, userImage, age, userID) => {
     const [user] = await pool.query(`
@@ -35,6 +46,7 @@ const editExistingUser = async (firstName, lastName, gender, userRole, emailAdd,
         [firstName, lastName, gender, userRole, emailAdd, userPass, userImage, age, userID]);
     return getExistingUsers(user);
 };
+
 // Delete an individual user from the database
 const deleteExistingUser = async (userID) => {
     const [user] = await pool.query(`
@@ -43,6 +55,7 @@ const deleteExistingUser = async (userID) => {
         [userID]);
     return getExistingUsers(user);
 };
+
 // Verify a user on login by retrieving their password from the database
 const verifyExistingUser = async (emailAdd) => {     
     try {
@@ -56,30 +69,6 @@ const verifyExistingUser = async (emailAdd) => {
     }
 };
 
-const getSingleUser = async (emailAdd) => {
-    try {
-        const [user] = await pool.query (`
-            SELECT * FROM Users WHERE emailAdd =?`,
-            [emailAdd])
-            return user
-    } catch (error) {
-        throw new Error ('Could not retrieve user Data')
-    }
-}
-
-// admin check
-const checkUserRole = async (userID) => {
-    const [[{userRole}]] = await pool.query(`
-       SELECT * FROM users WHERE userRole = ?
-    ` , [userID]);
-       return userRole;
-   }
-// const registerNewUser = async (emailAdd, userPass) => {
-//     await pool.query(`
-//     INSERT INTO Users (emailAdd, userPass) 
-//     VALUES (?, ?)
-//     `,[emailAdd, userPass])
-// }
 
 // Exporting functions to make them globally accessible
-export { getExistingUsers, getExistingUser, editExistingUser, deleteExistingUser, verifyExistingUser, registerNewUser, getSingleUser , checkUserRole};
+export { getExistingUsers, getExistingUser, editExistingUser, deleteExistingUser, verifyExistingUser, registerNewUser, getExistingUserEmailAdd};

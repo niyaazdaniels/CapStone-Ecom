@@ -1,5 +1,5 @@
 // Importing necessary functions for user management from the users model
-import { getExistingUsers, getExistingUser, editExistingUser, deleteExistingUser, verifyExistingUser, registerNewUser, getSingleUser } from '../models/users.js';
+import { getExistingUsers, getExistingUser, editExistingUser, deleteExistingUser, verifyExistingUser, registerNewUser, getExistingUserEmailAdd} from '../models/users.js';
 // Importing bcrypt for password hashing
 import bcrypt from 'bcrypt';
 
@@ -41,7 +41,7 @@ registerOneUser: async (req, res) => {
     // Controller to fetch a single user from the database
     getOneUser: async (req, res) => {
         try {
-            const userId = +req.params.userID;
+            const [userId] = +req.params.userID;
             const user = await getExistingUser(userId);
             if (user) {
                 res.send(user);
@@ -112,7 +112,8 @@ registerOneUser: async (req, res) => {
             const hashedPassword = await verifyExistingUser(emailAdd);
             const result = await bcrypt.compare(userPass, hashedPassword);
             if (result === true) {
-                let currentUser = await getSingleUser(emailAdd)
+                let currentUser = await getExistingUserEmailAdd(emailAdd)
+                console.log(currentUser);
                 res.send({
                     msg:  `Welcome back ${emailAdd}!`,
                     token: req.token,
