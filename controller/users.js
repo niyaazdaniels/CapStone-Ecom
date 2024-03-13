@@ -109,7 +109,7 @@ registerOneUser: async (req, res) => {
             const hashedPassword = await verifyExistingUser(emailAdd);
             const result = await bcrypt.compare(userPass, hashedPassword);
             if (result === true) {
-                let currentUser = await getSingleUser(emailAdd)
+                let currentUser = await getSingleUser(userRole)
                 res.send({
                     msg:  `Welcome back ${emailAdd}!`,
                     token: req.token,
