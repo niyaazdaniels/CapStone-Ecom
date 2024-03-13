@@ -110,12 +110,10 @@ registerOneUser: async (req, res) => {
             const result = await bcrypt.compare(userPass, hashedPassword);
             if (result === true) {
                 let currentUser = await getSingleUser(emailAdd)
-                let currentRole = await getSingleUser(userRole)
                 res.send({
                     msg:  `Welcome back ${emailAdd}!`,
                     token: req.token,
                     user: currentUser,
-                    userRole: currentRole
                 });
             } else {
                 res.status(401).send({ msg: "Password does not match, please try again." });
