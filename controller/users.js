@@ -26,11 +26,11 @@ export default {
 registerOneUser: async (req, res) => {
     try {
         // Extract user details from the request body
-        const { firstName, lastName, gender, userRole, emailAdd, userPass, userImage, age } = req.body;
+        const { firstName, lastName, gender, emailAdd, userPass, userImage, age } = req.body;
         // Hash the password using bcrypt
         const hash = await bcrypt.hash(userPass, 10);
         // Add user with hashed password to the database
-        await registerNewUser(firstName, lastName, gender, userRole, emailAdd, hash, userImage, age);
+        await registerNewUser(firstName, lastName, gender, emailAdd, hash, userImage, age);
         // Send success response
         res.send('User has been registered successfully!');
     } catch (error) {

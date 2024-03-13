@@ -18,11 +18,11 @@ const getExistingUser = async (userID) => {
     return result;
 };
 // Add a new user to the database
-const registerNewUser = async (firstName, lastName, gender, userRole, emailAdd, userPass, userImage, age) => {
+const registerNewUser = async (firstName, lastName, gender, emailAdd, userPass, userImage, age) => {
     const [user] = await pool.query(`
-        INSERT INTO Users (firstName, lastName, gender, userRole, emailAdd, userPass, userImage, age) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-        [firstName, lastName, gender, userRole, emailAdd, userPass, userImage, age]);
+        INSERT INTO Users (firstName, lastName, gender, emailAdd, userPass, userImage, age) 
+        VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        [firstName, lastName, gender, emailAdd, userPass, userImage, age]);
     return getExistingUser(user.insertId);
 };
 // Edit an individual user in the database

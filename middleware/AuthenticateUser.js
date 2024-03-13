@@ -12,20 +12,17 @@ const verifyToken = async (req, res, next) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Internal Server Error');
-            }
-            if (result === true) {
+            }if (result === true) {
                 req.tokenData = { emailAdd: emailAdd };
-                next(); // Move to the next middleware
+                next(); 0
             } else {
                 res.status(401).json({ msg: 'Password or Email address does not match' });
-            }
-        });
+            }});
     } catch (error) {
         console.error('Error verifying token:', error);
         res.status(500).send('Internal Server Error');
     }
 };
-
 const createToken = async (req, res, next) => {
     try {
         const { emailAdd, userPass } = req.body;
