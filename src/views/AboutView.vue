@@ -41,7 +41,7 @@ export default {
   background-size: cover;
 }
 .background {
-  height: 83vh;
+  height: 85.2vh;
   background: linear-gradient(110deg,#232323, grey);
 }
 .row {

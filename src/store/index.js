@@ -1,8 +1,9 @@
 // Importing necessary modules
-import { createStore } from "vuex"; // Importing Vuex's createStore function
+import { createStore } from "vuex"; 
 import router from '../router/index.js'
-import axios from "axios"; // Importing Axios for making HTTP requests
+import axios from "axios"; 
 import sweet from "sweetalert"
+import Swal from "sweetalert2";
 axios.defaults.withCredentials = true;
 // URL for the database API
 const DB = "https://capstone-ecom.onrender.com/";
@@ -11,7 +12,7 @@ const DB = "https://capstone-ecom.onrender.com/";
 export default createStore({
   state: { 
     users: null, 
-    user: null , //|| JSON.parse(localStorage.getItem("user")),
+    user: null ,
     selectedProduct: null, 
     products: null, 
     product: null, 
@@ -26,7 +27,6 @@ export default createStore({
       state.users = users; 
     },
     setUser(state, user) {
-      // localStorage.setItem("user", JSON.stringify(user));
       state.user = user;
     },
     setProducts(state, products) {
@@ -51,12 +51,13 @@ export default createStore({
         alert("Request Failed! Could not retrieve all users!");
       }
     },
-    async fetchUser(context, userID) {
+    async fetchUser(context, user) {
+      // console.log(user.userID);
       try {
-        const res = await axios.get(`${DB}users/` + userID );
+        const res = await axios.get(`${DB}users/${user.userID}`);
         const user = res.data;
         console.log(user);
-        context.commit("setUser", user);
+        context.commit("setUser");
       } catch (error) {
         sweet("Request Failed: Could not retrieve user!");
       }
@@ -82,18 +83,25 @@ export default createStore({
     async registerNewUser({ commit, dispatch }, registerUser) {
       try {
         const res = await axios.post(`${DB}signup`, registerUser);
-        const msg = res.data.msg;
-        if (msg) {
-          sweet("Successfully registered, you're being redirected");
-          await router.push('/');
+        if (res.data.success) {
+          Swal.fire("Successfully registered, you're being redirected to login page");
+          console.log("Response data:", res.data); 
+          
+          setTimeout(async () => {
+            await router.push('/login');
+          }, 3000);
+    
           dispatch("fetchUsers");
-          commit("setUser", msg);
+          commit("setUser", res.data.user);
+        } else {
+          sweet("Response Error: No success message received.");
+          console.error("Response data:", res.data);
         }
       } catch (e) {
         sweet("Request Failed: Could not register user.");
+        console.error("Error:", e); 
       }
     },
-    
     // Action to update an existing user
     async updateUser({ commit }, payload) {
       try {
@@ -161,26 +169,60 @@ async deleteProduct({ commit }, prodID) {
 async login({ commit }, loginUser) {
   console.log(loginUser);
   try {
+    // data
     const { data } = await axios.post(`${DB}login`, loginUser);
+    console.log("Response data:", data); 
+    // token
     const token = data.token;
     $cookies.set('jwt', token);
     sweet(data.msg);
+    // user role
+    let [{userRole}] = data.user;
+    console.log("User role:", userRole);
+    await $cookies.set('userRole', userRole);
+    // user data
+    let [{user}] = data.user;
+    await $cookies.set('user', user);
     setTimeout(async () => {
       await router.push('/');
+      console.log("Redirected successfully"); 
       commit('setLoggedIn', true);
       window.location.reload();
     }, 3000); 
+    
   } catch (error) {
+    console.error('Error during login:', error); // Log the error
     sweet('Error during login: ' + error.message); 
   }
 },
+async logOut (context) {
+  let cookies = $cookies.keys();
+  const confirmLogout = await Swal.fire({
+      title: 'Are you sure you want to log out?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, log me out',
+      cancelButtonText: 'Cancel'
+  });
 
-    async logOut (context) {
-      let cookies = $cookies.keys()
-       $cookies.remove('jwt')
-         await router.push('/');
-          window.location.reload()  
-    },
+  if (confirmLogout.isConfirmed) {
+      $cookies.remove('jwt');
+      $cookies.remove('userRole');
+      await Swal.fire({
+          title: 'Logged out successfully!',
+          text: 'You will now be redirected to the home page.',
+          icon: 'success',
+          timer: 2000, // Change it to desired time in milliseconds
+          timerProgressBar: true,
+          didOpen: () => {
+              Swal.showLoading();
+          }
+      });
+      await router.push('/');
+      window.location.reload();
+  }
+},
+
       // async getCart({ commit }, userID) {
       //   try {
       //     const res = await axios.get(`${DB}/cart`, userID);
