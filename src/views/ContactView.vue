@@ -5,7 +5,7 @@
             <h1 class="container d-flex ms-auto justify-content-center text-white fw-medium">Get in Touch</h1>
         </div>
     </div>
-    
+
     <div class="container contact-form-section d-flex align-content-center justify-content-end position-relative container-fluid">
         <div class="contact-heading container">
     <h1>Contact Us</h1>
@@ -234,6 +234,12 @@ p{
         .colorful-form{
             font-size: 10px;
             left: 30px;
+        }
+    }
+    @media (max-width: 350px) {
+        .colorful-form{
+            font-size: 10px;
+            left: 25px;
         }
     }
     @media (max-width: 335px) {

@@ -1,7 +1,7 @@
 <template>
      <nav class="navbar navbar-expand-md bg-dark text-uppercase fw-bold navbar-dark fixed-top" id="navbar">
         <div class="container-fluid">
-            <a class="navbar-brand">BSS</a>
+            <a class="navbar-brand animate__animated animate__fadeInLeftBig  animate__slower">BSS</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -19,7 +19,7 @@
                         <router-link to="/admin" v-if="$cookies.get('userRole') === 'Admin'">Admin</router-link>
                         <router-link v-if="!$cookies.get('jwt')" to="/login">Login</router-link>
                         <router-link v-if="$cookies.get('jwt')" to="/profile"><i class="fa-regular fa-user"></i></router-link>
-                        <a class="logOut" v-if="$cookies.get('jwt')" @click="logOut"><i class="fa-solid fa-right-from-bracket"></i></a>
+                        <a class="logOut " v-if="$cookies.get('jwt')" @click="logOut" ><i class="fa-solid fa-right-from-bracket"></i></a>
                         <router-link to="/checkout"><i class="fa-solid fa-cart-arrow-down"></i></router-link>
                     </ul>
                 </div>
@@ -29,6 +29,7 @@
   </template>
   
   <script>
+import 'animate.css';
 export default {
   computed: {
     currentUser() {

@@ -52,16 +52,21 @@ export default createStore({
       }
     },
     async fetchUser(context, user) {
-      // console.log(user.userID);
       try {
-        const res = await axios.get(`${DB}users/${user.userID}`);
-        const user = res.data;
-        console.log(user);
-        context.commit("setUser");
+        setTimeout(async () => {
+          try {
+            const res = await axios.get(`${DB}users/${user.userID}`);
+            const fetchedUser = res.data; 
+            context.commit("setUser", fetchedUser);
+          } catch (error) {
+            // sweet("Request Failed: Could not retrieve user!");
+          }
+        }, 3000);
       } catch (error) {
-        sweet("Request Failed: Could not retrieve user!");
+        console.error("Error in fetchUser:", error);
       }
-    },    
+    },
+    
     // Action to fetch all products data
     async fetchProducts({ commit }) {
       try {
@@ -71,6 +76,7 @@ export default createStore({
         sweet("Request Failed: Could not retrieve products from the database.");
       }
     },
+
     // Action to fetch a single product data
     async fetchProduct({ commit }) {
       try {
@@ -80,6 +86,7 @@ export default createStore({
         sweet("Requested Failed: Could not fetch product.");
       }
     },
+    // new user
     async registerNewUser({ commit, dispatch }, registerUser) {
       try {
         const res = await axios.post(`${DB}signup`, registerUser);
@@ -166,23 +173,30 @@ async deleteProduct({ commit }, prodID) {
     sweet("An error occurred while deleting the product");
   }
 },
+// login function
 async login({ commit }, loginUser) {
-  console.log(loginUser);
+  
   try {
+
     // data
     const { data } = await axios.post(`${DB}login`, loginUser);
-    console.log("Response data:", data); 
+    if (data.error) {
+      throw new Error(data.error); 
+    } 
     // token
     const token = data.token;
     $cookies.set('jwt', token);
     sweet(data.msg);
+
     // user role
-    let [{userRole}] = data.user;
+    const [{userRole}] = data.user;
     console.log("User role:", userRole);
     await $cookies.set('userRole', userRole);
+
     // user data
-    let [{user}] = data.user;
+    const [user] = data.user;
     await $cookies.set('user', user);
+
     setTimeout(async () => {
       await router.push('/');
       console.log("Redirected successfully"); 
@@ -191,9 +205,10 @@ async login({ commit }, loginUser) {
     }, 3000); 
     
   } catch (error) {
-    console.error('Error during login:', error); // Log the error
-    sweet('Error during login: ' + error.message); 
-  }
+    console.error('Error during login:', error);
+    sweet('Error during login: ' + (error.response ? error.response.data.msg : error.message));
+}
+
 },
 async logOut (context) {
   let cookies = $cookies.keys();
@@ -208,11 +223,12 @@ async logOut (context) {
   if (confirmLogout.isConfirmed) {
       $cookies.remove('jwt');
       $cookies.remove('userRole');
+      $cookies.remove('user');
       await Swal.fire({
           title: 'Logged out successfully!',
           text: 'You will now be redirected to the home page.',
           icon: 'success',
-          timer: 2000, // Change it to desired time in milliseconds
+          timer: 1500, // Change it to desired time in milliseconds
           timerProgressBar: true,
           didOpen: () => {
               Swal.showLoading();
