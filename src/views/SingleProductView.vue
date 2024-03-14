@@ -1,36 +1,26 @@
 <template>
+  <div class="background-card">
     <div class="card" id="card">
       <div v-if="product">
         <h1 class="fw-semibold">{{ product.prodName }}</h1>
         <div>
           <img :src="product.prodImage" :alt="product.prodName" loading="lazy" class="img-fluid" id="image"/>
-          <p class="title fw-medium ">{{ product.prodDesc }}</p>
-          <p>Category: {{ product.category }}</p>
-          <div id="quantity">Quantity: {{ product.quantity }}</div><br>
-          <p>Price: R{{ product.price }}</p>
+          <p class="title fw-medium  fs-4">{{ product.prodDesc }}</p>
+          <p class="text fs-5">Category: {{ product.category }}</p>
+          <div id="quantity" class="quantity fs-5">Quantity: {{ product.quantity }}</div><br>
+          <p class="price fs-6">Price: R{{ product.price }}</p>
         </div>
         <button class="cta">
-  <span class="hover-underline-animation"> Add to Cart </span>
-  <svg
-    id="arrow-horizontal"
-    xmlns="http://www.w3.org/2000/svg"
-    width="30"
-    height="10"
-    viewBox="0 0 46 16"
-  >
-    <path
-      id="Path_10"
-      data-name="Path 10"
-      d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z"
-      transform="translate(30)"
-    ></path>
-  </svg>
-</button>
-
-      </div>
-      <div v-else>
+          <span class="hover-underline-animation"> Add to Cart </span>
+            <svg id="arrow-horizontal" xmlns="http://www.w3.org/2000/svg" width="30" height="10" viewBox="0 0 46 16">
+             <path id="Path_10" data-name="Path 10" d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z" transform="translate(30)"></path>
+            </svg>
+            </button>
+          </div>
+         <div v-else>
         <SpinnerComp />
       </div>
+    </div>
     </div>
   </template>
   
@@ -49,6 +39,10 @@
   </script>
   
   <style scoped>
+  .background-card {
+    height: 83.6vh;
+    position: relative;
+  }
   #image{
     height: 14rem;
     margin-bottom: 3rem;
@@ -106,7 +100,7 @@
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: #000000;
+  background-color: #7A0000;
   transform-origin: bottom right;
   transition: transform 0.25s ease-out;
 }

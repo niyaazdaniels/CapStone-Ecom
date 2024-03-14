@@ -49,7 +49,7 @@ nav a {
   font-weight: lighter;
   color: white;
   padding-left: 0;
-  margin-left: 7px;
+  margin-left: 8px;
 }
 
 nav a.router-link-exact-active {

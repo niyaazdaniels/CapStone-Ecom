@@ -1,10 +1,10 @@
 <template>
     <section class="container-fluid background overflow-hidden">
             <div class="container-lg row text text-uppercase d-flex  ">
-                <h1 class="display-6 fw-bold">Solar Backup <br> Power Solutions</h1>
+                <h1 class="display-6 fw-bold animate__animated animate__fadeInLeftBig animate__slow">Solar Backup <br> Power Solutions</h1>
                 <div class="subtext">
-                    <h5 class="text-uppercase fw-semibold">Find the right setup for you now!</h5>
-                    <button>
+                    <h5 class="text-uppercase fw-semibold  animate__animated animate__fadeInLeftBig  animate__slower ">Find the right setup for you now!</h5>
+                    <button class="animate__animated animate__fadeInLeftBig  animate__slower">
                         <span class="circle1"></span>
                         <span class="circle2"></span>
                         <span class="circle3"></span>
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import 'animate.css';
 export default {
 
 }

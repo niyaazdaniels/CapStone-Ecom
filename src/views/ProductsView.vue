@@ -5,13 +5,9 @@
                 <h2 class="heading display-6 text-center m-0 me-auto d-flex justify-content-center pt-3">Products</h2>
             </div>
            </div>
-            <!-- This section represents the visual layout of the Products page -->
   <div class="cards">
-    <!-- Heading for the Products page -->
     <h1 class="Products-Range">Product Range</h1>
-    <!-- Search form for filtering products -->
     <form class="d-inline-flex mx-2 w-auto search-button" role="search">
-      <!-- Input field for searching products -->
       <input class="form-control" type="search" id="search" placeholder="Search" aria-label="Search" v-model="searchDBProducts" />
     </form>
     
@@ -68,34 +64,25 @@
 </template>
 
 <script>
-// Importing external Spinner component
 import SpinnerComp from "../components/SpinnerComp.vue";
 export default {
-  // Registering external components used in the template
   components: {
     SpinnerComp,
   },
-  // Computed properties for dynamic data manipulation
   computed: {
-    // Getter for products data from Vuex store
     products() {
       return this.$store.state.products;
     },
-    // Filtering and sorting products based on search and sort criteria
     filterDBProducts() {
   let filter = this.products;
-  // Filtering based on search query
   if (this.searchDBProducts !== '') {
     const searchQuery = this.searchDBProducts.toLowerCase();
-    // Check if the product name or category matches the search query
     filter = filter.filter(product => 
       (product.prodName && product.prodName.toLowerCase().includes(searchQuery)) ||
       (product.category && product.category.toLowerCase().includes(searchQuery))
     );
   }
-     // Sorting based on the selected sort option
 return filter.sort((a, b) => {
-  // Check the selected sorting option
   if (this.sortBy === 'price') {
     // Sort by price
     return (this.sort === 'asc' ? a.price - b.price : b.price - a.price);
@@ -112,42 +99,28 @@ return filter.sort((a, b) => {
 
     },
   },
-  // Lifecycle hook executed when component is mounted
   mounted() {
-    // Dispatching action to fetch products from Vuex store
     this.$store.dispatch("fetchProducts");
   },
-  // Methods for handling user interactions and data manipulation
   methods: {
-   // Function to handle search input
 searchDBProducts(e) {
-  // Prevent the default behavior of the event (e.g., form submission)
   e.preventDefault();
-  // Trim any whitespace from the search query
   this.searchDBProducts = this.searchDBProducts.trim();
 },
-    // Function to toggle sorting order
-   // Function to toggle the sorting order
 sortToggle() {
-  // Toggle between ascending and descending sort orders
   this.sort = this.sort === 'asc' ? 'desc' : 'asc';
 },
-    // Function to reset search input
     resetSearchTab() {
       this.searchDBProducts = ''
     },
-    // Function to display individual product details in a component 
     displayProduct(prodID) {
       const selectedItem = this.products.find(
         (product) => product.prodID === prodID
       );
-      // Committing selected item data to Vuex store
       this.$store.commit("setSelectedProduct", selectedItem);
-      // Navigating to product details view
       this.$router.push({ name: "SingleProductView", params: { prodID: prodID }});
     }
   },
-  // Data properties for storing component state
   data() {
     return {
       searchDBProducts: '', // Search query
