@@ -76,7 +76,8 @@ const verifyExistingUser = async (emailAdd) => {
 
         const [[{ userPass }]] = await pool.query(`
 
-            SELECT userPass FROM Users WHERE emailAdd = ?`,
+            SELECT userPass FROM Users 
+            WHERE emailAdd = ?`,
 
             [emailAdd]);
 
