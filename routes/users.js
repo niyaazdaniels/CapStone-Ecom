@@ -1,6 +1,5 @@
 import express from "express";
 import userController from "../controller/users.js";
-import cartController from "../controller/cart.js";
 
 const router = express.Router();
 
@@ -15,8 +14,5 @@ router
         .patch(userController.editOneUser) 
         .delete(userController.deleteOneUser); 
 
-router  
-    .route('/:userID/cart')
-    .post(cartController.addItemsToCartTable);
 
 export default router;
