@@ -4,7 +4,7 @@
         <h1>Users</h1>
         <addUserComp />
         <div class="table-responsive">
-          <table class="table table-secondary table-hover caption-top">
+          <table class="table table-dark table-hover caption-top">
             <thead>
               <tr>
                 <th>ID</th>
@@ -47,7 +47,7 @@
         </div>
         <addProductComp />
         <div class="table-responsive">
-          <table class="table table-secondary table-hover caption-top">
+          <table class="table table-dark table-hover caption-top">
             <thead>
               <tr>
                 <th>ID</th>
@@ -173,6 +173,13 @@
     min-height: 100vh;
     margin-top: 60px;
   }
+  td{
+    font-size: 14px;
+    letter-spacing: 2px;
+  }
+  tr{
+    letter-spacing: 2px;
+  }
   @media screen and (max-width: 300px) {
     .table {
       width: 280px !important;
@@ -206,7 +213,7 @@
 
 .table td:before{
   display: block;
-  color: black;
+  color: white;
   content: attr(data-label) !important;
   text-align: left;
 }
