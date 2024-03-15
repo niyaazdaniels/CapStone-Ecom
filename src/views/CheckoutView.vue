@@ -17,13 +17,13 @@
                             <tr class="prodRow my-5" v-for="product in cart" :key="product.prodID">
                             <td><img :src="product.prodImage" alt="" class="img"></td>
                             <td class="text-success"><h5 class="my-4">${{ product.price }}</h5></td>
-                            <th><button class="btn btn-danger my-3" @click="deleteFromCart(item.id)">Del</button></th>
+                            <th><button class="btn btn-danger my-3" @click="deleteFromCart(product.id)">Del</button></th>
                             </tr>
                         </tbody>
                         </table>
                     </div>
+                 </div>
             </div>
-                </div>
         </div>
         <div v-else>
             <div class="body">
@@ -41,7 +41,7 @@
                             <tr class="prodRow my-5">
                             <td><img :src="product.prodImage" alt="" class="img"></td>
                             <td class="text-success"><h5 class="my-4">{{ product.price }}</h5></td>
-                            <th><button class="btn btn-danger my-3" @click="deleteFromCart(item.id)">Del</button></th>
+                            <th><button class="btn btn-danger my-3" @click="deleteFromCart(product.id)">Del</button></th>
                             </tr>
                         </tbody>
                         </table>
@@ -76,7 +76,6 @@
             return this.$store.state.cart
         },
     },
-
     mounted() {
         this.$store.dispatch("getCart", this.userID)
     },

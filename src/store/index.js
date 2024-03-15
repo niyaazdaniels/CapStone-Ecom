@@ -17,11 +17,17 @@ export default createStore({
   state: { 
 
     users: null, 
+
     user: null ,
+
     selectedProduct: null, 
+
     products: null, 
+
     product: null, 
+
     LoggedIn: false,
+
     cart: null,
 
   },
@@ -33,26 +39,32 @@ export default createStore({
   mutations: { 
 
     setUsers(state, users) {
+
       state.users = users; 
     },
 
     setUser(state, user) {
+
       state.user = user;
     },
 
     setProducts(state, products) {
+
       state.products = products; 
     },
 
     setProduct(state, product) {
+
       state.product = product;
     },
 
     setSelectedProduct(state, product) {
+
       state.selectedProduct = product; 
     },
 
     setLoggedIn(state, LoggedIn) {
+
       state.LoggedIn = LoggedIn;
     },
 
@@ -77,9 +89,11 @@ export default createStore({
       try {
 
         const res = await axios.get(`${DB}users`);
+
         commit("setUsers", res.data);
 
       } catch (e) {
+
         alert("Request Failed! Could not retrieve all users!");
       }
     },
@@ -89,9 +103,13 @@ export default createStore({
       try {
         
         setTimeout(async () => {
+
           try {
+
             const res = await axios.get(`${DB}users/${user.userID}`);
+
             const fetchedUser = res.data; 
+
             context.commit("setUser", fetchedUser);
           } catch (error) {
             // sweet("Request Failed: Could not retrieve user!");
@@ -110,6 +128,7 @@ export default createStore({
       try {
 
         const res = await axios.get(`${DB}products`);
+
         commit("setProducts", res.data);
 
       } catch (e) {
@@ -124,6 +143,7 @@ export default createStore({
       try {
 
         const res = await axios.get(`${DB}products`);
+        
         commit("setProduct", res.data);
 
       } catch (e) {
@@ -143,19 +163,23 @@ export default createStore({
         if (res.data.success) {
 
           Swal.fire("Successfully registered, you're being redirected to login page");
+
           console.log("Response data:", res.data); 
           
           setTimeout(async () => {
+
             await router.push('/login');
 
           }, 3000);
     
           dispatch("fetchUsers");
+
           commit("setUser", res.data.user);
 
         } else {
 
           sweet("Response Error: No success message received.");
+
           console.error("Response data:", res.data);
 
         }
@@ -163,6 +187,7 @@ export default createStore({
       } catch (e) {
 
         sweet("Request Failed: Could not register user.");
+
         console.error("Error:", e); 
 
       }
@@ -178,13 +203,16 @@ export default createStore({
         if (res.data) {
 
           commit("fetchUsers");
+
           commit("setUser", res.data);
+
           sweet("Update Successful");
 
         }
       } catch (e) {
 
         console.error(e);
+
         sweet("Request Failed: An error occurred while trying to update the user.");
 
       }
@@ -196,12 +224,15 @@ export default createStore({
       try {
 
         await axios.delete(`${DB}users/${id}`);
+
         commit("fetchUsers");
+
         console.log("User deleted successfully");
 
       } catch (e) {
 
         console.error(e);
+
         sweet("Request Failed: An error occurred while deleting user.");
 
       }
@@ -217,6 +248,7 @@ export default createStore({
         if (res.data) {
 
           commit("fetchProducts");
+
           commit("setProduct", res.data);
 
         }
@@ -228,38 +260,22 @@ export default createStore({
       }
     },
 
-    // function to update an existing product
-    async updateProduct({ commit }, payload) {
+    async updateProduct ({commit}, product){
 
-      try {
+      await axios.patch(`${DB}products/`+ product.prodID, product)
 
-        const res  = await axios.patch(`${DB}products/${payload.prodID}`, payload); 
-        console.log(res.data);        
+      sweet('Product edited')
 
-        if (res) {
-
-          commit("fetchProducts"); 
-          sweet("Successfully updated product!");
-
-        } else {
-
-          throw new Error("Failed to update product");
-
-        }
-      } catch (error) {
-
-        sweet("An error occurred:", error);
-        console.error("An error occurred: " + error.message);
-
-      }
-    },        
-
+      window.location.reload()
+    },
+    
    // function to delete a product
 async deleteProduct({ commit }, prodID) {
 
   try {
 
     await axios.delete(`${DB}products/${prodID}`);
+
     commit("fetchProducts");
 
     console.log("Product deleted successfully");
@@ -278,28 +294,38 @@ async login({ commit }, loginUser) {
 
     // data
     const { data } = await axios.post(`${DB}login`, loginUser);
+
     if (data.error) {
+
       throw new Error(data.error); 
     } 
     // token
     const token = data.token;
+
     $cookies.set('jwt', token);
+
     sweet(data.msg);
 
     // user role
     const [{userRole}] = data.user;
+
     console.log("User role:", userRole);
+
     await $cookies.set('userRole', userRole);
 
     // user data
     const [user] = data.user;
+
     await $cookies.set('user', user);
 
     setTimeout(async () => {
 
       await router.push('/');
-      console.log("Redirected successfully"); 
+
+      console.log("Redirected successfully");
+
       commit('setLoggedIn', true);
+
       window.location.reload();
 
     }, 3000); 
@@ -307,11 +333,12 @@ async login({ commit }, loginUser) {
   } catch (error) {
 
     console.error('Error during login:', error);
+
     sweet('Error during login: ' + (error.response ? error.response.data.msg : error.message));
 
 }
-
 },
+
 // logout function
 async logOut (context) {
 
@@ -320,9 +347,13 @@ async logOut (context) {
   const confirmLogout = await Swal.fire({
 
       title: 'Are you sure you want to log out?',
+
       icon: 'warning',
+
       showCancelButton: true,
-      confirmButtonText: 'Yes, log me out',
+
+      confirmButtonText: 'Yes, Log me out',
+
       cancelButtonText: 'Cancel'
 
   });
@@ -330,23 +361,31 @@ async logOut (context) {
   if (confirmLogout.isConfirmed) {
 
       $cookies.remove('jwt');
+
       $cookies.remove('userRole');
+
       $cookies.remove('user');
 
       await Swal.fire({
 
           title: 'Logged out successfully!',
+
           text: 'You will now be redirected to the home page.',
+          
           icon: 'success',
-          timer: 1500, // Change it to desired time in milliseconds
+
+          timer: 1500,
+
           timerProgressBar: true,
 
           didOpen: () => {
+
               Swal.showLoading();
           }
       });
 
       await router.push('/');
+
       window.location.reload();
 
   }
@@ -357,13 +396,18 @@ async logOut (context) {
 
         try {
           
-          const res = await axios.get(`${DB}/cart`, userID);
+          const res = await axios.get(`${DB}users/${userID}/cart`);
+
           const data = res.data;
 
           if (data != null) {
+
             commit("setCart", data);
+
           } else {
+
             commit("setCart", null);
+
           }
         } catch (error) {
 
@@ -372,12 +416,13 @@ async logOut (context) {
       },
 
       //add cart function
-      async addToCart({ commit }, { userID, products }) {
+      async addToCart({ commit }, user ) {
 
         try {
 
-          await axios.post(`${DB}users/${userID}cart`, products);
-          commit("getCart", userID);
+          await axios.post(`${DB}users/${user}/cart`);
+
+          commit("getCart", user);
 
         } catch (error) {
 
@@ -392,6 +437,7 @@ async logOut (context) {
         try {
 
           await axios.delete(`${DB}users/${userID}cart/${cartID}`);
+
           commit("getCart", userID);
 
         } catch (error) {
@@ -407,6 +453,7 @@ async logOut (context) {
         try {
 
           await axios.delete(`${DB}cart`);
+
           commit("getCart", userID);
 
         } catch (error) {
