@@ -7,11 +7,13 @@ export default {
         try {
 
             const products = await getExistingProducts();
+            
             res.send(products);
 
         } catch (error) {
 
             console.error("Error fetching products:", error);
+
             res.status(500).json({ error: "Error fetching products" });
 
         }
@@ -22,12 +24,15 @@ export default {
         try {
 
             const { prodName, prodDesc, category, price, quantity, prodImage } = req.body;
+
             const post = await addNewProduct(prodName, prodDesc, category, price, quantity, prodImage);
+
             res.send(await getExistingProducts());
 
         } catch (error) {
 
             console.error("Error adding product:", error);
+
             res.status(500).send({ error: "An error occurred while adding the product" });
 
         }
@@ -38,6 +43,7 @@ export default {
         try {
 
             const productId = +req.params.prodID;
+
             const product = await getExistingProduct(productId);
 
             if (product) {
@@ -59,13 +65,19 @@ export default {
         try {
 
             const [product] = await getExistingProduct(+req.params.prodID);
+
             let { prodName, quantity, price, category, prodImage } = req.body;
             
             prodName = prodName || product.prodName;
+
             prodDesc = prodDesc || product.prodDesc;
+
             category = category || product.category;
+
             price = price || product.price;
+
             quantity = quantity || product.quantity;
+
             prodImage = prodImage || product.prodImage;
 
             await editExistingProduct(prodName, prodDesc, category, price, quantity, prodImage, +req.params.prodID);
@@ -83,6 +95,7 @@ export default {
         try {
 
             const productId = +req.params.prodID;
+
             const deletedProduct = await removeExistingProduct(productId);
 
             if (deletedProduct) {
