@@ -260,13 +260,30 @@ export default createStore({
       }
     },
 
-    async updateProduct ({commit}, product){
+    async updateProduct({ dispatch }, product) {
 
-      await axios.patch(`${DB}products/`+ product.prodID, product)
+      try {
 
-      sweet('Product edited')
+        const res = await axios.patch(`${DB}products/${product.prodID}`, product);
 
-      window.location.reload()
+        if (res.status === 200) {
+
+          dispatch("fetchProducts");
+
+          sweet("Successfully updated product!");
+
+        } else {
+
+          throw new Error("Failed to update product: " + res.statusText);
+
+        }
+      } catch (error) {
+
+        console.error("An error occurred:", error);
+
+        sweet("An error occurred: " + error.message);
+
+      }
     },
     
    // function to delete a product
