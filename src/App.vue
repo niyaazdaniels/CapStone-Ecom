@@ -42,7 +42,6 @@ nav {
   padding: 30px;
   
 }
-
 nav a {
   font-size: 12px;
   word-spacing: 10px;
@@ -55,7 +54,7 @@ nav a {
 nav a.router-link-exact-active {
   color: #BD0000;
   font-weight: bold;
-
+  border-bottom: 2px solid  #BD0000;
 }
 html::-webkit-scrollbar {
   display: none;

@@ -1,16 +1,12 @@
 <template>
     <div>
-      <!-- Button trigger modal -->
       <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">Add User</button>
-  
-      <!-- Modal -->
       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel1">New User</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
             <div class="modal-body">
               <label for="firstName">First Name:</label>
               <input required id="firstName" type="text" placeholder="Name" autocomplete="off" v-model="model.user.firstName"/>
@@ -60,8 +56,11 @@
     },
     methods: {
       createNewUser() {
+
         this.$store.dispatch("registerNewUser", this.model.user);
+
         console.log(this.model.user);
+        
       },
     },
   };

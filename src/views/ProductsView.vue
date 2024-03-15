@@ -10,13 +10,11 @@
     <form class="d-inline-flex mx-2 w-auto search-button" role="search">
       <input class="form-control" type="search" id="search" placeholder="Search" aria-label="Search" v-model="searchDBProducts" />
     </form>
-    
-    <!-- Sort dropdown -->
     <div class="sort-dropdown">
-      <label for="sort" class="sortHeading">Filter by: </label>
+      <label for="sort" class="sortHeading fw-medium">Filter by: </label>
       <select class="sort" v-model="sortBy">
         <option value="default">Default</option>
-        <option value="price">Price</option>
+        <option value="price ">Price</option>
         <option value="category">Category</option>
         <option value="alphabetical">Alphabetical</option>
       </select>
@@ -24,30 +22,23 @@
         {{ sort === 'asc' ? 'Ascending' : 'Descending' }}
       </button>
     </div>
-
-    <!-- Displaying products in a grid layout -->
     <div class="row row-cols-1 row-cols-sm-3 row-cols-md-3 flex" v-if="products">
       <div class="col flex" v-for="product in filterDBProducts" :key="product">
-
-        <!--  product card -->
         <div class="card flex" id="test">
             <img :src="product.prodImage" class="card-img-top img-fluid " id="image" loading="lazy" :alt="product.prodName" />
-
-          <!-- Product -->
           <div class="card-body">
             <div class="title">
-              <h5 class="card-title fw-semibold fs-4 fs">{{ product.prodName }}</h5>
+              <h5 class="card-title fw-medium fs-3">{{ product.prodName }}</h5>
             </div>
             <div class="card-body overflow-y-hidden h-auto ">
-              <h5 class="card-text fs-6">{{ product.prodDesc }}</h5>
+              <h5 class="card-text fs-6 fw-medium">{{ product.prodDesc }}</h5>
             </div>
             <div class="category">
-              <p class="card-text">Category: {{ product.category }}</p>
+              <p class="card-text fs-6 fw-medium">Category: {{ product.category }}</p>
             </div>
-            <div class="amount">
-              <p class="card-text">Price: R{{ product.price }}</p>
+            <div class="amount fs-6">
+              <p class="card-text fw-medium">Price: R{{ product.price }}</p>
             </div>
-            <!-- Button to view more -->
             <div class="button">
               <button @click="displayProduct(product.prodID)" class="btn fw-semibold">View Product</button>
             </div>
@@ -84,16 +75,12 @@ export default {
   }
 return filter.sort((a, b) => {
   if (this.sortBy === 'price') {
-    // Sort by price
     return (this.sort === 'asc' ? a.price - b.price : b.price - a.price);
   } else if (this.sortBy === 'category') {
-    // Sort by category
     return a.category.localeCompare(b.category) * (this.sort === 'asc' ? 1 : -1);
   } else if (this.sortBy === 'alphabetical') {
-    // Sort alphabetically
     return a.prodName.localeCompare(b.prodName) * (this.sort === 'asc' ? 1 : -1);
   }
-  // If no valid sorting option is provided, return the unsorted filter array
   return filter;
 });
 
@@ -123,9 +110,9 @@ sortToggle() {
   },
   data() {
     return {
-      searchDBProducts: '', // Search query
-      sortBy: "", // Sort option
-      sort: "" // Sort order
+      searchDBProducts: '', 
+      sortBy: "",
+      sort: "" 
     }
   }
 };
@@ -151,8 +138,6 @@ sortToggle() {
 .heading{
     top: 10px;
 }
-/* Styling specific to this component */
-
 .sortHeading{
   font-size:17px;
   margin-right: 1.5rem;
@@ -215,16 +200,9 @@ sortToggle() {
   margin-bottom: 2rem;
   width: 65% !important;
 }  
-.category {
-  height: 10%;
-}
-.quantity {
-  height: 10%;
-  margin-top: .1rem;
-  margin-bottom: .8rem;
-}
+
 .card-text {
-  height: 50px;
+  height: 40px;
   overflow: auto;
 }
 .title {

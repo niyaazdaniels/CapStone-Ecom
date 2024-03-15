@@ -1,12 +1,12 @@
 <template>
   <section class="contact-background">
     <div class="contact-heading-background position-relative">
-        <div class="container-fluid m-0 row-sm contact-text position-relative">
+        <div class="container-fluid contact-text position-relative">
             <h1 class="container d-flex ms-auto justify-content-center text-white fw-medium">Get in Touch</h1>
         </div>
     </div>
 
-    <div class="container contact-form-section d-flex align-content-center justify-content-end position-relative container-fluid">
+    <div class="contact-form-section d-flex align-content-center justify-content-end position-relative container-fluid col-10">
         <div class="contact-heading container">
     <h1>Contact Us</h1>
     <p>20 Worcestershire Crescent <br>
@@ -139,9 +139,14 @@ p{
         left: 0px;
     }
 }
+@media (max-width: 785px) {
+    .contact-form-section{
+        left: 3.2rem;
+    }
+}
 @media (max-width: 768px) {
     .contact-form-section{
-        left: 160px;
+        left: 5rem;
     }
 }
 @media (max-width: 712px) {
@@ -167,17 +172,17 @@ p{
     }
     @media (max-width: 598px){
         .contact-form-section{
-            left: -20px;
+            left: 0px;
         }
     }
     @media (max-width: 579px) {
         .contact-form-section{
-            left: -50px;
+            left: 0px;
         }
     }
     @media (max-width: 490px){
         .contact-form-section{
-            left: -10px;
+            left: 2rem;
         }
         .contact-heading{
             left: -10px;
@@ -190,7 +195,7 @@ p{
     @media (max-width: 460px) {
         .contact-form-section{
         width: 300px;
-          left: 80px;
+          left: 60px;
         }
         .colorful-form{
             position: relative;
@@ -199,19 +204,19 @@ p{
     }
     @media (max-width: 400px){
         .colorful-form{
-            left: -5px;
+            left: 1rem;
         }
         .contact-heading{
             left: -28px;
         }
     }
-    @media (max-width: 378px){
+    @media (max-width: 380px){
         .colorful-form{
-            left: -6px;
+            left: 1rem;
             font-size: 12px;
         }
         .contact-heading{
-            left: -39px;
+            left: -8px;
         }
         .contact-form-section{
             font-size: 12px;
@@ -221,7 +226,7 @@ p{
     @media (max-width: 369px){
         .contact-form-section{
             font-size: 10px;
-            left: 30px;
+            left: 2.2rem;
         }
         .contact-heading{
             left: 4px;
@@ -230,42 +235,68 @@ p{
             left: 35px;
         }
     }
-    @media (max-width: 355px) {
+    @media (max-width: 360px) {
         .colorful-form{
             font-size: 10px;
             left: 30px;
         }
     }
+    @media (max-width: 355px) {
+        .colorful-form{
+            font-size: 10px;
+            left: 1.7rem;
+        }
+    }
     @media (max-width: 350px) {
         .colorful-form{
             font-size: 10px;
-            left: 25px;
+            left: 1.48rem;
+        }
+        .contact-form-section{
+            left: 2rem;
+            max-width: 290px;
+        }
+        .contact-heading{
+            left: -5px;
+            font-size: 12px;
         }
     }
     @media (max-width: 335px) {
         .contact-form-section{
-            left: 20px;
+            left: 0em;
+            max-width: 250px;
+        }
+        .contact-heading{
+            left: 45px;
+            font-size: 12px;
+        }
+        .colorful-form{
+            font-size: 10px;
+            left: 5.7rem
         }
     }
     @media (max-width: 320px){
         .colorful-form{
             min-width: 300px;
-            left: -8px;
+            left: 30px;
         }
         .contact-form-section{
             left: 27px;
         }
         .contact-heading{
-            left: -10px;
+            left: 10px;
             font-size: 12px;
         }
     }
     @media (max-width: 300px){
         .contact-form-section{
-            left: 10px;
+            left: 45px;
         }
         .colorful-form{
             left: 0.5px;
+        }
+        .contact-heading{
+            left: -20px;
         }
     }
 }
