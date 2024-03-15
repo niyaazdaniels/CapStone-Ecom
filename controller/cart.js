@@ -1,19 +1,18 @@
-import { getCart, addToCart, insert, removeFromCart } from "../models/cart.js";
+import { fetchCart, addToCart, deleteFromCart } from "../models/cart.js";
+import express from "express";
 
-export default {
-    getAllCartItems : async (req, res) => {
-        res.send(await getCart())
-    },
-    addItemsToCartTable : async (req, res) => {
-        console.log(req.query);
-        console.log(+req.params.cartID);
-        let { quantity } = req.body
-        let { userID } = req.query
-        await insert(+req.params.cartID, userID, quantity)
-        res.send(await getCart())
-    },
-    deleteItemsFromCart : async (req, res) => {
-        await removeFromCart(+req.params.cartID)
-        res.send(await getCart())
-    }
-} 
+const router = express.Router();
+
+router.get("/users/:id/cart", (req, res) => {
+  fetchCart(req, res);
+});
+
+router.post("/users/:id/cart", (req, res) => {
+  addToCart(req, res);
+});
+
+router.delete("/users/:id/cart/:cartID", (req, res) => {
+  deleteFromCart(req, res);
+});
+
+export default router;

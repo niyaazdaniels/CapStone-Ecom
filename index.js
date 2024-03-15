@@ -1,6 +1,7 @@
 import express from "express";
 import { config } from "dotenv";
 import cors from 'cors';
+import route from './controller/cart.js'
 import productsRouter from "./routes/products.js";
 import usersRouter from "./routes/users.js";
 import loginRouter from "./routes/login.js";
@@ -28,5 +29,6 @@ app.use('/users', usersRouter);
 app.use('/login', createToken, loginRouter); 
 app.use('/signup', signUpRouter); 
 app.use('/cart', cartRouter);
+app.use(route)
  
 app.listen(PORT, () => console.log(`Server Live on PORT http://localhost:${PORT}`));
