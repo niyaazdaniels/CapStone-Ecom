@@ -1,17 +1,11 @@
 <template>
-    <!-- Main container -->
     <div class="container main-container">
-      <!-- Section for Users -->
       <div>
-        <!-- Title -->
         <h1>Users</h1>
-        <!-- Component to add a new user -->
         <addUserComp />
-        <!-- Responsive table for displaying users -->
         <div class="table-responsive">
           <table class="table table-secondary table-hover caption-top">
             <thead>
-              <!-- Table header -->
               <tr>
                 <th>ID</th>
                 <th>Name</th>
@@ -25,9 +19,7 @@
               </tr>
             </thead>
             <tbody v-for="user in users" :key="user.userID">
-              <!-- Render user data if available -->
               <tr v-if="users">
-                <!-- User details -->
                 <td data-label="ID">{{ user.userID }}</td>
                 <td data-label="Name">{{ user.firstName }}</td>
                 <td data-label="Surname">{{ user.lastName }}</td>
@@ -36,7 +28,6 @@
                 <td data-label="Role">{{ user.userRole }}</td>
                 <td data-label="Email">{{ user.emailAdd }}</td>
                 <td data-label="Image"><img :src="user.userImage" :alt="user.userImage" class="img-fluid image rounded-5 d-inline-flex" loading="lazy"/></td>
-                <!-- Buttons for updating and deleting user -->
                 <td>
                   <updateUserComp :user="user"/><button class="btn" @click="deleteUser(user.userID)">Delete</button>
                 </td>
@@ -44,27 +35,20 @@
               <tr v-else>
                 <SpinnerComp />
               </tr>
-              <!-- Show spinner component if data is loading -->
             </tbody>
           </table>
         </div>
       </div>
-      <!-- Section for Products -->
       <div>
-        <!-- Title -->
         <h1>Products</h1>
-        <!-- Dropdown for sorting products -->
         <div class="sort-dropdown">
           <button class="btn" @click="toggleSortDirection">Filter by Name: {{ sort === "asc" ? "Ascending" : "Descending " }}</button>
           <button class="btn" @click="refresh">Refresh</button>
         </div>
-        <!-- Component to add a new product -->
         <addProductComp />
-        <!-- Responsive table for displaying products -->
         <div class="table-responsive">
           <table class="table table-secondary table-hover caption-top">
             <thead>
-              <!-- Table header -->
               <tr>
                 <th>ID</th>
                 <th>Name</th>
@@ -76,21 +60,17 @@
               </tr>
             </thead>
             <tbody v-for="product in filterDBProducts" :key="product.prodID">
-              <!-- Render product data if available -->
               <tr v-if="products">
-                <!-- Product details -->
                 <td data-label="ID">{{ product.prodID }}</td>
                 <td data-label="Product Name">{{ product.prodName }}</td>
                 <td data-label="Quantity">{{ product.quantity }}</td>
                 <td data-label="Price">R {{ product.price }}</td>
                 <td data-label="Category">{{ product.category }}</td>
                 <td data-label="Image"><img :src="product.prodImage" :alt="product.prodImage" class="img-fluid image" loading="lazy"/></td>
-                <!-- Buttons for updating and deleting product -->
                 <td><updateProductComp :product="product"/>
                   <button @click="deleteProduct(product.prodID)" class="btn">Delete</button>
                 </td>
               </tr>
-              <!-- Show spinner component if data is loading -->
               <tr v-else>
                 <SpinnerComp/>
               </tr>
@@ -102,7 +82,6 @@
   </template>
   
   <script>
-  // Import necessary external components
   import SpinnerComp from "../components/SpinnerComp.vue";
   import addProductComp from "../components/AddProductComp.vue";
   import addUserComp from "../components/AddUserComp.vue";
@@ -110,7 +89,6 @@
   import updateUserComp from "@/components/UpdateUser.vue";
   
   export default {
-    // Register external components
     components: {
       SpinnerComp,
       addProductComp,
@@ -118,7 +96,6 @@
       updateProductComp,
       updateUserComp,
     },
-    // Data properties where keys are set to values
     data() {
       return {
         sort: "",
@@ -160,16 +137,13 @@
           }, 1000);
         }
       },
-      // Refresh products list
       refresh() {
         this.sortBy = "prodID";
       },
-      // Toggle sort direction for products
       toggleSortDirection() {
         this.sortBy = 'name' 
         this.sort = this.sort === "asc" ? "desc" : "asc";
       },
-      // Delete a user
       deleteUser(userID) {
         if (confirm("Are you sure you want to delete this user?")) { 
           this.$store.dispatch("deleteUser", userID);
@@ -182,17 +156,14 @@
   </script>
   
   <style scoped>
-  /* Styling for product images */
   .image {
     width: 3rem;
   }
   
-  /* Styling for sort dropdown */
   .sort-dropdown{
     display: flex;
     justify-content: space-evenly;
   }
-  /* General button styling */
   .btn {
     background-color: #7A0000;
     color: white;
@@ -202,7 +173,6 @@
     min-height: 100vh;
     margin-top: 60px;
   }
-  /* Responsive styling for small screens */
   @media screen and (max-width: 300px) {
     .table {
       width: 280px !important;

@@ -1,6 +1,6 @@
 <template>
   <div id="container">
-  <label class="loading-title">Loading ...</label>
+  <label class="loading-title">Loading  products...</label>
   <span class="loading-circle sp1">
     <span class="loading-circle sp2">
       <span class="loading-circle sp3"></span>
