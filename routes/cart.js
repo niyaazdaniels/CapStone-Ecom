@@ -1,4 +1,4 @@
-import express from 'express';
+    import express from 'express';
 import controller from '../controller/cart.js'
 
 
@@ -8,7 +8,7 @@ router.route('/')
     .get(controller.getAllCartItems)
 
 
-router.route('/:id')
+router.route('/')
     .post(controller.addItemsToCartTable)
     .delete(controller.deleteItemsFromCart)
 
