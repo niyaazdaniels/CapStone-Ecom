@@ -1,9 +1,6 @@
 <template>
     <div>
-      <!-- Button trigger modal -->
       <button type="button" class="btn" @click="openEditUserModal(user.userID)" data-bs-toggle="modal" :data-bs-target="'#texampleModal' + user.userID">Edit</button>
-  
-      <!-- Modal -->
       <div class="modal fade" :id="'texampleModal' + user.userID" tabindex="-1" :aria-labelledby="'texampleModalLabel' + user.userID" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
