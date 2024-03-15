@@ -10,7 +10,6 @@
                   <img :src="user.userImage" alt="" class="my-5 rounded-4">
                   <div class="card-text">
                     <h3 class="my-4">{{ user.firstName }} {{ user.lastName }}</h3>
-                    <a href="" class="logBut bg-white my-3 p-2 px-5 rounded-5" @click="logout">Log Out</a>
                   </div>
                 </div>
               </div>
@@ -61,14 +60,11 @@ export default {
       this.$store.commit("setUser", userData);
     }
   },
-  computed: {
+  methods: {
     thisUser() {
       return this.$store.state.user;
     },
   },
-    logout() {
-      this.$store.dispatch("logOut");
-    }
   }
 
 </script>
@@ -97,35 +93,22 @@ export default {
 
 .card-body img{
     width: 200px;
-    height: 200px;
+    height: auto;
     border-radius: 20%;
 }
 .about{
     max-width: 100%;
 }
-
 p {
   font-size: 16px;
 }
 input {
   font-size: 14px;
 }
-
 .col-8{
     word-wrap: break-word;   
     font-size: 24px;
 }
-.logBut{
-            text-align: center;
-            text-decoration: none;
-            max-width: 100px !important;
-            color: rgb(0, 0, 0);
-        }
-
-        .logBut:hover{
-            color: rgb(0, 0, 0);
-           opacity: 90%;
-        }
 @media screen and (max-width: 300px) {
   .row {
     --bs-gutter-x: 0;
