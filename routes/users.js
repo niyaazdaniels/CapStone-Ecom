@@ -1,22 +1,22 @@
-// Importing the Express module from the installed express package
 import express from "express";
-// Importing functions from the users controller
-import controller from "../controller/users.js";
+import userController from "../controller/users.js";
+import cartController from "../controller/cart.js";
 
-// Creating an instance of the Express Router
 const router = express.Router();
 
-// Grouping together routes with similar paths
 router
     .route('/')
-        .get(controller.getManyUsers) // GET request to fetch many users
-        .post(controller.registerOneUser); // POST request to add a new user
+        .get(userController.getManyUsers) 
+        .post(userController.registerOneUser);
 
 router
     .route('/:userID')
-        .get(controller.getOneUser) // GET request to fetch a single user by ID
-        .patch(controller.editOneUser) // PATCH request to edit a user by ID
-        .delete(controller.deleteOneUser); // DELETE request to delete a user by ID
+        .get(userController.getOneUser) 
+        .patch(userController.editOneUser) 
+        .delete(userController.deleteOneUser); 
 
-// Exporting the router to be used globally
+router  
+    .route('/:userID/cart')
+    .post(cartController.addItemsToCartTable);
+
 export default router;

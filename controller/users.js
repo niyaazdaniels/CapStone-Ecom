@@ -107,12 +107,11 @@ registerOneUser: async (req, res) => {
     // Controller to login a user by comparing passwords
     logInUser: async (req, res, next) => {
         try {
-            const {user} = req.body.emailAdd;
             const { emailAdd, userPass } = req.body;
             const hashedPassword = await verifyExistingUser(emailAdd);
             const result = await bcrypt.compare(userPass, hashedPassword);
+            let currentUser = await getExistingUserEmailAdd(emailAdd)
             if (result === true) {
-                let currentUser = await getExistingUserEmailAdd(emailAdd)
                 console.log(currentUser);
                 res.send({
                     msg:  `Welcome back ${emailAdd}!`,
