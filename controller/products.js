@@ -7,7 +7,7 @@ export default {
         try {
 
             const products = await getExistingProducts();
-            
+
             res.send(products);
 
         } catch (error) {
@@ -66,21 +66,21 @@ export default {
 
             const [product] = await getExistingProduct(+req.params.prodID);
 
-            let { prodName, quantity, price, category, prodImage } = req.body;
+            let { prodName, prodDesc, quantity, price, category, prodImage } = req.body;
             
             prodName = prodName || product.prodName;
 
             prodDesc = prodDesc || product.prodDesc;
 
-            category = category || product.category;
+            quantity = quantity || product.quantity;
 
             price = price || product.price;
 
-            quantity = quantity || product.quantity;
+            category = category || product.category;
 
             prodImage = prodImage || product.prodImage;
 
-            await editExistingProduct(prodName, prodDesc, category, price, quantity, prodImage, +req.params.prodID);
+            await editExistingProduct(prodName, prodDesc, quantity, price, categoryi ,prodImage, +req.params.prodID);
 
             res.json(await getExistingProducts());
 
