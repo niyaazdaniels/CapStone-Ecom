@@ -20,6 +20,7 @@ export default {
         } catch (error) {
 
             console.error("Error in fetching all the users:", error);
+            
             res.status(500).send({ error: "Internal Server Error" });
 
         }
@@ -30,8 +31,11 @@ registerOneUser: async (req, res) => {
     try {
 
         const { firstName, lastName, gender, emailAdd, userPass, userImage, age } = req.body;
+
         const hash = await bcrypt.hash(userPass, 10);
+
         await registerNewUser(firstName, lastName, gender, emailAdd, hash, userImage, age);
+
         res.send('User has been registered successfully!');
 
     } catch (error) {
@@ -45,7 +49,7 @@ registerOneUser: async (req, res) => {
         try {
 
             const [userId] = +req.params.userID;
-            
+
             const user = await getExistingUser(userId);
 
             if (user) {
@@ -73,12 +77,19 @@ registerOneUser: async (req, res) => {
             let { firstName, lastName, gender, userRole, emailAdd, userPass, userImage, age } = req.body;
             
             firstName = firstName || user.firstName;
+
             lastName = lastName || user.lastName;
+
             gender = gender || user.gender;
+
             userRole = userRole || user.userRole;
+
             emailAdd = emailAdd || user.emailAdd;
+
             userPass = userPass || user.userPass;
+
             userImage = userImage || user.userImage;
+
             age = age || user.age;
             
             await editExistingUser(firstName, lastName, gender, userRole, emailAdd, userPass, userImage, age, +req.params.userID);
@@ -135,7 +146,9 @@ registerOneUser: async (req, res) => {
                 res.send({
 
                     msg:  `Welcome back ${emailAdd}!`,
+
                     token: req.token,
+
                     user: currentUser, 
 
                 });
@@ -147,6 +160,7 @@ registerOneUser: async (req, res) => {
         } catch (error) {
 
             console.error('Error logging in user: ', error);
+
             res.status(500).send('Error logging in user.');
 
         }

@@ -1,16 +1,23 @@
-// controller/cart.js
 import { getCart, addToCart, deleteFromCart } from "../models/cart.js";
 
-const getCartHandler = (req, res) => {
-    getCart(req, res);
-};
-  
-const addToCartHandler = (req, res) => {
-    addToCart(req, res);
-};
-  
-const deleteFromCartHandler = (req, res) => {
-    deleteFromCart(req, res);
+export default {
+
+    getCartHandler: async (req, res) => {
+
+        await getCart(req, res);
+
+    },
+
+    addToCartHandler: async (req, res) => {
+
+        await addToCart(req, res);
+
+    },
+
+    deleteFromCartHandler: async (req, res) => {
+
+        await deleteFromCart(req, res);
+        
+    }
 };
 
-export { getCartHandler, addToCartHandler, deleteFromCartHandler };
