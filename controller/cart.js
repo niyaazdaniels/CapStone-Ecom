@@ -1,17 +1,16 @@
-    import { getCart, addToCart, deleteFromCart } from "../models/cart.js";
-    import express from "express";
+// controller/cart.js
+import { getCart, addToCart, deleteFromCart } from "../models/cart.js";
 
-    const router = express.Router();
-
-    router.get("/users/:id/cart", (req, res) => {
+const getCartHandler = (req, res) => {
     getCart(req, res);
-    });
-
-    router.post("/users/:id/cart", (req, res) => {
+};
+  
+const addToCartHandler = (req, res) => {
     addToCart(req, res);
-    });
-
-    router.delete("/users/:id/cart/:cartID", (req, res) => {
+};
+  
+const deleteFromCartHandler = (req, res) => {
     deleteFromCart(req, res);
-    });
-    export default router;
+};
+
+export { getCartHandler, addToCartHandler, deleteFromCartHandler };
