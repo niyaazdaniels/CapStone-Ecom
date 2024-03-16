@@ -29,7 +29,7 @@
                 <td data-label="Email">{{ user.emailAdd }}</td>
                 <td data-label="Image"><img :src="user.userImage" :alt="user.userImage" class="img-fluid image rounded-5 d-inline-flex" loading="lazy"/></td>
                 <td>
-                  <updateUserComp :user="user"/><button class="btn" @click="deleteUser(user.userID)">Delete</button>
+                  <updateUserComp :user="user"/><button class="btn" @click="deleteUser(user.userID)"><i class="fa-regular fa-trash-can"></i></button>
                 </td>
               </tr>
               <tr v-else>
@@ -68,7 +68,7 @@
                 <td data-label="Category">{{ product.category }}</td>
                 <td data-label="Image"><img :src="product.prodImage" :alt="product.prodImage" class="img-fluid image" loading="lazy"/></td>
                 <td><updateProductComp :product="product"/>
-                  <button @click="deleteProduct(product.prodID)" class="btn">Delete</button>
+                  <button @click="deleteProduct(product.prodID)" class="btn"><i class="fa-regular fa-trash-can"></i>  </button>
                 </td>
               </tr>
               <tr v-else>

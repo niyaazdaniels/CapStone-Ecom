@@ -28,7 +28,7 @@ export default createStore({
 
     LoggedIn: false,
 
-    cart: null,
+    cart: null || [],
 
   },
 
@@ -83,6 +83,7 @@ export default createStore({
   },
 
   actions: {
+    
     // fetch all users function
     async fetchUsers({ commit }) {
 
@@ -97,6 +98,7 @@ export default createStore({
         alert("Request Failed! Could not retrieve all users!");
       }
     },
+    
     // fetch single user function
     async fetchUser(context, user) {
 
