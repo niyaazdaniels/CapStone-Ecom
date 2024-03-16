@@ -5,10 +5,34 @@ import controller from '../controller/cart.js';
 
 const router = express.Router();
 
-router.get("/users/:id/cart",controller.getCartHandler);
+// add to cart
+router
+    .route('/cartItem')
+    .post(controller.addItems);
 
-router.post("/users/:id/cart",controller.addToCartHandler); 
+// get a item in cart
+router
+    .route('cartItem/:userID/:prodID')
+    .get(controller.getItem)
 
-router.delete("/users/:id/cart/:cartID",controller.deleteFromCartHandler);
+// get all items by user id
+router
+    .route('/cartItem/:userID"')
+    .get(controller.allItems);
+
+// update item qty
+router
+    .route('/cartItem')
+    .patch(controller.updateItem);
+
+// delete a item in cart
+router
+    .route('/cartItem/:userID/:prodID')
+    .delete(controller.deleteItem);
+
+// delete all items in cart
+router
+    .route('/cartItem/:userID')
+    .delete(controller.deleteItems);
 
 export default router;
