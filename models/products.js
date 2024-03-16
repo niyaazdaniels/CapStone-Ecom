@@ -24,7 +24,7 @@ const getExistingProduct = async (prodID) => {
     return result;
 };
 
-const addNewProduct = async (prodName, prodDesc,quantity, price, category, prodImage) => {
+const addNewProduct = async (prodName, prodDesc, quantity, price, category, prodImage) => {
 
     const [product] = await pool.query(`
 
@@ -36,7 +36,7 @@ const addNewProduct = async (prodName, prodDesc,quantity, price, category, prodI
     return getExistingProduct(product.insertId);
 };
 
-const editExistingProduct = async (prodID,prodName, prodDesc, quantity, price, category, prodImage) => {
+const editExistingProduct = async (prodID, prodName, prodDesc, quantity, price, category, prodImage) => {
 
     await pool.query(`
 
@@ -44,7 +44,7 @@ const editExistingProduct = async (prodID,prodName, prodDesc, quantity, price, c
         SET prodName = ?, prodDesc = ? , quantity = ?, price = ? , category = ?, prodImage = ?
         WHERE prodID = ?`,
 
-        [(prodName, prodDesc, quantity, price,category, prodImage) ]);
+        [(prodName, prodDesc, quantity, price, category, prodImage) ]);
 
     const editedProduct = await getExistingProduct(prodID);
 

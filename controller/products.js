@@ -80,7 +80,7 @@ export default {
 
             prodImage = prodImage || product.prodImage;
 
-            await editExistingProduct(prodName, prodDesc, quantity, price, categoryi ,prodImage, +req.params.prodID);
+            await editExistingProduct(prodName, prodDesc, quantity, price, category ,prodImage, +req.params.prodID);
 
             res.json(await getExistingProducts());
 
