@@ -24,32 +24,36 @@ const getExistingProduct = async (prodID) => {
     return result;
 };
 
-const addNewProduct = async (prodName, prodDesc,quantity, price, category, prodImage) => {
+const addNewProduct = async (prodName, prodDesc, category, price, quantity, prodImage) => {
 
     const [product] = await pool.query(`
 
-        INSERT INTO Products (prodName, prodDesc, quantity, price, category, prodImage) 
+        INSERT INTO Products (prodName, prodDesc, category, price, quantity, prodImage) 
         VALUES (?, ?, ?, ?, ?, ?)`,
 
-        [prodName, prodDesc ,quantity, price, category, prodImage ]);
+        [prodName, prodDesc , category, price, quantity, prodImage ]);
 
     return getExistingProduct(product.insertId);
 };
 
-const editExistingProduct = async (prodID,prodName, prodDesc, quantity, price, category, prodImage) => {
+const editExistingProduct = async (prodID, prodName, prodDesc, category, price, quantity, prodImage) => {
 
     await pool.query(`
 
         UPDATE Products
-        SET prodName = ?, prodDesc = ? , quantity = ?, price = ? , category = ?, prodImage = ?
-        WHERE prodID = ?`,
 
-        [(prodName, prodDesc, quantity, price,category, prodImage) ]);
+        SET prodName = ?, prodDesc = ?, category = ?, price = ?, quantity = ?, prodImage = ?
+
+        WHERE prodID = ?`,
+        
+        [prodName, prodDesc, category, price, quantity, prodImage, prodID]
+    );
 
     const editedProduct = await getExistingProduct(prodID);
 
     return editedProduct;
-}; 
+};
+
 
 const removeExistingProduct = async (prodID) => {
 
