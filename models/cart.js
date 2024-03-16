@@ -1,141 +1,167 @@
-import { pool } from '../config/index.js'
+// import connection
+import {pool} from "../config/index.js";
 
-const getCart = async (req, res) => {
+// get all items by user id
+const getAllItems = async (userID,result) => {
 
-    try {
+    await pool.query(`
 
-      const result = await pool.query(
+    SELECT * FROM cart 
 
-        `SELECT cart FROM Users 
-        WHERE userID = ${req.params.id}`,
+    WHERE userID = ?`,
 
-       [ req.params.id ]
+    [userID], 
 
-      );
-  
-      const cart = result[0].cart;
+    (err,results)=> {
 
-      if (!cart) {
+        if (err){
 
-        return res.json({ msg: "Please Login" });
+            console.log(err);
 
-      }
-  
-      res.send(cart);
+            result(err,null);
 
-    } catch (error) {
+        }else{
 
-      console.error("Error fetching cart:", error.message);
+            result(null,results);
 
-      res.status(500).json({ error: "Internal server error" });
+        }
+    });
+};
 
-    }
-  };
-  
-  const addToCart = async (req, res) => {
+// get a items by user id, food id
+const getAItem =  async (userID,prodID,result) => {
 
-    try {
+    await pool.query(`
 
-      const results = await pool.query(
+    SELECT * FROM cart 
 
-        `SELECT cart FROM users 
-        WHERE userID = ${req.params.id}`,
+    WHERE userID = ? AND prodID = ?`,
 
-        [req.params.id]
+    [userID, prodID], 
 
-      );
-  
-      let cart = JSON.parse(results[0].cart || "[]");
-  
-      const id = req.body.id;
+    (err,results)=> {
 
-      const productResult = await pool.query(
+        if (err){
 
-        `SELECT * FROM Products
-        WHERE prodID = ${id}`
-      );
-  
-      const product = {
+            console.log(err);
 
-        id: productResult[0].id,
+            result(err,null);
 
-        prodName: productResult[0].prodName,
+        }else{
 
-        prodImage: productResult[0].prodImage,
+            result(null,results);
 
-        prodDesc: productResult[0].prodDesc,
+        }
+    });
+};
 
-        category: productResult[0].category,
+// insert new item to cart
+const insertToCart = async (data,result) => {
 
-        price: productResult[0].price,
+    await pool.query(`
 
-        quantity: productResult[0].quantity,
+    INSERT INTO cart SET ?`,
 
-        userID: productResult[0].userID,
+    data,
 
-      };
-  
-      cart.push(product);
-  
-      await pool.query(
+    (err,results)=> {
 
-        `UPDATE Users SET cart = ? 
-        WHERE userID = ${req.params.id}`,
+        if (err){
 
-        JSON.stringify(cart)
+            console.log(err);
 
-      );
-  
-      res.json({ product, msg: "Products added to Cart" });
+            result(err,null);
 
-    } catch (error) {
+        }else{
 
-      console.error("Error adding to cart:", error.message);
+            result(null,results[0]);
 
-      res.status(500).json({ error: "Internal server error" });
+        }
+    });
+};
 
-    }
-  };
-  
-  const deleteFromCart = async (req, res) => {
+// update qty of a cart item
+const updateCartItemQty = async (data,result) => {
 
-    try {
+    await pool.query(`
 
-      const results = await pool.query(
+    UPDATE cart 
 
-        `SELECT cart FROM Users 
-        WHERE userID = ${req.params.id}`,
+    SET quantity = ? 
 
-        [req.params.id]
+    WHERE userID = ? AND prodID = ?`,
 
-      );
-  
-      const cart = JSON.parse(results[0].cart || "[]");
+    [data.quantity, data.userID, data.prodID], 
 
-      const prodID = req.params.prodID;
-  
-      const updatedCart = cart.filter((product) => product.id != prodID);
-  
-      await pool.query(
+    (err,results)=> {
 
-        `UPDATE Users SET cart = ? 
-        WHERE userID = ${req.params.id}`,
+        if (err){
 
-        JSON.stringify(updatedCart)
+            console.log(err);
 
-      );
-  
-      res.json({ msg: "Item Deleted from Cart" });
+            result(err,null);
 
-    } catch (error) {
+        }else{
 
-      console.error("Error deleting from cart:", error.message);
+            result(null,results);
 
-      res.status(500).json({ error: "Internal server error" });
+        }
+    });
+};
 
-    }
-  };
-  
-  export { getCart, addToCart, deleteFromCart };
-  
-  
+
+// delete cart item
+const deleteItemInCart = async (userID,prodID,result) => {
+
+    await pool.query
+    (`
+
+    DELETE FROM cart 
+
+    WHERE userID = ? AND prodID = ?`,
+
+    [userID,prodID], 
+
+    (err,results)=> {
+
+        if (err){
+
+            console.log(err);
+
+            result(err,null);
+
+        }else{
+
+            result(null,results);
+
+        }
+    });
+};
+
+// delete all Items
+const deleteAllItemsByUser = async (userID,result) => {
+
+    await pool.query(`
+
+    DELETE FROM cart 
+
+    WHERE userID = ?`,
+
+    [userID], 
+
+    (err,results)=> {
+
+        if (err){
+
+            console.log(err);
+
+            result(err,null);
+
+        }else{
+
+            result(null,results);
+        }
+    });
+};
+
+export {getAItem, getAllItems, updateCartItemQty, deleteAllItemsByUser, deleteItemInCart, insertToCart}
