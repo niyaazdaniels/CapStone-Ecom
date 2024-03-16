@@ -61,27 +61,25 @@ export default {
     },
 
     editOneProduct: async (req, res) => {
-
         try {
-
             const [product] = await getExistingProduct(+req.params.prodID);
-
-            let { prodName, prodDesc, quantity, price, category, prodImage } = req.body;
-            
+    
+            let { prodName, prodDesc, category, price, quantity, prodImage } = req.body;
+    
             prodName = prodName || product.prodName;
 
             prodDesc = prodDesc || product.prodDesc;
+
+            category = category || product.category;
 
             quantity = quantity || product.quantity;
 
             price = price || product.price;
 
-            category = category || product.category;
-
             prodImage = prodImage || product.prodImage;
-
-            await editExistingProduct(prodName, prodDesc, quantity, price, category ,prodImage, +req.params.prodID);
-
+    
+            await editExistingProduct(+req.params.prodID, prodName, prodDesc, category, price, quantity, prodImage);
+    
             res.json(await getExistingProducts());
 
         } catch (error) {
@@ -89,6 +87,7 @@ export default {
             res.status(500).json({ error: 'An error occurred while editing the product.' });
         }
     },
+    
 
     deleteOneProduct: async (req, res) => {
 
