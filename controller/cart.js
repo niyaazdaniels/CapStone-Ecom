@@ -1,4 +1,4 @@
-import { getAllItems, getAItem, insertToCart, updateCartItemQty, deleteItemInCart, deleteAllItemsByUser } from "../models/CartModel.js";
+import { getAllItems, getAItem, insertToCart, updateCartItemQty, deleteItemInCart, deleteAllItemsByUser } from "../models/cart.js";
 
 export default {
 
