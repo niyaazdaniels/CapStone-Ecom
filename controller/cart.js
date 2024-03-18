@@ -1,114 +1,29 @@
-import { getAllItems, getAItem, insertToCart, updateCartItemQty, deleteItemInCart, deleteAllItemsByUser } from "../models/cart.js";
+import { getCart, removeFromCart, insert, addToCart} from "../models/cart.js";
 
 export default {
 
-    // get all Items
-    allItems: async (req, res) => {
+        getEntireCart : async (req, res) => {
 
-        await getAllItems(+req.params.userID, (err, results) => {
+            res.send(await getCart())
 
-            if (err) {
+        },
 
-                res.send(err);
+        addToCart : async (req, res) => {
 
-            } else {
-                res.json(results);
-            }
-        });
-    },
+            let { quantity } = req.body
 
-    // get a Item
-    getItem: async (req, res) => {
+            let { userID } = req.query
 
-        const userID = +req.params.userID;
+            await insert(+req.params.id, userID, quantity)
 
-        const prodID = +req.params.prodID;
+            res.send(await getCart())
 
-        await getAItem(userID, prodID, (err, results) => {
+        },
 
-            if (err) {
+        deleteFromCart : async (req, res) => {
 
-                res.send(err);
+            await removeFromCart(+req.params.id)
 
-            } else {
-
-                res.json(results);
-            }
-        });
-    },
-
-    // add to cart
-    addItems: async (req, res) => {
-
-        const data = req.body;
-
-        await insertToCart(data, (err, results) => {
-
-            if (err) {
-
-                res.send(err);
-
-            } else {
-
-                res.json(results);
-
-            }
-        });
-    },
-
-    // update Item
-    updateItem: async (req, res) => {
-
-        const data = req.body;
-
-        await updateCartItemQty(data, (err, results) => {
-
-            if (err) {
-
-                res.send(err);
-
-            } else {
-
-                res.json(results);
-            }
-        });
-    },
-
-    // delete a item in cart
-    deleteItem: async (req, res) => {
-
-        const userID = +req.params.userID;
-
-        const prodID = +req.params.prodID;
-
-        await deleteItemInCart(userID, prodID, (err, results) => {
-
-            if (err) {
-
-                res.send(err);
-
-            } else {
-
-                res.json(results);
-
-            }
-        });
-    },
-
-    // delete all items in cart
-    deleteItems: async (req, res) => {
-
-        await deleteAllItemsByUser(+req.params.userID, (err, results) => {
-
-            if (err) {
-
-                res.send(err);
-
-            } else {
-
-                res.json(results);
-
-            }
-        });
-    }
+            res.send(await getCart())
+        }
 };
