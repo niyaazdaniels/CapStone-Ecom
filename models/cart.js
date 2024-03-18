@@ -12,7 +12,7 @@ const getAllCarts = async(userID)=> {
     INNER JOIN Products
 
     ON cartID = prodID
-    
+
     WHERE userID = ? GROUP BY prodName;
 
     `,[userID])
@@ -93,7 +93,9 @@ const deleteCart = async(cartID)=> {
 
     WHERE cartID =?
 
-    `,[cartID]) 
+    `,
+    
+    [cartID]) 
 
     return cart
 }
@@ -102,11 +104,15 @@ const updateCart = async(quantity,cartID) => {
 
     const [cart]  = await pool.query(`
 
-    UPDATE cart SET quantity =? 
+    UPDATE cart 
+    
+    SET quantity =? 
+
     WHERE cartID =?
 
-    `,[quantity,cartID] 
-    )
+    `,
+    
+    [quantity,cartID])
 
     return cart
 }

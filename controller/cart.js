@@ -1,4 +1,4 @@
-import { getAllCarts , addToCart , deleteCart , updateCart , getCart , insertCart } from "../models/cart.js";
+import { getAllCarts , addToCart , deleteCart , updateCart , getCart , insertCart } from "../models/cart.js"
 
 export default {
 
@@ -39,5 +39,6 @@ export default {
     await updateCart(quantity,+req.params.prodID);
 
     res.send(await getAllCarts())
+    
    }
 } 
