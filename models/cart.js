@@ -1,167 +1,69 @@
 // import connection
 import {pool} from "../config/index.js";
 
-// get all items by user id
-const getAllItems = async (userID,result) => {
+const getCart = async () => {
 
-    await pool.query(`
+    const [cart] = await pool.query(`
 
-    SELECT * FROM cart 
+        SELECT * FROM 
+        cart
+    `)
+    return cart
+}
 
-    WHERE userID = ?`,
+const addToCart = async (prodID, userID) => {
 
-    [userID], 
+    const [existingProduct] = await pool.query(`
 
-    (err,results)=> {
+        SELECT * FROM cart
 
-        if (err){
+        WHERE prodID = ? AND userID = ?
 
-            console.log(err);
+    `, [prodID, userID]);
 
-            result(err,null);
+    if (existingProduct.length > 0) {
 
-        }else{
+        const updatedQuantity = existingProduct[0].quantity + 1;
 
-            result(null,results);
+        await pool.query(`
 
-        }
-    });
-};
+            UPDATE cart
 
-// get a items by user id, food id
-const getAItem =  async (userID,prodID,result) => {
+            SET quantity = ?
 
-    await pool.query(`
+            WHERE prodID = ? AND userID = ?
 
-    SELECT * FROM cart 
-
-    WHERE userID = ? AND prodID = ?`,
-
-    [userID, prodID], 
-
-    (err,results)=> {
-
-        if (err){
-
-            console.log(err);
-
-            result(err,null);
-
-        }else{
-
-            result(null,results);
-
-        }
-    });
-};
-
-// insert new item to cart
-const insertToCart = async (data,result) => {
-
-    await pool.query(`
-
-    INSERT INTO cart SET ?`,
-
-    data,
-
-    (err,results)=> {
-
-        if (err){
-
-            console.log(err);
-
-            result(err,null);
-
-        }else{
-
-            result(null,results[0]);
-
-        }
-    });
-};
-
-// update qty of a cart item
-const updateCartItemQty = async (data,result) => {
-
-    await pool.query(`
-
-    UPDATE cart 
-
-    SET quantity = ? 
-
-    WHERE userID = ? AND prodID = ?`,
-
-    [data.quantity, data.userID, data.prodID], 
-
-    (err,results)=> {
-
-        if (err){
-
-            console.log(err);
-
-            result(err,null);
-
-        }else{
-
-            result(null,results);
-
-        }
-    });
-};
+        `, [updatedQuantity, prodID, userID]);
 
 
-// delete cart item
-const deleteItemInCart = async (userID,prodID,result) => {
+    } else {
 
-    await pool.query
-    (`
+        await pool.query(`
+
+            INSERT INTO cart (prodID, userID, quantity)
+
+            VALUES (?, ?, 1)
+
+        `, [prodID, userID]);
+
+    }
+}
+
+const insert = async(prodID, userID) => {
+
+    await addToCart(prodID, userID);
+}
+
+const removeFromCart = async (prodID) => {
+
+    const [inCart] = await pool.query(`
 
     DELETE FROM cart 
 
-    WHERE userID = ? AND prodID = ?`,
+    WHERE prodID = ? 
 
-    [userID,prodID], 
+    `, [prodID]);
+}
 
-    (err,results)=> {
 
-        if (err){
-
-            console.log(err);
-
-            result(err,null);
-
-        }else{
-
-            result(null,results);
-
-        }
-    });
-};
-
-// delete all Items
-const deleteAllItemsByUser = async (userID,result) => {
-
-    await pool.query(`
-
-    DELETE FROM cart 
-
-    WHERE userID = ?`,
-
-    [userID], 
-
-    (err,results)=> {
-
-        if (err){
-
-            console.log(err);
-
-            result(err,null);
-
-        }else{
-
-            result(null,results);
-        }
-    });
-};
-
-export {getAItem, getAllItems, updateCartItemQty, deleteAllItemsByUser, deleteItemInCart, insertToCart}
+export {getCart, removeFromCart, insert, addToCart}
