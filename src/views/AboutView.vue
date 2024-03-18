@@ -49,7 +49,7 @@ export default {
   justify-content: center;
   align-items: center;
   height: 7vh;
-  top: 100px;
+  top: 120px;
   background: #7A0000;
 }
 .about-us-heading{
@@ -75,10 +75,19 @@ export default {
     top: 80px;
   }
   h2{
-    font-size: 2rem;
+    font-size: 1.6rem;
   }
   .background{
     height: 100vh;
+  }
+}
+@media (max-width: 962px) {
+  h2 {
+    font-size: 1rem;
+  }
+  .row {
+    position: relative;
+    left: -40px;
   }
 }
  @media (max-width: 768px) {

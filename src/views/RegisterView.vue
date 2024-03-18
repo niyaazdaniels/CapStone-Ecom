@@ -53,30 +53,51 @@
 <script>
     export default {
         name: 'RegisterView',
+
         data() {
+
         return {
+
             register: {
+
             firstName: "",
+
             lastName: "",
+
             gender: "",
+
             age: "",
+            
             emailAdd: "",
+            
             userPass: "", 
+
             userImage: "", 
+
             }
             
         };
     },
     methods: {
+
         registerUser() {
+
             this.$store.dispatch("registerNewUser", this.register);
+
             this.register.firstName = "";
+
             this.register.lastName = "";
+
             this.register.gender = "";
+
             this.register.age = "";
+            
             this.register.emailAdd = "";
+
             this.register.userPass = "";
+
             this.register.userImage = "";
+
             },
 
         }

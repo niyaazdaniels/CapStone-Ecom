@@ -22,21 +22,33 @@
 </template>
 
 <script>
+
 export default {
+
   data() {
+
     return {
+
       loginUser: {
+
         emailAdd: "",
+        
         userPass: "",
+
       },
     };
   },
   computed: {
+
     user() {
+
       return this.$store.state.user;
+
     },
     logIn() {
+
       this.$store.dispatch('login',this.loginUser)
+      
       this.$store.dispatch('fetchUser')
     },
   },

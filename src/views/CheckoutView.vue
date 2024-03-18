@@ -65,24 +65,38 @@
 </template>
 
 <script>
+
     export default {
+
         name: 'CheckoutView',
+
     computed: {
+
         user() {
+
             return this.$store.state.user;
+
         },
+
         cart() {
+
             console.log(this.$store.state.cart)
+
             return this.$store.state.cart
         },
     },
     mounted() {
+
         this.$store.dispatch("getCart", this.userID)
+
     },
 
     methods: {
+
         deleteFromCart(id) {
+            
           this.$store.dispatch("deleteFromCart", id);
+
            sweet("Product was deleted");
         },
     }

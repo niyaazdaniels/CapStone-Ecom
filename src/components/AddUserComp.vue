@@ -18,6 +18,8 @@
               <input required id="gender" type="text" placeholder="Gender" autocomplete="off" v-model="model.user.gender"/>
               <label for="email">Email Address</label>
               <input required  id="email"  type="text" placeholder="Email" autocomplete="off" v-model="model.user.emailAdd"/>
+              <label for="role">User Role</label>
+              <input required  id="role"  type="text" placeholder="User Role" autocomplete="off" v-model="model.user.userRole"/>
               <label for="password">Password:</label>
               <input required id="password" type="text" placeholder="Password" autocomplete="off" v-model="model.user.userPass"/>
               <label for="profilePic">Profile Image:</label>
@@ -58,11 +60,16 @@
             userPass: "",
 
             userImage: "",
+
+            userRole: "",
+
           },
         },
       };
     },
+
     methods: {
+
       createNewUser() {
 
         this.$store.dispatch("registerNewUser", this.model.user);
