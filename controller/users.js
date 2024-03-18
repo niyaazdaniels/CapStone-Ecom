@@ -30,7 +30,7 @@ registerOneUser: async (req, res) => {
 
     try {
 
-        const { firstName, lastName, gender, emailAdd, userPass, userImage, age } = req.body;
+        const { firstName, lastName, gender,     emailAdd, userPass, userImage, age } = req.body;
 
         const hash = await bcrypt.hash(userPass, 10);
 

@@ -42,6 +42,7 @@ const verifyToken = async (req, res, next) => {
         res.status(500).send('Internal Server Error');
     }
 };
+
 const createToken = async (req, res, next) => {
 
     try {
@@ -64,7 +65,7 @@ const createToken = async (req, res, next) => {
             console.log("Password matched. Creating token...");
 
             const token = jwt.sign({ emailAdd: emailAdd }, process.env.SECRET_KEY, { expiresIn: '1h' });
-            // res.cookie('jwt', token, { httpOnly: false}); // 1 hour expiration
+
             console.log("Token created successfully");
 
             req.token = token; 
