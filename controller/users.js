@@ -141,7 +141,7 @@ registerOneUser: async (req, res) => {
 
             if (result === true) {
 
-                console.log(currentUser);
+                console.log(currentUser);   
 
                 res.send({
 

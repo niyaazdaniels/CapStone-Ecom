@@ -1,69 +1,120 @@
 // import connection
 import {pool} from "../config/index.js";
 
-const getCart = async () => {
+const getAllCarts = async(userID)=> {
+
+    const [carts] = await pool.query(`
+
+    SELECT distinct prodName , proce , prodImage , category, count(cartID) as quantity  
+    FROM cart 
+    INNER JOIN Products ON cartID = prodID
+    WHERE userID = ? group by prodName;
+
+    `,[userID])
+
+    return carts
+}
+
+const addToCart = async (userID, prodID) => {
 
     const [cart] = await pool.query(`
 
-        SELECT * FROM 
-        cart
-    `)
-    return cart
-}
+        SELECT *
+        
+        FROM cart
+        
+        INNER JOIN Products ON cartID = prodID
 
-const addToCart = async (prodID, userID) => {
+        WHERE userID = ? AND prodID = ?;
 
-    const [existingProduct] = await pool.query(`
+    `, [userID, prodID]);
 
-        SELECT * FROM cart
+    return cart;
+};
 
-        WHERE prodID = ? AND userID = ?
+const insertCart = async (quantity, prodID, userID) => {
+    
+    const [user] = await pool.query(`
 
-    `, [prodID, userID]);
+    SELECT * FROM users 
 
-    if (existingProduct.length > 0) {
+    WHERE userID = ?`, 
 
-        const updatedQuantity = existingProduct[0].quantity + 1;
+    [userID]);
 
-        await pool.query(`
+    const [product] = await pool.query(
 
-            UPDATE cart
+        `SELECT * FROM 
 
-            SET quantity = ?
+        Products 
 
-            WHERE prodID = ? AND userID = ?
+        WHERE prodID = ?`, 
 
-        `, [updatedQuantity, prodID, userID]);
+        [prodID])
 
+    if (user.length === 0) {
 
-    } else {
+        console.error(`User with ID ${userID} does not exist.`);
 
-        await pool.query(`
-
-            INSERT INTO cart (prodID, userID, quantity)
-
-            VALUES (?, ?, 1)
-
-        `, [prodID, userID]);
-
+        return null; 
     }
-}
 
-const insert = async(prodID, userID) => {
+    if (product.length === 0) {
 
-    await addToCart(prodID, userID);
-}
+        console.error(`Product with ID ${prodID} does not exist.`);
 
-const removeFromCart = async (prodID) => {
+        return null;
+    }
 
-    const [inCart] = await pool.query(`
+    await pool.query(`
+
+    INSERT INTO cart (quantity, prodID, userID) 
+
+    VALUES (?, ?, ?)`,
+
+     [quantity, prodID, userID]);
+
+    return addToCart(quantity, prodID, userID);
+};
+
+ 
+const deleteCart = async(cartID)=> {
+
+    const [cart] = await pool.query(`
 
     DELETE FROM cart 
 
-    WHERE prodID = ? 
+    WHERE cartID =?
 
-    `, [prodID]);
+    `,[cartID]) 
+
+    return cart
 }
 
+const updateCart = async(quantity,cartID) => {
 
-export {getCart, removeFromCart, insert, addToCart}
+    const [cart]  = await pool.query(`
+
+    UPDATE cart SET quantity =? 
+    WHERE cartID =?
+
+    `,[quantity,cartID] 
+    )
+
+    return cart
+}
+
+const getCart = async(cartID) => {
+
+  const [cart] = await pool.query(`
+
+  SELECT * FROM cart 
+
+  WHERE cartID =?`,
+
+   [cartID]);
+
+  return cart
+}
+
+export {getCart, deleteCart, insertCart, addToCart, getAllCarts, updateCart}

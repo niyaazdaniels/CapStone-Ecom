@@ -1,29 +1,43 @@
-import { getCart, removeFromCart, insert, addToCart} from "../models/cart.js";
+import { getAllCarts , addToCart , deleteCart , updateCart , getCart , insertCart } from "../models/database.js";
 
 export default {
 
-        getEntireCart : async (req, res) => {
+   getCartItems: async (req,res)=> {
 
-            res.send(await getCart())
+    res.send(await getAllCarts(+req.params.prodID))
 
-        },
+   },
 
-        addToCart : async (req, res) => {
+   addCartItems: async (req,res)=>{
 
-            let { quantity } = req.body
+    const { quantity } = req.body;
 
-            let { userID } = req.query
+    const { user} = req.query
 
-            await insert(+req.params.id, userID, quantity)
+    await insertCart(quantity,+req.params.prodID,user);
 
-            res.send(await getCart())
+    res.send(await addToCart())
 
-        },
+   },
 
-        deleteFromCart : async (req, res) => {
+   deleteCartItems: async (req,res)=> {
 
-            await removeFromCart(+req.params.id)
+    await deleteCart(+req.params.prodID);
 
-            res.send(await getCart())
-        }
-};
+    res.send(await getAllCarts())
+
+   },
+
+   updateCartItems: async (req,res)=> {
+
+    let {quantity} = req.body
+
+    const [user] = await getCart(+req.params.prodID);
+
+    quantity? quantity : {quantity} = user
+
+    await updateCart(quantity,+req.params.prodID);
+    
+    res.send(await getAllCarts())
+   }
+} 
