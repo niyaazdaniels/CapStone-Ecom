@@ -155,46 +155,34 @@ export default createStore({
       }
     },
     
-    //register a new user function
     async registerNewUser({ commit, dispatch }, registerUser) {
-
-      try {
-
-        const res = await axios.post(`${DB}signup`, registerUser);
-
-        if (res.data.success) {
-
-          Swal.fire("Successfully registered, you're being redirected to login page");
-
-          console.log("Response data:", res.data); 
-          
-          setTimeout(async () => {
-
-            await router.push('/login');
-
-          }, 3000);
+        try {
+            const res = await axios.post(`${DB}signup`, registerUser);
     
-          dispatch("fetchUsers");
+            await new Promise(resolve => setTimeout(resolve, 1500));
+    
+            Swal.fire({
 
-          commit("setUser", res.data.user);
+                icon: 'success',
 
-        } else {
+                title: 'Registration Successful!',
 
-          sweet("Response Error: No success message received.");
+                text: 'You can now log in with your credentials. Welcome aboard!',
 
-          console.error("Response data:", res.data);
+            });
 
+            router.push('/login');
+    
+            dispatch("fetchUsers");
+    
+            commit("setUser", res.data.user);
+
+        } catch (error) {
+
+            console.error("Error registering new user:", error);
         }
-
-      } catch (e) {
-
-        sweet("Request Failed: Could not register user.");
-
-        console.error("Error:", e); 
-
-      }
     },
-
+    
     // function to update an existing user
     async updateUser({ commit }, payload) {
 
@@ -262,6 +250,7 @@ export default createStore({
       }
     },
 
+    // update product function
     async updateProduct({ dispatch }, product) {
 
       try {
@@ -318,6 +307,7 @@ async login({ commit }, loginUser) {
 
       throw new Error(data.error); 
     } 
+
     // token
     const token = data.token;
 
@@ -336,6 +326,11 @@ async login({ commit }, loginUser) {
     const [user] = data.user;
 
     await $cookies.set('user', user);
+
+    // user ID
+    let [{userID}] = data.user
+
+    $cookies.set('userID', userID)
 
     setTimeout(async () => {
 
@@ -385,6 +380,8 @@ async logOut (context) {
 
       $cookies.remove('user');
 
+      $cookies.remove('userID');
+
       await Swal.fire({
 
           title: 'Logged out successfully!',
@@ -403,84 +400,79 @@ async logOut (context) {
           }
       });
 
-      await router.push('/');
+      await router.push('/login');
 
       window.location.reload();
+
+       }
+
+      },
+
+      // delete user profile
+  deleteMyUser ({commit}, userID) {
+
+  try {
+
+    axios.delete(`${DB}/users/${userID}`);
+
+    let cookies = $cookies.keys();
+
+    $cookies.remove('jwt');
+
+    sweet({
+
+      title: 'Success',
+
+      icon: 'success',
+
+      text: 'User deleted successfully',
+
+      timer: 4000
+
+    });
+
+    setTimeout(() => {
+
+      window.location.assign('/register');
+
+    }, 3000); 
+
+  } catch (e) {
+
+    sweet({
+
+      title: 'Error',
+
+      icon: 'error',
+
+      text: 'Failed to delete user',
+
+      timer: 4000
+
+    });
+
+    window.location.reload();
 
   }
 },
 
-    //get cart function
-      async getCart({ commit }, userID) {
+async addToCart( {commit} , payload ){
 
-        try {
-          
-          const res = await axios.get(`${DB}users/${userID}/cart`);
+  let {data} = await axios.post(`${DB}cart/${payload.userID}`)
 
-          const data = res.data;
+ 
+  window.location.reload()
+  
+},
 
-          if (data != null) {
+     async getCart(context){
 
-            commit("setCart", data);
+      const res = await axios.get(`${DB}cart`)
 
-          } else {
+      context.commit('setCart', res.data)
 
-            commit("setCart", null);
+     }
 
-          }
-        } catch (error) {
-
-          sweet('Error getting cart:', error);
-        }
-      },
-
-      //add cart function
-      async addToCart({ commit }, user ) {
-
-        try {
-
-          await axios.post(`${DB}users/${user}/cart`);
-
-          commit("getCart", user);
-
-        } catch (error) {
-
-          sweet('Error adding to cart:', error);
-
-        }
-      },
-
-      //delete from cart function
-      async deleteFromCart({ commit }, { userID, cartID }) {
-
-        try {
-
-          await axios.delete(`${DB}users/${userID}cart/${cartID}`);
-
-          commit("getCart", userID);
-
-        } catch (error) {
-
-          sweet('Error deleting from cart:', error);
-
-        }
-      },
-    
-      //delete entire cart function
-      async deleteCart({ commit }, userID) {
-
-        try {
-
-          await axios.delete(`${DB}cart`);
-
-          commit("getCart", userID);
-
-        } catch (error) {
-
-          sweet('Error deleting cart:', error);
-
-        }
-      }
     },      
 
   modules: {

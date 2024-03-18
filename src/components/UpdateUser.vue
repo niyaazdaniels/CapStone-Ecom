@@ -3,9 +3,9 @@
       <button type="button" class="btn" @click="openEditUserModal(user.userID)" data-bs-toggle="modal" :data-bs-target="'#texampleModal' + user.userID"><i class="fa-regular fa-pen-to-square"></i></button>
       <div class="modal fade" :id="'texampleModal' + user.userID" tabindex="-1" :aria-labelledby="'texampleModalLabel' + user.userID" aria-hidden="true">
         <div class="modal-dialog">
-          <div class="modal-content bg-dark-subtle">
+          <div class="modal-content bg-dark">
             <div class="modal-header">
-              <h1 class="modal-title fs-4 text-dark" id="texampleModalLabel3">Edit User</h1>
+              <h1 class="modal-title fs-4 text-dark text-white" id="texampleModalLabel3">Edit User</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body bg-dark text-center">
@@ -68,6 +68,7 @@
         },
       };
     },
+
     computed: {
       currentUser() {
 
@@ -85,6 +86,7 @@
 
         };
       },
+
       updateUser(id) {
 
         this.$store.dispatch("updateUser", {userID: id, data: { ...this.editingUser },
@@ -102,6 +104,7 @@
       },
     },
   };
+        
   </script>
   
   <style scoped>

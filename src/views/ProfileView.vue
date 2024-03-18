@@ -15,8 +15,8 @@
               </div>
             </div>
             <div class="col-md-8 my-5">
-              <div class="mx">
-                <h1 class="profile-heading display-6 fst-italic fw-semibold ">Profile</h1>
+              <div class="mx-3">
+                <h1 class="profile-heading display-6 fst-italic fw-semibold">Profile</h1>
                 <form autocomplete="off" @submit.prevent="updateUser" method="POST">
                   <p>First Name</p>
                   <input class="col-12 my-3" id="Name" type="text" v-model="user.firstName" required>
@@ -29,6 +29,8 @@
                   <p>Password:</p>
                   <input class="col-12 my-3" id="text" type="text" v-model="user.userPass" required>
                   <div class="modal-footer">
+                    <button class="btn logOut text-white" v-if="$cookies.get('jwt')" @click="logOut()"><i class="fa-solid fa-right-from-bracket"></i></button>
+                    <button  @click="deleteMyUser(user.userID)" class="btn btn-dark" >Delete </button>
                     <button @click="$store.dispatch('updateUser', user)" class="btn btn-dark" id="submit">Save Changes</button>
                   </div>
                 </form>
@@ -39,7 +41,6 @@
       </div>
     </div>
   </div>
-
   <div v-else>
     <SpinnerComp />
   </div>
@@ -47,25 +48,51 @@
 
 
 <script>
+import SpinnerComp from '@/components/SpinnerComp.vue';
 export default {
+  components: {
+    SpinnerComp
+  },
+
 
   created() {
+
     const fetchUser = $cookies.get("user");
+
     if (fetchUser) {
+
       this.user = $cookies.get('user')
+
     }
 
     const userData = $cookies.get('user')
+
     if (userData) {
+
       this.$store.commit("setUser", userData);
+
     }
   },
   methods: {
+
     thisUser() {
+
       return this.$store.state.user;
-    },
+
+    }, 
+
+    deleteMyUser(userID){
+
+        this.$store.dispatch('deleteMyUser',userID)
+
   },
+
+  logOut() {
+
+      this.$store.dispatch("logOut");
+    },
   }
+}
 
 </script>
 
@@ -79,6 +106,10 @@ export default {
     align-items: center;
     margin-top: 100px;
     min-height: 80vh;
+}
+.btn {
+  margin-left: 16px;
+  background: #7A0000;
 }
 
 .card{

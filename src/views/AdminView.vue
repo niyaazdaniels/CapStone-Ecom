@@ -82,74 +82,133 @@
   </template>
   
   <script>
+  
   import SpinnerComp from "../components/SpinnerComp.vue";
+
   import addProductComp from "../components/AddProductComp.vue";
+
   import addUserComp from "../components/AddUserComp.vue";
+
   import updateProductComp from "../components/UpdateProduct.vue";
+
   import updateUserComp from "@/components/UpdateUser.vue";
   
   export default {
+
     components: {
+
       SpinnerComp,
+
       addProductComp,
+
       addUserComp,
+
       updateProductComp,
+
       updateUserComp,
+
     },
+
     data() {
+
       return {
+
         sort: "",
+
         sortBy: "id",
+
         sortMode: "prodID",
+
       };
     },
   computed: {
+
     users() {
+
       return this.$store.state.users || []; 
+
     },
+
     products() {
+
       return this.$store.state.products || [];
+
     },
+
     filterDBProducts() {
+
       let filter = [...this.products];
+
       if (this.sortBy === "name") {
+
         filter = filter.sort(
+
           (a, b) => a.prodName.localeCompare(b.prodName) * (this.sort === "asc" ? 1 : -1)
+
         );
+
       } else if (this.sortBy === "id") {
+
         filter = filter.sort(
+
           (a, b) => (this.sort === "asc" ? 1 : -1) * (a.prodID - b.prodID)
+
         );
+
       }
+
       return filter;
+
     },
     },
+
     async mounted() {
+
       await this.$store.dispatch("fetchProducts");
+
       await this.$store.dispatch("fetchUsers");
+
     },
+
     methods: {
-      // Delete a product
+
       deleteProduct(prodID) {
+
         if (confirm("Are you sure you want to delete this product?")) { 
+
           this.$store.dispatch("deleteProduct", prodID);
+
           setTimeout(() => {location.reload();
+
           }, 1000);
+
         }
       },
       refresh() {
+
         this.sortBy = "prodID";
+
       },
       toggleSortDirection() {
+
         this.sortBy = 'name' 
+
         this.sort = this.sort === "asc" ? "desc" : "asc";
+
       },
+
       deleteUser(userID) {
+
         if (confirm("Are you sure you want to delete this user?")) { 
+
           this.$store.dispatch("deleteUser", userID);
+
           setTimeout(() => {location.reload();
+
           }, 1000);
+
         }
+
       },
     },
   };

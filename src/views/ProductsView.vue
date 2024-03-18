@@ -55,65 +55,116 @@
 </template>
 
 <script>
+
 import SpinnerComp from "../components/SpinnerComp.vue";
+
 export default {
+
   components: {
+
     SpinnerComp,
+
   },
   computed: {
+
     products() {
+
       return this.$store.state.products;
+
     },
     filterDBProducts() {
+
   let filter = this.products;
+
   if (this.searchDBProducts !== '') {
+
     const searchQuery = this.searchDBProducts.toLowerCase();
+
     filter = filter.filter(product => 
+
       (product.prodName && product.prodName.toLowerCase().includes(searchQuery)) ||
+
       (product.category && product.category.toLowerCase().includes(searchQuery))
+
     );
   }
+
 return filter.sort((a, b) => {
+
   if (this.sortBy === 'price') {
+
     return (this.sort === 'asc' ? a.price - b.price : b.price - a.price);
+
   } else if (this.sortBy === 'category') {
+
     return a.category.localeCompare(b.category) * (this.sort === 'asc' ? 1 : -1);
+
   } else if (this.sortBy === 'alphabetical') {
+
     return a.prodName.localeCompare(b.prodName) * (this.sort === 'asc' ? 1 : -1);
+
   }
+
   return filter;
+
 });
 
     },
   },
+
   mounted() {
+
     this.$store.dispatch("fetchProducts");
+
   },
   methods: {
+
 searchDBProducts(e) {
+
   e.preventDefault();
+
   this.searchDBProducts = this.searchDBProducts.trim();
+
 },
+
 sortToggle() {
+
   this.sort = this.sort === 'asc' ? 'desc' : 'asc';
+
 },
     resetSearchTab() {
+
       this.searchDBProducts = ''
+
     },
+
     displayProduct(prodID) {
+
       const selectedItem = this.products.find(
+
         (product) => product.prodID === prodID
+
       );
+
       this.$store.commit("setSelectedProduct", selectedItem);
+
       this.$router.push({ name: "SingleProductView", params: { prodID: prodID }});
+
     }
   },
+
   data() {
+
     return {
+
       searchDBProducts: '', 
+
       sortBy: "",
+
       sort: "" 
+      
     }
+
   }
 };
 </script>
