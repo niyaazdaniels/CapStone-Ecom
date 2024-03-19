@@ -5,17 +5,20 @@ const getAllCarts = async(userID)=> {
 
     const [carts] = await pool.query(`
 
-    SELECT DISTINCT prodName , price , prodImage , category, count(cartID) as quantity 
+    SELECT DISTINCT prodName, price, prodImage, category, COUNT(cartID) as quantity 
 
     FROM cart 
 
-    INNER JOIN Products
+    INNER JOIN Products ON cart.prodID = Products.prodID 
 
-    ON cartID = prodID
+    WHERE cart.userID = ?
 
-    WHERE userID = ? GROUP BY prodName;
+    GROUP BY prodName;
 
-    `,[userID])
+
+    `,
+    
+    [userID])
 
     return carts
 }
@@ -34,10 +37,12 @@ const addToCart = async (userID, prodID) => {
 
         WHERE cart.userID = ? AND cart.prodID = ?;
 
-    `, [userID, prodID]);
+    `,
+    
+    [userID, prodID]);
 
     return cart;
-    
+
 };
 
 
@@ -45,7 +50,7 @@ const insertCart = async (quantity, prodID, userID) => {
     
     const [user] = await pool.query(`
 
-    SELECT * FROM users 
+    SELECT * FROM Users 
 
     WHERE userID = ?`, 
 
@@ -102,19 +107,19 @@ const deleteCart = async(cartID)=> {
     return cart
 }
 
-const updateCart = async(quantity,cartID) => {
+const updateCart = async(quantity , cartID) => {
 
     const [cart]  = await pool.query(`
 
     UPDATE cart 
     
-    SET quantity =? 
+    SET quantity = ? 
 
-    WHERE cartID =?
+    WHERE cartID = ?
 
     `,
     
-    [quantity,cartID])
+    [quantity , cartID])
 
     return cart
 }
@@ -125,7 +130,7 @@ const getCart = async(cartID) => {
 
   SELECT * FROM cart 
 
-  WHERE cartID =?`,
+  WHERE cartID = ?`,
 
    [cartID]);
 
