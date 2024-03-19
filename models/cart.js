@@ -25,19 +25,21 @@ const addToCart = async (userID, prodID) => {
     const [cart] = await pool.query(`
 
         SELECT *
-        
-        FROM cart
-        
-        INNER JOIN Products 
-        
-        ON cartID = prodID
 
-        WHERE userID = ? AND prodID = ?;
+        FROM cart
+
+        INNER JOIN Products 
+
+        ON cart.userID = Products.userID AND cart.prodID = Products.prodID
+
+        WHERE cart.userID = ? AND cart.prodID = ?;
 
     `, [userID, prodID]);
 
     return cart;
+    
 };
+
 
 const insertCart = async (quantity, prodID, userID) => {
     

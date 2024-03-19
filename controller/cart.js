@@ -8,15 +8,15 @@ export default {
 
    },
 
-   addCartItems: async (req,res)=>{
+   addCartItems: async (req, res) => {
 
-    const { quantity } = req.body;
-
-    const { user} = req.query
-
-    await insertCart(quantity,+req.params.prodID,user);
-
-    res.send(await addToCart())
+      const { quantity } = req.body;
+      
+      const { user } = req.query;
+      
+      await insertCart(quantity, +req.params.prodID, user);
+      
+      res.send(await addToCart(user, +req.params.prodID));
 
    },
 
