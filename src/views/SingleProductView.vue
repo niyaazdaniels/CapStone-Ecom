@@ -8,10 +8,10 @@
           <p class="title fw-medium  fs-4">{{ product.prodDesc }}</p>
           <p class="text fs-5">Category: {{ product.category }}</p>
           <div id="quantity" class="quantity fs-5">Quantity: {{ product.quantity }}</div><br>
-          <p class="price fs-6">Price: R{{ product.price }}</p>
+          <p class="price fs-6">Price: R {{ product.price }}</p>
         </div>
         <button class="cta">
-          <span class="hover-underline-animation"  @click="addtocart(product.prodID, $cookies.get('userID'))">Add to Cart</span>
+          <span class="hover-underline-animation" v-if="$cookies.get('jwt')" @click="addtocart(product.prodID, $cookies.get('userID'))">Add to Cart</span>
           <svg id="arrow-horizontal" xmlns="http://www.w3.org/2000/svg" width="30" height="10" viewBox="0 0 46 16">
             <path id="Path_10" data-name="Path 10" d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z" transform="translate(30)"></path>
           </svg>
@@ -50,13 +50,13 @@ export default {
 
   methods: {
 
-    addtocart(id){
+    addtocart(id) {
 
-        const userID = $cookies.get('userID'); 
+        const userID = $cookies.get('userID');
 
-        this.$store.dispatch('addToCart', { id, userID });
+        this.$store.dispatch('addToCart', { prodID: id, userID: userID, quantity: 1 });
 
-        }
+    }
 }
 
 }

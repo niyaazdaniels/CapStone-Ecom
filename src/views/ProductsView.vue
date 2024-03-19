@@ -23,21 +23,21 @@
       </button>
     </div>
     <div class="row row-cols-1 row-cols-sm-3 row-cols-md-3 flex" v-if="products">
-      <div class="col flex" v-for="product in filterDBProducts" :key="product">
+      <div class="col flex" v-for="product in filterDBProducts" :key="product" data-aos="zoom-in-down">
         <div class="card flex" id="test">
             <img :src="product.prodImage" class="card-img-top img-fluid " id="image" loading="lazy" :alt="product.prodName" />
           <div class="card-body">
             <div class="title">
-              <h5 class="card-title fw-medium fs-3">{{ product.prodName }}</h5>
+              <h5 class="card-title fw-medium fs-">{{ product.prodName }}</h5>
             </div>
-            <div class="card-body overflow-y-hidden h-auto ">
-              <h5 class="card-text fs-6 fw-medium">{{ product.prodDesc }}</h5>
+            <div class="card-body overflow-y-hidden  ">
+              <h5 class="card-text fs-6 fw-medium overflow-hidden">{{ product.prodDesc }}</h5>
             </div>
             <div class="category">
-              <p class="card-text fs-6 fw-medium">Category: {{ product.category }}</p>
+              <p class="card-text  fw-medium">Category: {{ product.category }}</p>
             </div>
-            <div class="amount fs-6">
-              <p class="card-text fw-medium">Price: R{{ product.price }}</p>
+            <div class="amount">
+              <p class="card-text fw-medium">Price: R {{ product.price }}</p>
             </div>
             <div class="button">
               <button @click="displayProduct(product.prodID)" class="btn fw-semibold">View Product</button>

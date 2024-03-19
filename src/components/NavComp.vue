@@ -17,10 +17,10 @@
                         <router-link to="/products">Products</router-link>
                         <router-link to="/contact">Contact</router-link>
                         <router-link to="/admin" v-if="$cookies.get('userRole') === 'Admin'">Admin</router-link>
-                        <router-link v-if="!$cookies.get('jwt')" to="/login">Login</router-link>
-                        <router-link v-if="$cookies.get('jwt')" to="/profile"><i class="fa-regular fa-user"></i></router-link>
-                        <a class="logOut " v-if="$cookies.get('jwt')" @click="logOut" ><i class="fa-solid fa-right-from-bracket"></i></a>
-                        <router-link to="/checkout"><i class="fa-solid fa-cart-arrow-down"></i></router-link>
+                        <router-link v-if="!$cookies.get('jwt')" to="/login" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tooltip on bottom">Login</router-link>
+                        <router-link v-if="$cookies.get('jwt')" to="/profile" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tooltip on bottom" ><i class="fa-regular fa-user"></i></router-link>
+                        <a class="logOut " v-if="$cookies.get('jwt')" @click="logOut" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tooltip on bottom" ><i class="fa-solid fa-right-from-bracket"></i></a>
+                        <router-link to="/checkout" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tooltip on bottom"><i class="fa-solid fa-cart-arrow-down"></i></router-link>
                     </ul>
                 </div>
             </div>
@@ -32,17 +32,25 @@
 import 'animate.css';
 export default {
   computed: {
+
     currentUser() {
+
       return this.$store.state.user = []
     }
   },
   
   methods: {
+
     logOut() {
+
       this.$store.dispatch("logOut");
+
     },
+
     scrollTop() {
+
       window.scrollTo(0, 0);
+
     },
   }
 };
@@ -62,6 +70,7 @@ export default {
     #navbar{
       background:linear-gradient(#232323,rgb(82, 82, 82));
   }
+  
  
   .logOut {
     cursor: pointer;

@@ -10,7 +10,8 @@ import Swal from "sweetalert2";
 
 axios.defaults.withCredentials = true;
 
-const DB = "https://capstone-ecom.onrender.com/";
+// const DB = "https://capstone-ecom.onrender.com/";
+const DB = "http://localhost:4000/";
 
 export default createStore({
 
@@ -28,7 +29,7 @@ export default createStore({
 
     LoggedIn: false,
 
-    cart: null || [],
+    cart: [],
 
   },
 
@@ -70,17 +71,9 @@ export default createStore({
 
     setCart: (state, cart) => {
 
-      if (cart === null) {
-
-        state.cart = null;
-
-      } else {
-
-        state.cart = cart;
-
+      state.cart = cart
       }
     },
-  },
 
   actions: {
     
@@ -95,7 +88,7 @@ export default createStore({
 
       } catch (e) {
 
-        alert("Request Failed! Could not retrieve all users!");
+        sweet("Request Failed! Could not retrieve all users!");
       }
     },
     
@@ -114,7 +107,7 @@ export default createStore({
 
             context.commit("setUser", fetchedUser);
           } catch (error) {
-            // sweet("Request Failed: Could not retrieve user!");
+
           }
         }, 3000);
 
@@ -327,8 +320,17 @@ async login({ commit }, loginUser) {
 
     await $cookies.set('user', user);
 
+    // user email
+    let [{emailAdd}] = data.user
+
+    JSON.parse(atob($cookies.get('jwt').split('.')[1])).emailAdd
+
+    $cookies.set('emailAdd', emailAdd)
+
     // user ID
     let [{userID}] = data.user
+
+    JSON.parse(atob($cookies.get('jwt').split('.')[1])).userID
 
     $cookies.set('userID', userID)
 
@@ -379,6 +381,8 @@ async logOut (context) {
       $cookies.remove('userRole');
 
       $cookies.remove('user');
+
+      $cookies.remove('emailAdd');
 
       $cookies.remove('userID');
 
@@ -456,13 +460,16 @@ async logOut (context) {
   }
 },
 
-async addToCart( {commit} , payload ){
+async addToCart({commit}, payload){
 
-  let {data} = await axios.post(`${DB}cart/${payload.userID}`)
+ console.log(payload);
 
- 
+  let {data} = await axios.post(`${DB}cart/${payload.prodID}?user=${payload.userID}`)
+
+  console.log(data);
+
   window.location.reload()
-  
+
 },
 
      async getCart(context){

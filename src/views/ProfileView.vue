@@ -30,7 +30,7 @@
                   <input class="col-12 my-3" id="text" type="text" v-model="user.userPass" required>
                   <div class="modal-footer">
                     <button class="btn logOut text-white" v-if="$cookies.get('jwt')" @click="logOut()"><i class="fa-solid fa-right-from-bracket"></i></button>
-                    <button  @click="deleteMyUser(user.userID)" class="btn btn-dark" >Delete </button>
+                    <button  @click="deleteMyUser(user.userID)" class="btn btn-dark">Delete Profile</button>
                     <button @click="$store.dispatch('updateUser', user)" class="btn btn-dark" id="submit">Save Changes</button>
                   </div>
                 </form>
