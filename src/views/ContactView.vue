@@ -8,8 +8,8 @@
 
     <div class="contact-form-section d-flex align-content-center justify-content-end position-relative container-fluid col-10">
         <div class="contact-heading container">
-    <h1>Contact Us</h1>
-    <p>20 Worcestershire Crescent <br>
+    <h1 class="animate__animated animate__slideInLeft">Contact Us</h1>
+    <p class="animate__animated animate__slideInLeft animate__slow">20 Worcestershire Crescent <br>
        Blackmerrow Industrial
        Park 1
       <br>
@@ -17,18 +17,23 @@
       <br><br>
       Enquiries <span>+10 624 2828</span> <br>
       Tech Support <span>support@bss.co.za</span></p>
-</div>
-        <form action="https://formspree.io/f/mayrbqgy" method="POST" class="colorful-form container form m-0">
+      <div class="icons icon-link icon-link-hover p-0 m-0 text-black fw-lighter">
+            <i class=" text-danger animate__animated animate__rollIn animate__slower fs-5 mx-2 fa-brands fa-instagram"></i>
+            <i class=" text-danger animate__animated animate__rollIn animate__slow fs-5 mx-2 fa-brands fa-facebook-f"></i>
+            <i class=" text-danger animate__animated animate__rollIn fs-5 mx-2 fa-brands fa-twitter"></i>
+          </div>
+    </div>
+    <form action="https://formspree.io/f/mayrbqgy" method="POST" class="colorful-form container form m-0 animate__animated animate__lightSpeedInRight">
   <div class="form-group">
-    <label class="form-label" for="name">Name:</label>
+    <label class="form-label animate__animated animate__flash animate__delay-2s" for="name">Name:</label>
     <input required="Name" placeholder="Enter your name" class="form-input" type="text" >
   </div>
   <div class="form-group">
-    <label class="form-label" for="email">Email:</label>
+    <label class="form-label animate__animated animate__flash animate__slow animate__delay-2s" for="email">Email:</label>
     <input required="Email" placeholder="Enter your email" class="form-input" name="email" id="email" type="email" autocomplete="off">
   </div>
   <div class="form-group">
-    <label class="form-label" for="message">Message:</label>
+    <label class="form-label animate__animated animate__flash animate__slower animate__delay-2s" for="message">Message:</label>
     <textarea required="" placeholder="Enter your message" class="form-input" name="message" id="message"></textarea>
   </div>
   <button class="form-button" type="submit">Submit</button>
