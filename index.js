@@ -16,7 +16,7 @@ import cartRouter from "./routes/cart.js";
 
 import cookieParser from 'cookie-parser';
 
-import { createToken, verifyToken } from "./middleware/AuthenticateUser.js";
+import { createToken } from "./middleware/AuthenticateUser.js";
 
 config();
 
@@ -47,6 +47,6 @@ app.use('/login', createToken, loginRouter);
 
 app.use('/signup', signUpRouter); 
 
-app.use('/cart', verifyToken, cartRouter);
+app.use('/cart', cartRouter);
  
 app.listen(PORT, () => console.log(`Server Live on PORT http://localhost:${PORT}`));
