@@ -42,21 +42,21 @@ const addToCart = async (userID, prodID) => {
 
     return cart;
 
-};
+}; 
 
 
-const insertCart = async (quantity, prodID, userID) => {
+const insertCart = async (userID, prodID, quantity) => {
 
     await pool.query(`
 
-    INSERT INTO cart (quantity, prodID, userID) 
+    INSERT INTO cart (userID, prodID, quantity) 
 
     VALUES (?, ?, ?)`,
 
-     [quantity, prodID, userID]);
+     [userID, prodID, quantity]);
 
-    return addToCart(quantity, prodID, userID);
-};
+    return addToCart(userID, prodID, quantity);
+}; 
 
  
 const deleteCart = async(cartID)=> {

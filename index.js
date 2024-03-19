@@ -47,6 +47,6 @@ app.use('/login', createToken, loginRouter);
 
 app.use('/signup', signUpRouter); 
 
-app.use('/cart', verifyToken, cartRouter);
+app.use('/cart', cartRouter);
  
 app.listen(PORT, () => console.log(`Server Live on PORT http://localhost:${PORT}`));
