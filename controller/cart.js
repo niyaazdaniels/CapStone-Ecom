@@ -11,12 +11,12 @@ export default {
    addCartItems: async (req, res) => {
 
       const { quantity } = req.body;
-      
+
       const { user } = req.query;
       
-      await insertCart(quantity, +req.params.prodID, user);
+      const insertedItem = await insertCart(user, +req.params.prodID, quantity);
       
-      res.send(await addToCart(user, +req.params.prodID));
+      res.send(insertedItem);
 
    },
 
