@@ -32,7 +32,7 @@ const addToCart = async (userID, prodID) => {
 
         INNER JOIN Products 
 
-        ON cart.userID = Products.userID AND cart.prodID = Products.prodID
+        ON cart.userID = Products.userID AND cart.prodID = Products.pro dID
 
         WHERE cart.userID = ? AND cart.prodID = ?;
 

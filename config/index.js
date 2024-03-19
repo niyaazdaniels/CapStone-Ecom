@@ -16,7 +16,7 @@ const pool = mysql.createPool({
 
     multipleStatements: true,
 
-    connectionLimit: 30
+    connectionLimit: 0
     
 }).promise();
 
