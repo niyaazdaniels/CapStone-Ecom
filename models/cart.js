@@ -5,7 +5,7 @@ const getAllCarts = async(userID)=> {
 
     const [carts] = await pool.query(`
 
-    SELECT prodName, prodDesc, price, prodImage, category, COUNT(cartID) as quantity 
+    SELECT prodName , price , prodImage , category , COUNT(cartID) as quantity 
 
     FROM cart 
 
@@ -26,7 +26,7 @@ const addToCart = async (userID, prodID) => {
 
     const [cart] = await pool.query(`
 
-    SELECT DISTINCT cart.userID, cart.cartID, cart.prodID, Products.prodName, Products.category ,Products.prodImage, Products.price, Users.emailAdd
+    SELECT DISTINCT cart.userID , cart.cartID , cart.prodID , Products.prodName , Products.category , Products.prodImage, Products.price , Users.emailAdd
 
     FROM cart
 
