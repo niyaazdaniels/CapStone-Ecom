@@ -1,33 +1,33 @@
-import { getAllCarts , addToCart , deleteCart , updateCart , getCart , insertCart } from "../models/cart.js"
+import { addToCart , deleteCart , updateCart , getCart , insertCart } from "../models/cart.js"
 
 export default {
 
-   getCartItems: async (req,res)=> {
+   getCart : async (req, res) => {
 
-    res.send(await getAllCarts(+req.params.prodID))
+      res.send(await getCart())
 
-   },
+  },
+  addToCart : async (req, res) => {
 
-   addCartItems: async (req, res) => {
+      console.log(req.query);
 
-      const { quantity } = req.body;
+      console.log(+req.params.prodID);
 
-      const { user } = req.query;
-      
-      const insertedItem = await insertCart(user, +req.params.prodID, quantity);
-      
-      res.send(insertedItem);
+      let { quantity } = req.body
 
-   },
+      let { userID } = req.query
 
-   deleteCartItems: async (req,res)=> {
+      await insertCart(+req.params.prodID, userID, quantity)
 
-    await deleteCart(+req.params.prodID);
+      res.send(await getCart())
 
-    res.send(await getAllCarts())
+  },
+  deleteFromCart : async (req, res) => {
 
-   },
+      await deleteCart(+req.params.proID)
 
+      res.send(await getCart())
+  },
    updateCartItems: async (req,res)=> {
 
     let {quantity} = req.body
@@ -38,7 +38,7 @@ export default {
 
     await updateCart(quantity,+req.params.prodID);
 
-    res.send(await getAllCarts())
+    res.send(await getCart())
     
    }
 } 

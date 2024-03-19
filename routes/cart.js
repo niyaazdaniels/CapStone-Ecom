@@ -5,14 +5,18 @@ import controller from '../controller/cart.js'
 const router = express.Router()
 
 
-router.route('/:id')
+router
 
-          .get(controller.getCartItems) 
+      .route('/:cartID')
+
+          .get(controller.getCart) 
 
           .patch(controller.updateCartItems)
 
-          .delete(controller.deleteCartItems)
+          .delete(controller.deleteFromCart)
 
-          .post(controller.addCartItems)
+          .post(controller.addToCart)
+
+
 
     export default router  
