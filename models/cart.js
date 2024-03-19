@@ -5,7 +5,7 @@ const getAllCarts = async(userID)=> {
 
     const [carts] = await pool.query(`
 
-    SELECT DISTINCT prodName, price, prodImage, category, COUNT(cartID) as quantity 
+    SELECT prodName, prodDesc, price, prodImage, category, COUNT(cartID) as quantity 
 
     FROM cart 
 
@@ -26,16 +26,16 @@ const addToCart = async (userID, prodID) => {
 
     const [cart] = await pool.query(`
 
-        SELECT *
+    SELECT DISTINCT cart.userID, cart.cartID, cart.prodID, Products.prodName, Products.category ,Products.prodImage, Products.price, Users.emailAdd
 
-        FROM cart
+    FROM cart
 
-        INNER JOIN Products 
+    JOIN Products ON cart.prodID = Products.prodID
 
-        ON cart.userID = Products.userID AND cart.prodID = Products.pro dID
+    JOIN Users ON cart.userID = Users.userID
 
-        WHERE cart.userID = ? AND cart.prodID = ?;
-
+    WHERE cart.userID = ?;
+    
     `,
     
     [userID, prodID]);
@@ -46,38 +46,6 @@ const addToCart = async (userID, prodID) => {
 
 
 const insertCart = async (quantity, prodID, userID) => {
-    
-    const [user] = await pool.query(`
-
-    SELECT * FROM Users 
-
-    WHERE userID = ?`, 
-
-    [userID]);
-
-    const [product] = await pool.query(`
-        
-        SELECT * FROM 
-
-        Products 
-
-        WHERE prodID = ?`, 
-
-        [prodID])
-
-    if (user.length === 0) {
-
-        console.error(`User with ID ${userID} does not exist.`);
-
-        return null; 
-    }
-
-    if (product.length === 0) {
-
-        console.error(`Product with ID ${prodID} does not exist.`);
-
-        return null;
-    }
 
     await pool.query(`
 
