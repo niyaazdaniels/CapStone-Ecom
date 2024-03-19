@@ -9,14 +9,15 @@ router
 
       .route('/:cartID')
 
-          .get(controller.getCart) 
+          .get(controller.getCartItems) 
 
           .patch(controller.updateCartItems)
 
-          .delete(controller.deleteFromCart)
+          .delete(controller.deleteCartItems)
 
-          .post(controller.addToCart)
+          .post(controller.addCartItems)
 
+      
 
 
     export default router  
