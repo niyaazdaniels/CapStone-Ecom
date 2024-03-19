@@ -12,9 +12,9 @@ export default {
 
       const { quantity } = req.body;
 
-      const { user } = req.query;
+      const { userID } = req.query;
       
-      const insertedItem = await insertCart(user, +req.params.prodID, quantity);
+      const insertedItem = await insertCart(userID, +req.params.prodID, quantity);
       
       res.send(insertedItem);
 
