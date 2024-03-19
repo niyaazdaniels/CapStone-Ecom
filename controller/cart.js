@@ -12,9 +12,9 @@ export default {
 
       const { quantity } = req.body;
 
-      const { userID } = req.query;
+      const { user }  = req.query;
       
-      const insertedItem = await insertCart(userID, +req.params.prodID, quantity);
+      const insertedItem = await insertCart(user, +req.params.prodID, quantity);
       
       res.send(insertedItem);
 
@@ -26,10 +26,10 @@ export default {
 
     res.send(await getAllCarts())
 
-   },
-
+   },  
+ 
    updateCartItems: async (req,res)=> {
-
+ 
     let {quantity} = req.body
 
     const [user] = await getCart(+req.params.prodID);
