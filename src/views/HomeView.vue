@@ -10,7 +10,7 @@
                         <span class="circle3"></span>
                         <span class="circle4"></span>
                         <span class="circle5"></span>
-                        <span class="submit">Contact Us</span>
+                       <span> <a href="/contact" class="submit">Contact Us</a></span>
                     </button>
                 </div>
             </div>
@@ -51,7 +51,7 @@ button {
   background-color: #171717;
   padding: 0.6em 2em;
   border: none;
-  width: 140px;
+  width: 120px;
   border-radius: 3rem;
   position: relative;
   cursor: pointer;
@@ -99,6 +99,10 @@ button:hover span:not(:nth-child(6)) {
   transition: 1.5s ease;
 }
   
+.submit {
+    text-decoration: none;
+    color: white;
+}
 
 
 /* Media queries */
