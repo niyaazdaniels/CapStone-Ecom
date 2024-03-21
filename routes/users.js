@@ -27,13 +27,13 @@ router
 router 
     .route('/:userID/cart')
     
-    .post(cartController.additems)
+    .post(cartController.addItemsToCart)
 
-    .get(cartController.getitems) 
+    .get(cartController.getItemsFromCart) 
     
-    .patch(cartController.updateitems)
+    .patch(cartController.updateItemInCart)
     
-    .delete(cartController.deleteitems)
+    .delete(cartController.deleteItemsInCart)
    
 
 export default router;
