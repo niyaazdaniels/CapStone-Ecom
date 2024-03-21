@@ -123,9 +123,9 @@ export default {
 }
 
 .card-body img{
-    width: 200px;
+    width: 190px;
     height: auto;
-    border-radius: 20%;
+    border-radius: 40%;
 }
 .about{
     max-width: 100%;

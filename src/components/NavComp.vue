@@ -20,7 +20,7 @@
                         <router-link v-if="!$cookies.get('jwt')" to="/login" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tooltip on bottom">Login</router-link>
                         <router-link v-if="$cookies.get('jwt')" to="/profile" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tooltip on bottom" ><i class="fa-regular fa-user"></i></router-link>
                         <a class="logOut " v-if="$cookies.get('jwt')" @click="logOut" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tooltip on bottom" ><i class="fa-solid fa-right-from-bracket"></i></a>
-                        <router-link to="/checkout" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tooltip on bottom"><i class="fa-solid fa-cart-arrow-down"></i></router-link>
+                        <router-link v-if="$cookies.get('jwt')" to="/checkout" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tooltip on bottom"><i class="fa-solid fa-cart-arrow-down"></i></router-link>
                     </ul>
                 </div>
             </div>
