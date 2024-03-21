@@ -37,8 +37,8 @@ export default {
   font-weight: light;
   font-size: 12px;
   box-sizing: border-box;
-  letter-spacing: 2px;
-  
+  letter-spacing: 3px;
+
 }
 .btn {
   font-size: 12px;

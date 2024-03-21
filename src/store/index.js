@@ -10,7 +10,9 @@ import Swal from "sweetalert2";
 
 axios.defaults.withCredentials = true;
 
-const DB = "https://capstone-ecom.onrender.com/";
+// const DB = "https://capstone-ecom.onrender.com/";
+const DB = "http://localhost:4000/";
+
 
 export default createStore({
 
@@ -28,7 +30,7 @@ export default createStore({
 
     LoggedIn: false,
 
-    cart: [],
+    cart: "",
 
   },
 
@@ -68,9 +70,9 @@ export default createStore({
       state.LoggedIn = LoggedIn;
     },
 
-    setCart: (state, cart) => {
+    setCart: (state, value) => {
 
-      state.cart = cart
+      state.cart = value
       }
     },
 
@@ -418,10 +420,6 @@ async login({ commit }, loginUser) {
 
     $cookies.set('userID', userID)
 
-    let [{cartID}] = data.user
-
-    $cookies.set('cartID', cartID)
-
     setTimeout(async () => {
 
       await router.push('/');
@@ -474,7 +472,6 @@ async logOut (context) {
 
       $cookies.remove('userID');
 
-      $cookies.remove('cartID');
 
       await Swal.fire({
 
@@ -521,7 +518,6 @@ async logOut (context) {
 
     $cookies.remove('userID');
 
-    $cookies.remove('cartID');
 
     sweet({
 
@@ -560,90 +556,34 @@ async logOut (context) {
   }
 },
 
-async addToCart({ commit }, payload) {
+async addToCart({commit},payload){
 
-  try {
+  let {data} = await axios.post(`${DB}cart/${payload.prodID}?user=${payload.userID}`)
 
-    const res = await axios.post(`${DB}cart/${payload.id}?user=${payload.userID}`);
-
-    const data = res.data;
-
-    console.log(data);
-
-    await $cookies.set('setCart', res.data);
-
-    window.location.reload();
-
-  } catch (error) {
-
-    console.error("Error adding to cart:", error);
-
-    Swal.fire({
-
-      icon: 'error',
-
-      title: 'Error',
-
-      text: 'An error occurred while adding to cart. Please try again later.',
-      
-    });
-  }
+  console.log(data);
 },
 
+ async getCart({commit},userID) {
+
+  let {data} = await axios.get(`${DB}cart/${userID}`)
+
+  console.log(data);
+
+  commit('setCart',data)
 
 
-async getCart({ commit  }) {
+ },
+ 
+ async deleteFromCart({commit},prodID){
 
-  try {
-    const res = await axios.get(`${DB}cart/${$cookies.get('cartID')}`);
-
-    const data = res.data;
-
-    console.log(data);
-
-    commit('setCart', data);
-
-    if (!data) {
-
-      Swal.fire({
-
-        icon: 'info',
-
-        title: 'No Cart Found',
-
-        text: 'There is no cart associated with this user ID and cart ID.',
-
-      });
-    }
-
-  } catch (error) {
-
-    console.error("Error fetching cart:", error);
-
-    Swal.fire({
-
-      icon: 'error',
-
-      title: 'Error',
-
-      text: 'An error occurred while fetching the cart. Please try again later.',
-
-    });
-  }
-},
-
-async deleteFromCart({commit},cartID){
-
-  let {data} = await axios.delete(DB + '/' + cartID )
+  let {data} = await axios.delete(`${DB}cart/${prodID}` )
 
   console.log(data);
 
   window.location.reload()
-
- }  
-
-
-    },      
+ },
+},
+ 
 
   modules: {
 
