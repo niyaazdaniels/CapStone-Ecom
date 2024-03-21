@@ -176,7 +176,7 @@ export default {
     display: flex;
     height: 250px;
     flex-direction: column;
-    font-size: 12px;
+    font-size: 10px;
   }
 }
 @media (max-width: 355px) {

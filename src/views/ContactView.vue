@@ -1,5 +1,5 @@
 <template>
-  <section class="contact-background">
+  <section class="contact-background overflow-hidden">
     <div class="contact-heading-background position-relative">
         <div class="container-fluid contact-text position-relative">
             <h1 class="container d-flex ms-auto justify-content-center text-white fw-medium">Get in Touch</h1>
@@ -23,7 +23,7 @@
             <i class=" text-danger animate__animated animate__rollIn fs-5 mx-2 fa-brands fa-twitter"></i>
           </div>
     </div>
-    <form action="https://formspree.io/f/mayrbqgy" method="POST" class="colorful-form container form m-0 animate__animated animate__lightSpeedInRight">
+    <form action="https://formspree.io/f/mayrbqgy" method="POST" class="colorful-form container form m-0 animate__animated animate__lightSpeedInRight overflow-hidden">
   <div class="form-group">
     <label class="form-label animate__animated animate__flash animate__delay-2s" for="name">Name:</label>
     <input required="Name" placeholder="Enter your name" class="form-input" type="text" >
@@ -129,8 +129,9 @@ textarea.form-input {
 }
 @media (max-width: 836px){
 .contact-form-section{
-    left: -10px;
+    left: 70px;
     gap: 100px;
+    display: flex;
 }
 h1{
 font-size: 1.6rem;
@@ -139,11 +140,7 @@ p{
     font-size: 16px;
 }
 }
-@media (max-width: 824px) {
-    .contact-form-section{
-        left: 0px;
-    }
-}
+/*  */
 @media (max-width: 785px) {
     .contact-form-section{
         left: 3.2rem;
@@ -153,6 +150,12 @@ p{
     .contact-form-section{
         left: 5rem;
     }
+}
+@media (max-width: 740px) {
+    .contact-form-section{
+        left: 100px;
+    }
+    
 }
 @media (max-width: 712px) {
     .contact-form-section{
@@ -165,26 +168,29 @@ p{
     .colorful-form{
        font-size: 14px;
        position: relative;
-       left: 50px;
+       left: 00px;
     }
     .contact-heading{
-        left: 40px  ;
+        left: 20px  ;
     }
     @media (max-width: 640px) {
         .contact-form-section{
-            left: 0px;
+            left: 60px;
+        }
+        .contact-heading {
+            left: -10px;
         }
     }
-    @media (max-width: 598px){
+    /* @media (max-width: 598px){
         .contact-form-section{
             left: 0px;
         }
-    }
-    @media (max-width: 579px) {
+    } */
+    /* @media (max-width: 579px) {
         .contact-form-section{
             left: 0px;
         }
-    }
+    } */
     @media (max-width: 490px){
         .contact-form-section{
             left: 2rem;
@@ -199,12 +205,20 @@ p{
     }
     @media (max-width: 460px) {
         .contact-form-section{
-        width: 300px;
-          left: 60px;
+          left: 25px;
         }
         .colorful-form{
             position: relative;
             left: 20px;
+            min-width: 300px;
+        }
+        .contact-heading{
+            left: 17px;
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+        p {
+            font-size: 14px;
         }
     }
     @media (max-width: 400px){
@@ -212,7 +226,7 @@ p{
             left: 1rem;
         }
         .contact-heading{
-            left: -28px;
+            left: 10px;
         }
     }
     @media (max-width: 380px){
@@ -228,7 +242,7 @@ p{
             width: 290px;
         }
     }
-    @media (max-width: 369px){
+    /* @media (max-width: 369px){
         .contact-form-section{
             font-size: 10px;
             left: 2.2rem;
@@ -239,7 +253,7 @@ p{
         .colorful-form{
             left: 35px;
         }
-    }
+    } */
     @media (max-width: 360px) {
         .colorful-form{
             font-size: 10px;
@@ -249,10 +263,17 @@ p{
     @media (max-width: 355px) {
         .colorful-form{
             font-size: 10px;
-            left: 1.7rem;
+            left: 0px;
+            min-width: 290px;
+        }
+        p {
+            font-size: 12px;
+        }
+        .contact-heading{
+            left: -1px;
         }
     }
-    @media (max-width: 350px) {
+    /* @media (max-width: 350px) {
         .colorful-form{
             font-size: 10px;
             left: 1.48rem;
@@ -265,6 +286,15 @@ p{
             left: -5px;
             font-size: 12px;
         }
+    } */
+    @media (max-width: 345px) {
+        .colorful-form {
+            min-width: 290px;
+            left: -7px;
+        }
+        p {
+            font-size: 13px;
+        }
     }
     @media (max-width: 335px) {
         .contact-form-section{
@@ -276,8 +306,14 @@ p{
             font-size: 12px;
         }
         .colorful-form{
-            font-size: 10px;
-            left: 5.7rem
+            min-width: 290px;
+            left: 4rem;
+        }
+        p {
+           font-size: 12px;
+        }
+        .contact-background{
+            min-height: 50vh;
         }
     }
     @media (max-width: 320px){
@@ -293,15 +329,33 @@ p{
             font-size: 12px;
         }
     }
-    @media (max-width: 300px){
+    @media (max-width: 310px){
         .contact-form-section{
-            left: 45px;
+            left: 50px;
         }
         .colorful-form{
-            left: 0.5px;
+            left: 5px;
         }
         .contact-heading{
             left: -20px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+        .contact-background {
+            min-height: 50vh;
+        }
+        p {
+            font-size: 10px;
+        }
+        h1 {
+            padding: 5px;
+        }
+    }
+    @media (max-width: 305px){
+        .colorful-form{
+            min-width: 290px;
+            left: -5px;
+
         }
     }
 }

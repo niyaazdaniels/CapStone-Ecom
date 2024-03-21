@@ -30,7 +30,7 @@ export default {
 .background{
     background-image: url(https://i.postimg.cc/3rpQy1Bq/Upscales-ai-1709639906381.webp);
     background-position: center;
-    min-height: 85.9vh;
+    min-height: 81.9vh;
     background-size: cover;
 }
 

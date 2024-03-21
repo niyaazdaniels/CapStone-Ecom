@@ -275,6 +275,8 @@ sortToggle() {
   display: flex !important;
   justify-content: space-between !important;
 }
+
+
 /* Media queries for responsive design */
 
 @media screen and (max-width:300px) {
@@ -286,6 +288,12 @@ sortToggle() {
   }
   .search-button {
     width: 290px !important;
+    display: flex;
+    position: relative;
+    right: 20px;
+  }
+  .inner-text{
+    height: 8vh;
   }
   .row {
     --bs-gutter-x: 0;
