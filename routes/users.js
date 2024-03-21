@@ -2,6 +2,8 @@ import express from "express";
 
 import userController from "../controller/users.js";
 
+import cartController from "../controller/cart.js"
+
 const router = express.Router();
 
 router
@@ -22,5 +24,16 @@ router
          
         .delete(userController.deleteOneUser); 
 
+router 
+    .route('/:userID/cart')
+    
+    .post(cartController.additems)
+
+    .get(cartController.getitems) 
+    
+    .patch(cartController.updateitems)
+    
+    .delete(cartController.deleteitems)
+   
 
 export default router;

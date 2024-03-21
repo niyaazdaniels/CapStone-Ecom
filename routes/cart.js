@@ -1,23 +1,18 @@
 import express from 'express';
-
 import controller from '../controller/cart.js'
+
 
 const router = express.Router()
 
 
-router
+router.route('/:cartID')
+         
+.post(controller.additems)
 
-      .route('/:cartID')
-
-          .get(controller.getCartItems) 
-
-          .patch(controller.updateCartItems)
-
-          .delete(controller.deleteCartItems)
-
-          .post(controller.addCartItems)
-
-      
-
+    .get(controller.getitems) 
+    
+    .patch(controller.updateitems)
+    
+    .delete(controller.deleteitems)
 
     export default router  

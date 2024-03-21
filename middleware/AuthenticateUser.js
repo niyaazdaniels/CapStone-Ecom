@@ -41,12 +41,12 @@ const verifyToken = async (req, res, next) => {
 
         res.status(500).send('Internal Server Error');
     }
-};
+}; 
 
 const createToken = async (req, res, next) => {
 
     try {
-        
+
         const { emailAdd, userPass } = req.body;
 
         const hashedUserPass = await verifyExistingUser(emailAdd);
@@ -56,7 +56,7 @@ const createToken = async (req, res, next) => {
             console.log("User not found");
 
             return res.status(401).send({ msg: "User not found" });
-        }
+        } 
 
         const result = await bcrypt.compare(userPass, hashedUserPass);
 
