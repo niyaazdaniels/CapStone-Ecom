@@ -16,7 +16,7 @@ export default {
 
             res.status(500).json({ error: "Error fetching products" });
 
-        }
+        } 
     },
 
     addOneProduct: async (req, res) => {
