@@ -149,32 +149,97 @@ export default createStore({
     },
     
     async registerNewUser({ commit, dispatch }, registerUser) {
-        try {
-            const res = await axios.post(`${DB}signup`, registerUser);
-    
-            await new Promise(resolve => setTimeout(resolve, 1500));
-    
-            Swal.fire({
 
-                icon: 'success',
+      try {
+          const res = await axios.post(`${DB}signup`, registerUser);
+          
+          await new Promise(resolve => setTimeout(resolve, 1500));
+          
+          Swal.fire({
 
-                title: 'Registration Successful!',
+              icon: 'success',
 
-                text: 'You can now log in with your credentials. Welcome aboard!',
+              title: 'Registration Successful!',
 
-            });
+              text: 'You can now log in with your credentials. Welcome aboard!',
 
-            router.push('/login');
-    
-            dispatch("fetchUsers");
-    
-            commit("setUser", res.data.user);
+          });
+  
+          router.push('/login');
+          
+          dispatch("fetchUsers");
+          
+          commit("setUser", res.data.user);
 
-        } catch (error) {
+      } catch (error) {
 
-            console.error("Error registering new user:", error);
-        }
-    },
+          console.error("Error registering new user:", error.message);
+  
+          if (error.response) {
+
+              if (error.response.status === 409) {
+
+                  console.error("User already exists:", error.response.data.message);
+
+                  Swal.fire({
+
+                      icon: 'error',
+
+                      title: 'Registration Failed',
+
+                      text: 'A user with this email already exists. Please use a different email or log in.',
+
+                  });
+
+              } else {
+
+                  console.error("Server responded with status:", error.response.status);
+
+                  console.error("Response data:", error.response.data);
+
+                  Swal.fire({
+
+                      icon: 'error',
+
+                      title: 'Registration Failed',
+
+                      text: 'An error occurred while registering. Please try again later.',
+
+                  });
+              }
+
+          } else if (error.request) {
+
+              console.error("No response received from server");
+
+              Swal.fire({
+
+                  icon: 'error',
+
+
+                  title: 'Network Error',
+
+                  text: 'Could not connect to the server. Please check your internet connection and try again.',
+
+              });
+
+          } else {
+
+              console.error("Error:", error.message);
+
+              Swal.fire({
+
+                  icon: 'error',
+
+                  title: 'Unexpected Error',
+
+                  text: 'An unexpected error occurred. Please try again later.',
+
+              });
+          }
+      }
+  },
+  
     
     // function to update an existing user
     async updateUser({ commit }, payload) {
@@ -212,6 +277,8 @@ export default createStore({
 
         console.log("User deleted successfully");
 
+        sweet("User deleted successfully");
+
       } catch (e) {
 
         console.error(e);
@@ -234,11 +301,27 @@ export default createStore({
 
           commit("setProduct", res.data);
 
+          this.$swal({
+
+            title: "Success!",
+
+            text: "Product added successfully",
+
+            icon: "success",
+
+            timer: 2000, 
+
+            buttons: false 
+
+          });
+
         }
+
       } catch (e) {
 
         console.error(e);
-        sweet("Request Failed: An error occurred while adding a new product.");
+
+        this.$swal("Error", "An error occurred while adding a new product.", "error");
 
       }
     },
@@ -280,6 +363,8 @@ async deleteProduct({ commit }, prodID) {
     commit("fetchProducts");
 
     console.log("Product deleted successfully");
+
+    sweet("Product deleted successfully");
 
   } catch (e) {
 
@@ -334,6 +419,10 @@ async login({ commit }, loginUser) {
 
     $cookies.set('userID', userID)
 
+    let [{cartID}] = data.user
+
+    $cookies.set('cartID', cartID)
+
     setTimeout(async () => {
 
       await router.push('/');
@@ -386,6 +475,8 @@ async logOut (context) {
 
       $cookies.remove('userID');
 
+      $cookies.remove('cartID');
+
       await Swal.fire({
 
           title: 'Logged out successfully!',
@@ -417,11 +508,21 @@ async logOut (context) {
 
   try {
 
-    axios.delete(`${DB}/users/${userID}`);
+    axios.delete(`${DB}users/${userID}`);
 
     let cookies = $cookies.keys();
 
     $cookies.remove('jwt');
+
+    $cookies.remove('userRole');
+
+    $cookies.remove('user');
+
+    $cookies.remove('emailAdd');
+
+    $cookies.remove('userID');
+
+    $cookies.remove('cartID');
 
     sweet({
 
@@ -460,25 +561,77 @@ async logOut (context) {
   }
 },
 
-async addToCart({commit}, payload){
+async addToCart({ commit }, payload) {
 
- console.log(payload);
+  try {
 
-  let {data} = await axios.post(`${DB}cart/${payload.prodID}?user=${payload.userID}`)
+    const res = await axios.post(`${DB}cart/${payload.prodID}?user=${payload.userID}`);
 
-  console.log(data);
+    const data = res.data;
 
-  window.location.reload()
+    console.log(data);
 
+    await $cookies.set('setCart', res.data);
+
+    window.location.reload();
+
+  } catch (error) {
+
+    console.error("Error adding to cart:", error);
+
+    Swal.fire({
+
+      icon: 'error',
+
+      title: 'Error',
+
+      text: 'An error occurred while adding to cart. Please try again later.',
+      
+    });
+  }
 },
 
-     async getCart(context){
 
-      const res = await axios.get(`${DB}cart`)
 
-      context.commit('setCart', res.data)
+async getCart({ commit  }) {
 
-     }
+  try {
+    const res = await axios.get(`${DB}cart/${$cookies.get('cartID')}`);
+
+    const data = res.data;
+
+    console.log(data);
+
+    commit('setCart', data);
+
+    if (!data) {
+
+      Swal.fire({
+
+        icon: 'info',
+
+        title: 'No Cart Found',
+
+        text: 'There is no cart associated with this user ID and cart ID.',
+
+      });
+    }
+
+  } catch (error) {
+
+    console.error("Error fetching cart:", error);
+
+    Swal.fire({
+
+      icon: 'error',
+
+      title: 'Error',
+
+      text: 'An error occurred while fetching the cart. Please try again later.',
+
+    });
+  }
+}
 
     },      
 

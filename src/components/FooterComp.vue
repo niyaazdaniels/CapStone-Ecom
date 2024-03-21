@@ -1,5 +1,5 @@
 <template>
-  <footer class="text-center text-lg-start">
+  <footer class="text-center text-lg-start overflow-hidden">
   <div class="container-fluid pt-2">
     <div class="row">
       <div class="col-lg-6 col-md-12">
@@ -12,7 +12,7 @@
             Tech Support support@bss.co.za
           </p>
             <br>
-            <div class="icons icon-link icon-link-hover p-0 m-0 text-black fw-lighter">
+            <div class="icons icon-link icon-link-hover p-0 mt-0 text-black fw-lighter overflow-hidden">
             <i class=" text-warning animate__animated animate__rollIn animate__slower fs-5 mx-2 fa-brands fa-instagram"></i>
             <i class=" text-warning animate__animated animate__rollIn animate__slow fs-5 mx-2 fa-brands fa-facebook-f"></i>
             <i class=" text-warning animate__animated animate__rollIn fs-5 mx-2 fa-brands fa-twitter"></i>

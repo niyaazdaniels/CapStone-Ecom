@@ -66,7 +66,12 @@ export default {
   flex-flow: row wrap;
   width: 100vw;
 }
-
+@media (max-width: 1073px) {
+  h2 {
+    font-size: 1.8rem;
+    margin: 0;
+  }
+}
 @media (max-width: 1024px) {
   .body-header{
     min-height: 21vh;
@@ -83,11 +88,20 @@ export default {
 }
 @media (max-width: 962px) {
   h2 {
-    font-size: 1rem;
+    font-size: 1.4rem;
   }
   .row {
     position: relative;
-    left: -40px;
+    left: 25px;
+  }
+}
+@media (max-width: 785px) {
+  h2 {
+    font-size: 1.3rem;
+  }
+  .row {
+    min-width: 200px;
+    left: -10px;
   }
 }
  @media (max-width: 768px) {
@@ -117,16 +131,15 @@ export default {
   .row {
     height: 30px;
     width: 130px;
-    top: 20px;
+    top: 2rem;
     justify-content: center;
-    right: 10px;
   }
   h2{
     font-size: 0.7rem;
   }
   .body-header{
-    min-height: 8vh;
-    top: 55px;
+    min-height: 10vh;
+    top: 3rem;
   }
   p {
     font-size: 14px;
@@ -143,20 +156,30 @@ export default {
     font-size: 1rem;
   }
   p {
-    font-size: 12px;
+    font-size: 10px;
   }
   .row{
     justify-content: center;
     align-items: center;
-    right: 20px;
-    top: 11px ;
+    right: 0px;
+    top: 20px ;
   }
   .body-header{
-    min-height: 6vh;
+    min-height: 8vh;
     top: 55px;
   }
   .background{
-    max-height: 90vh;
+   min-height: 85vh;
+  }
+ }
+ @media (max-width: 300px) {
+  .row {
+    margin-right: 40px;
+    position: relative;
+    padding-right: 20px;
+  }
+  .background{
+    min-height: 90vh;
   }
  }
 </style>
