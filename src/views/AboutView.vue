@@ -66,9 +66,14 @@ export default {
   flex-flow: row wrap;
   width: 100vw;
 }
+@media (max-width: 1116px){
+  h2 {
+    font-size: 1.7rem;
+  }
+}
 @media (max-width: 1073px) {
   h2 {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     margin: 0;
   }
 }
@@ -83,7 +88,7 @@ export default {
     font-size: 1.6rem;
   }
   .background{
-    height: 100vh;
+    height: 90vh;
   }
 }
 @media (max-width: 962px) {
@@ -142,13 +147,18 @@ export default {
     top: 3rem;
   }
   p {
-    font-size: 14px;
+    font-size: 12px;
   }
   .become-independent-heading {
     align-self: start;
   }
   h1{
     font-size: 22px;
+  }
+ }
+ @media (max-width: 342px) {
+  p {
+    font-size: 11px;
   }
  }
  @media (max-width: 320px) {

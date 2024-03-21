@@ -150,7 +150,7 @@ export default {
 .login-background {
   background: linear-gradient(-45deg, #1E1E1E, rgb(68, 68, 68), #575a59);
   background-size: 400% 400%;
-  animation: gradient 5s ease infinite;
+  animation: gradient 3s ease infinite;
   height: 100vh;
 }
 

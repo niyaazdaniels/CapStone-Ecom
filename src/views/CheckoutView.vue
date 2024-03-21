@@ -2,7 +2,6 @@
   <div class="checkout-background">
     <h1 class="text-white">Checkout</h1>
     <div class="table table-responsive" >
-    
       <table class="table table-bordered table-hover table-dark" >
                        <thead>
                            <tr>
@@ -12,7 +11,6 @@
                                <th>Category</th>
                                <th>Image</th>
                                <th>Action</th>
-                               
                            </tr>
                        </thead>
                        <tbody>
@@ -23,30 +21,43 @@
                                <td data-label="Category">{{ product.category }}</td>
                                <td data-label="Image"><img :src="product.prodImage" alt= "product.prodName" id="product-image" class=" img-fluid"></td>
                                <td data-label="Actions"><button class="btn" @click="deleteItem(product.prodID)">Delete</button>
-                               <button class="btn" @click="deleteItem(product.userID)">Update</button></td>
-                           </tr>
-                       </tbody>
-                   </table>
-               </div>
-              </div> 
+                               <button class="btn" @click="deleteItem(product.cartID)">Update</button></td>
+                              </tr>
+             </tbody>
+          </table>
+      </div>
+  </div> 
 </template>
 
 <script>
+
 export default {
+
   components: {
+
   },
+
   methods: {
-    deleteItem(prodID) {
-      this.$store.dispatch('deleteFromCart', prodID)
+
+    deleteItem(cartID) {
+
+      this.$store.dispatch('deleteFromCart', cartID)
+
     }
   },
   computed: {
+
     getCart() {
+
       this.$store.dispatch('getCart', $cookies.get('userID'))
+
     }
   },
+
   mounted() {
+
     this.getCart
+
     this.deleteItem
   }
 }

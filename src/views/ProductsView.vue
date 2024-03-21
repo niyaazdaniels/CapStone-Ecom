@@ -28,7 +28,7 @@
             <img :src="product.prodImage" class="card-img-top img-fluid " id="image" loading="lazy" :alt="product.prodName" />
           <div class="card-body">
             <div class="title">
-              <h5 class="card-title fw-medium fs-">{{ product.prodName }}</h5>
+              <h5 class="card-title fw-semibold">{{ product.prodName }}</h5>
             </div>
             <div class="card-body overflow-y-hidden  ">
               <h5 class="card-text fs-6 fw-medium overflow-hidden">{{ product.prodDesc }}</h5>
@@ -50,7 +50,6 @@
       <SpinnerComp />
     </div>
   </div>
-            
     </section>
 </template>
 
@@ -72,6 +71,7 @@ export default {
       return this.$store.state.products;
 
     },
+
     filterDBProducts() {
 
   let filter = this.products;
@@ -117,6 +117,7 @@ return filter.sort((a, b) => {
     this.$store.dispatch("fetchProducts");
 
   },
+
   methods: {
 
 searchDBProducts(e) {

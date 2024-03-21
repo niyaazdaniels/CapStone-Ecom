@@ -10,8 +10,7 @@ import Swal from "sweetalert2";
 
 axios.defaults.withCredentials = true;
 
-// const DB = "https://capstone-ecom.onrender.com/";
-const DB = "http://localhost:4000/";
+const DB = "https://capstone-ecom.onrender.com/";
 
 
 export default createStore({
@@ -406,6 +405,11 @@ async login({ commit }, loginUser) {
 
     await $cookies.set('user', user);
 
+    // user cart ID
+    const [cartID] = data.user;
+
+    await $cookies.set('cartID', cartID);
+
     // user email
     let [{emailAdd}] = data.user
 
@@ -556,34 +560,104 @@ async logOut (context) {
   }
 },
 
-async addToCart({commit},payload){
+async addToCart({ commit }, payload) {
 
-  let {data} = await axios.post(`${DB}cart/${payload.prodID}?user=${payload.userID}`)
+  try {
 
-  console.log(data);
+    let { data } = await axios.post(`${DB}cart/${payload.prodID}?user=${payload.userID}`);
+
+    console.log(data);
+
+    Swal.fire({
+
+      icon: 'success',
+
+      title: 'Added to Cart!',
+
+      text: 'Product has been added to your cart.',
+      
+    });
+
+  } catch (error) {
+
+    console.error(error);
+
+    Swal.fire({
+
+      icon: 'error',
+
+      title: 'Oops...',
+
+      text: 'Something went wrong! Please try again.',
+
+    });
+
+  }
 },
 
- async getCart({commit},userID) {
+async getCart({ commit }, userID) {
 
-  let {data} = await axios.get(`${DB}cart/${userID}`)
+  try {
 
-  console.log(data);
+    let { data } = await axios.get(`${DB}cart/${userID}`);
 
-  commit('setCart',data)
+    console.log(data);
 
+    commit('setCart', data);
 
- },
- 
- async deleteFromCart({commit},prodID){
+  } catch (error) {
 
-  let {data} = await axios.delete(`${DB}cart/${prodID}` )
+    console.error(error);
 
-  console.log(data);
+    Swal.fire({
+      
+      icon: 'error',
 
-  window.location.reload()
- },
+      title: 'Oops...',
+
+      text: 'Failed to retrieve your cart. Please try again later.',
+
+    });
+  }
 },
  
+async deleteFromCart({ commit }, prodID) {
+
+    try {
+
+      let { data } = await axios.delete(`${DB}cart/${prodID}`);
+
+      console.log(data);
+
+      Swal.fire({
+
+        icon: 'success',
+
+        title: 'Removed from Cart!',
+
+        text: 'Product has been removed from your cart.',
+
+      }).then(() => {
+
+        window.location.reload();
+      });
+
+    } catch (error) {
+
+      console.error(error);
+
+      Swal.fire({
+
+        icon: 'error',
+
+        title: 'Oops...',
+
+        text: 'Failed to remove the product from your cart. Please try again later.',
+
+      });
+    }
+  },
+},
 
   modules: {
 
