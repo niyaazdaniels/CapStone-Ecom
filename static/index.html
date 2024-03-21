@@ -48,7 +48,7 @@
             <td colspan="2">Delete a user's data</td>
           </tr>
           <tr>
-            <td colspan="2">/register</td>
+            <td colspan="2">/signup</td>
             <td colspan="2">POST</td>
             <td colspan="2">Register a user</td>
           </tr>
@@ -85,6 +85,27 @@
             <td colspan="2">POST</td>
             <td colspan="2">Add a product</td>
           </tr>
+          <th colspan="5" class="text-center">Products</th>
+          <tr>
+          <td colspan="2">/cart</td>
+          <td colspan="2">POST</td>
+          <td colspan="2">Add a product to cart</td>
+        </tr>
+          <tr>
+          <td colspan="2">/cart/:prodID</td>
+          <td colspan="2">PATCH</td>
+          <td colspan="2">To edit a product in cart</td>
+        </tr>
+          <tr>
+          <td colspan="2">/cart/:prodID</td>
+          <td colspan="2">DELETE</td>
+          <td colspan="2">To delete a product in cart</td>
+        </tr>
+          <tr>
+          <td colspan="2">/cart/</td>
+          <td colspan="2">DELETE</td>
+          <td colspan="2">To delete the entire cart</td>
+        </tr>
         </tbody>
       </table>
 
