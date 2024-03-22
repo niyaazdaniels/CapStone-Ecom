@@ -1,4 +1,4 @@
-import {addToCart,deleteCart,updateCart,getCart,insertCart, getManyCarts} from "../models/cart.js";
+import {addToCart,deleteCart,updateCart,getCart,insertCart, getManyCarts,dropCart} from "../models/cart.js";
 
 export default {
 
@@ -21,8 +21,8 @@ export default {
    },
 
    deleteItemsInCart: async (req,res)=> {
-
-    await deleteCart(+req.body.userID, +req.params.prodID);
+      
+    await deleteCart(+req.params.cartID);
 
     res.send(await getManyCarts())
  
@@ -30,7 +30,7 @@ export default {
 
    deleteCart: async (req,res)=> {
 
-    await deleteCart(+req.params.prodID);
+    await dropCart(+req.params.userID);
 
     res.send(await getManyCarts())
  

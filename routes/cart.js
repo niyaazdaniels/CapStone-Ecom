@@ -14,13 +14,16 @@ router
     .get(controller.getItemsFromCart) 
     
     .patch(controller.updateItemInCart)
-    
+
+router
+
+    .route('/drop/:userID')
+         
     .delete(controller.deleteCart)
 
 router    
-    
-    .route('/:prodID/:userID')
+    .route('/delete/:cartID')
 
     .delete(controller.deleteItemsInCart)
     
-    export default router  
+export default router  
