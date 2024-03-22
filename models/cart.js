@@ -1,5 +1,6 @@
 // import connection
 import {pool} from "../config/index.js";
+import cart from "../controller/cart.js";
 
 const getManyCarts = async(userID)=> {
 
@@ -108,19 +109,17 @@ const getCart = async(cartID) => {
   return cart
 }
 
-const dropCart = async (prodID) => {
+const dropCart = async (userID) => {
 
     try {
 
         const query = `
         
-        DROP cart
-
-        wHERE userID = ?
+        DELETE FROM cart WHERE userID = ?
 
         `;
 
-        const [result] = await pool.query (query, [prodID])
+        const [result] = await pool.query (query, [userID])
         
         return result
 
@@ -132,18 +131,17 @@ const dropCart = async (prodID) => {
     }
 }
 
-const deleteCart = async (userID, prodID) => {
+const deleteCart = async (cartID) => {
 
     try {
 
         const query = `
 
-        DELETE FROM cart WHERE prodID = ? 
-        AND userID = ?
+        DELETE FROM cart WHERE cartID = ?
 
         `;
         
-        const [result] = await pool.query(query, [userID,prodID,]);
+        const [result] = await pool.query(query, [cartID]);
 
         return result;
 
