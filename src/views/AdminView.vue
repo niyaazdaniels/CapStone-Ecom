@@ -3,7 +3,7 @@
       <div>
         <h1>Users</h1>
         <addUserComp />
-        <div class="table-responsive">
+        <div class="table-responsive ">
           <table class="table table-dark table-hover caption-top">
             <thead>
               <tr>
@@ -121,6 +121,7 @@
 
       };
     },
+
   computed: {
 
     users() {
@@ -160,6 +161,7 @@
       return filter;
 
     },
+
     },
 
     async mounted() {
@@ -184,11 +186,13 @@
 
         }
       },
+
       refresh() {
 
         this.sortBy = "prodID";
 
       },
+
       toggleSortDirection() {
 
         this.sortBy = 'name' 
@@ -212,13 +216,16 @@
       },
     },
   };
+
   </script>
   
   <style scoped>
+  table {
+    box-shadow: 4px 8px 12px grey;
+  }
   .image {
     width: 3rem;
   }
-  
   .sort-dropdown{
     display: flex;
     justify-content: space-evenly;
@@ -227,10 +234,16 @@
     background-color: #7A0000;
     color: white;
     margin-bottom: 1rem;
+    box-shadow: 4px 8px 12px grey;
+
   }
   .main-container{
     min-height: 100vh;
-    margin-top: 60px;
+    margin: 0;
+    min-width: 100vw;
+    margin-top: 55px;
+    background: linear-gradient(-60deg,grey,white);
+
   }
   td{
     font-size: 14px;

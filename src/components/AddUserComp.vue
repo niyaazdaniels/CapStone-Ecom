@@ -84,6 +84,7 @@
   <style scoped>
   button {
     background-color: #7A0000;
+    box-shadow: 4px 8px 12px grey;
     color: white;
     margin-bottom: 1rem;
   }
