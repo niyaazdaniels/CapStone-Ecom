@@ -28,6 +28,14 @@ export default {
  
    }, 
 
+   deleteCart: async (req,res)=> {
+
+    await deleteCart(+req.params.prodID);
+
+    res.send(await getManyCarts())
+ 
+   }, 
+
    updateItemInCart: async (req,res)=> {
 
     let {quantity} = req.body 

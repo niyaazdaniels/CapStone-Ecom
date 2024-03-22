@@ -17,4 +17,6 @@ router
     
     .delete(controller.deleteItemsInCart)
 
+    .delete(controller.deleteCart)
+
     export default router  
