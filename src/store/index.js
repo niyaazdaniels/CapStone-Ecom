@@ -10,8 +10,7 @@ import Swal from "sweetalert2";
 
 axios.defaults.withCredentials = true;
 
-// const DB = "https://capstone-ecom.onrender.com/";
- const DB = "http://localhost:4000/";
+const DB = "https://capstone-ecom.onrender.com/";
 
 
 export default createStore({
@@ -675,7 +674,7 @@ async deleteFromCart({ commit }, cartID) {
       }).then(() => {
 
         window.location.reload();
-        
+
       });
 
     } catch (error) {
