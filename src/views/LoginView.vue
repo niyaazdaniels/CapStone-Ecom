@@ -52,9 +52,13 @@ export default {
       this.$store.dispatch('fetchUser')
     },
   },
+
   methods: {
+
   },
+
   mounted() {
+
  },
 }
 
@@ -62,7 +66,7 @@ export default {
 
 <style scoped>
 .login-background{
-    height: 100vh;
+    height: 80vh;
     background: #1E1E1E;
 }
 .login-background-heading{

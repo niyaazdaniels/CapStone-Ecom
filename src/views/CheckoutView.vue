@@ -1,35 +1,107 @@
 <template>
-  <div class="checkout-background">
-    <h1 class="text-white">Checkout</h1>
-    <div class="table table-responsive" >
-      <table class="table table-bordered table-hover table-dark" >
-                       <thead>
-                           <tr>
-                               <th>Name</th>
-                               <th>Quantity</th>
-                               <th>Price</th>
-                               <th>Category</th>
-                               <th>Image</th>
-                               <th>Action</th>
-                               <th>Total</th>
-                           </tr>
-                       </thead>
-                       <tbody>
-                           <tr v-for="product in $store.state.cart" :key="product.prodID">
-                               <td data-label="Name">{{ product.prodName }}</td>
-                               <td data-label="Quantity">{{ product.quantity }}</td>
-                               <td data-label="Price">R {{ product.price }}</td>
-                               <td data-label="Category">{{ product.category }}</td>
-                               <td data-label="Image"><img :src="product.prodImage" alt= "product.prodName" id="product-image" class=" img-fluid"></td>
-                               <td data-label="Actions"><button class="btn" @click="deleteItem(product.prodID)">Delete</button>
-                               <button class="btn" @click="deleteItem(product.cartID)">Update</button></td>
+  
+  <section class="h-100 h-custom" style="background-color: #eee;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col">
+        <div class="card">
+          <div class="card-body p-4">
+            <div class="row">
+              <div class="col-lg-7">
+                <h5 class="mb-3"><a href="/products" class="text-body"><i
+                      class="fas fa-long-arrow-alt-left me-2"></i>Continue shopping</a></h5>
+                <hr>
 
-                                 <td data-label="Total">{{ product.totalAmount }}</td>
-                              </tr>
-             </tbody>
-          </table>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                  <div>
+                    <p class="mb-1">Shopping cart</p>
+                  </div>
+                </div>
+
+                <div class="card mb-3 mt-2" v-for="product in $store.state.cart" :key="product.prodID">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <div class="d-flex flex-row align-items-center">
+                        <div>
+                          <img :src="product.prodImage" class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
+                        </div>
+                        <div class="ms-3">
+                          <p class="text">{{ product.prodName }}</p>
+                          <p class="small mb-0">{{product.category}}</p>
+                        </div>
+                      </div>
+                      <div class="d-flex flex-column align-items-center">
+                        <div style="width: 50px;">
+                          <p class="mb-0">{{ product.quantity }}</p>
+                        </div>
+                        <div style="width: 110px;">
+                          <p class="mb-0 ">R {{ product.price }}</p>
+                        </div>
+                        <a href="#!" style="color: #cecece;" @click="deleteItem(product.cartID)"><i class="fas fa-trash-alt"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-5 mt-5">
+                <div class="card-pay text-white rounded-3">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                      <h5 class="mb-0">Card details</h5>
+                    </div>
+                    <p class="small mb-2">Card type</p>
+                    <a href="#!" type="submit" class="text-white"><i
+                        class="fab fa-cc-mastercard fa-2x me-2"></i></a>
+                    <a href="#!" type="submit" class="text-white"><i
+                        class="fab fa-cc-visa fa-2x me-2"></i></a>
+                    <a href="#!" type="submit" class="text-white"><i
+                        class="fab fa-cc-amex fa-2x me-2"></i></a>
+                    <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-paypal fa-2x"></i></a>
+                    <form class="mt-4">
+                      <div class="form-outline form-white mb-4">
+                        <input type="text" id="typeName" class="form-control form-control-lg" size="17"
+                          placeholder="Cardholder's Name" />
+                        <label class="form-label" for="typeName">Cardholder's Name</label>
+                      </div>
+                      <div class="form-outline form-white mb-4">
+                        <input type="text" id="typeText" class="form-control form-control-lg" size="17"
+                          placeholder="1234 5678 9012 3457" minlength="19" maxlength="19" />
+                        <label class="form-label" for="typeText">Card Number</label>
+                      </div>
+                      <div class="row mb-4">
+                        <div class="col-md-6">
+                          <div class="form-outline form-white">
+                            <input type="text" id="typeExp" class="form-control form-control-lg"
+                              placeholder="MM/YYYY" size="7" minlength="7" maxlength="7" />
+                            <label class="form-label" for="typeExp">Expiration</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-outline form-white">
+                            <input type="password" id="typeText" class="form-control form-control-lg"
+                              placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3" />
+                            <label class="form-label" for="typeText">CVC</label>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    <hr class="my-4">
+                    <button type="button" class="btn btn-info btn-block btn-lg">
+                      <div class="d-flex justify-content-between">
+                        <span @click="purchaseCart()">Purchase<i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-  </div> 
+    </div>
+  </div>
+</section>
 </template>
 
 <script>
@@ -46,8 +118,20 @@ export default {
 
       this.$store.dispatch('deleteFromCart', cartID)
 
+    },
+    users() {
+
+    return this.$store.state.users || []; 
+
+    },
+
+    async purchaseCart() {
+
+        await this.$store.dispatch('purchaseItem'); 
+
     }
   },
+
   computed: {
 
     getCart() {
@@ -62,22 +146,16 @@ export default {
     this.getCart
 
     this.deleteItem
+
+    this.users
+
+    this.purchaseCart
   }
 }
 </script>
 
 <style>
-table {
-  padding: 10px;
-}
-      #product-image{
-        height: 50px;
-        width: auto;
-    } 
-    td{
-        vertical-align: middle
-        ;
-    }
+
  .checkout-background {
   min-height: 80vh;
   position: relative;
@@ -87,78 +165,33 @@ table {
   margin-top: 55px;
 
  }
- @keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
+
  .btn {
-  background: #7A0000;
+  background: #1E1E1E;
   color: white;
-  margin-right: 10px ;
+  margin-right: 14px ;
+  border: none;
  }
- td{
-    font-size: 14px;
-    letter-spacing: 2px;
-  }
-  tr{
-    letter-spacing: 2px;
-  }
-  @media screen and (max-width: 300px) {
-    .table {
-      min-width: 290px !important;
-    }
-  }
-  @media  (max-width: 980px ) {
-table {
-  min-width: 700px;
-}
-.table thead{
-  display: none !important;
+ .card-pay {
+  background: #7A0000;
+ }
 
-}
-
-.table, .table tbody, .table tr, .table td{
-  display: block !important;
-  min-width: 100% !important;
-}
-
-.table tr{
-  margin-bottom: 20px !important;
-}
-
-.table tbody{
-  background: white;
+::placeholder {
   font-size: 12px;
+  color: #232323;
+  text-align: center;
+}
+.h-custom {
+  background: linear-gradient(-60deg,grey,white);
 
 }
-
-.table tbody tr td{
-  text-align: right;
-  position: relative;
-  min-width: 100%;
-  font-size: 12px;
+.card {
+  background: rgb(176, 176, 176)
 
 }
-
-.table td:before{
-  display: block;
-  color: white;
-  content: attr(data-label) !important;
-  text-align: left;
-  font-size: 12px;
-
+ @media (min-width: 1025px) {
+.h-custom {
+height: 100vh !important;
 }
-
-.modal-body p{
-  text-align: left;
-  font-size: 12px;
 }
-  }
 </style>

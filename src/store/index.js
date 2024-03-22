@@ -659,6 +659,30 @@ async deleteFromCart({ commit }, cartID) {
       });
     }
   },
+  purchaseItem() {
+
+    return new Promise((resolve) => {
+
+        swal({
+
+            title: "Thank You!",
+
+            text: "Your purchase was successful. Thank you for shopping with us!",
+
+            icon: "success",
+
+            button: "OK",
+
+        }).then(() => {
+
+            resolve();
+            
+        });
+    });
+},
+  clearCart(){
+
+  }
 },
 
   modules: {

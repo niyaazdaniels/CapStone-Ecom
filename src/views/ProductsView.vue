@@ -14,7 +14,7 @@
       <label for="sort" class="sortHeading fw-medium">Filter by: </label>
       <select class="sort" v-model="sortBy">
         <option value="default">Default</option>
-        <option value="price ">Price</option>
+        <option value="price">Price</option>
         <option value="category">Category</option>
         <option value="alphabetical">Alphabetical</option>
       </select>
@@ -36,7 +36,7 @@
             <div class="category">
               <p class="card-text  fw-medium">Category: {{ product.category }}</p>
             </div>
-            <div class="amount">
+            <div class="price">
               <p class="card-text fw-medium">Price: R {{ product.price }}</p>
             </div>
             <div class="button">

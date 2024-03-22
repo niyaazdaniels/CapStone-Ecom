@@ -28,7 +28,7 @@
                   <input class="col-12 my-3" id="img" type="text" v-model="user.userImage" required>
                   <p>Password:</p>
                   <input class="col-12 my-3" id="text" type="text" v-model="user.userPass" required>
-                  <div class="modal-footer">
+                  <div class="modal-footer d-flex">
                     <button class="btn logOut text-white" v-if="$cookies.get('jwt')" @click="logOut()"><i class="fa-solid fa-right-from-bracket"></i></button>
                     <button  @click="deleteMyUser(user.userID)" class="btn btn-dark">Delete Profile</button>
                     <button @click="$store.dispatch('updateUser', user)" class="btn btn-dark" id="submit">Save Changes</button>
@@ -105,21 +105,28 @@ export default {
 
 .prof{
     justify-content: center !important;
-}
-.profile{
+    border: none;
+  }
+  .profile{
+    background: linear-gradient(-60deg,grey,white);
     justify-content: center;
     align-items: center;
-    margin-top: 100px;
+    position: relative;
+    margin-top: 19px;
+    padding-top: 30px;
     min-height: 80vh;
 }
 .btn {
   margin-left: 16px;
   background: #7A0000;
   box-shadow: 2px 8px 16px grey;
+  border: none;
 }
 .card{
     max-width: 100%;
-    box-shadow: 2px 8px 16px grey
+    box-shadow: 0px 20px 36px grey;
+    border: none;
+    top: 50px;
 }
 .card-body{
     height: 500px;

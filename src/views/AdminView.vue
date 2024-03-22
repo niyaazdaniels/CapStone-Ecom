@@ -182,7 +182,7 @@
 
           setTimeout(() => {location.reload();
 
-          }, 1000);
+          }, 2000);
 
         }
       },
@@ -209,7 +209,7 @@
 
           setTimeout(() => {location.reload();
 
-          }, 1000);
+          }, 2000);
 
         }
 
@@ -220,6 +220,7 @@
   </script>
   
   <style scoped>
+
   table {
     box-shadow: 4px 8px 12px grey;
   }
@@ -228,12 +229,12 @@
   }
   .sort-dropdown{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around
   }
   .btn {
     background-color: #7A0000;
     color: white;
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
     box-shadow: 4px 8px 12px grey;
 
   }
@@ -252,6 +253,11 @@
   tr{
     letter-spacing: 2px;
   }
+  h1 {
+    text-shadow: 8px 4px 8px grey;
+
+  }
+
   @media screen and (max-width: 300px) {
     .table {
       width: 280px !important;
