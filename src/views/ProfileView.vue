@@ -31,7 +31,7 @@
                   <div class="modal-footer d-flex">
                     <button class="btn logOut text-white" v-if="$cookies.get('jwt')" @click="logOut()"><i class="fa-solid fa-right-from-bracket"></i></button>
                     <button  @click="deleteMyUser(user.userID)" class="btn btn-dark">Delete Profile</button>
-                    <button @click="$store.dispatch('updateUser', user)" class="btn btn-dark" id="submit">Save Changes</button>
+                    <button @click="saveChanges" class="btn btn-dark" id="submit">Save Changes</button>
                   </div>
                 </form>
               </div>
@@ -80,12 +80,20 @@ export default {
   },
   methods: {
 
-    thisUser() {
+    async saveChanges() {
 
-      return this.$store.state.user;
+    try {
 
-    }, 
+      await this.$store.dispatch('updateUserProfile', this.user); 
 
+      $cookies.set("user", this.user);
+
+    } catch (error) {
+
+      console.error(error);
+
+    }
+  },
     deleteMyUser(userID){
 
         this.$store.dispatch('deleteMyUser',userID)
@@ -113,7 +121,7 @@ export default {
     align-items: center;
     position: relative;
     margin-top: 19px;
-    padding-top: 30px;
+    padding-top: 3px;
     min-height: 80vh;
 }
 .btn {

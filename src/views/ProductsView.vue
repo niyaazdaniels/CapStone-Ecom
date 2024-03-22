@@ -171,6 +171,7 @@ sortToggle() {
 </script>
 
 <style scoped>
+
 .background-header-image{
     background-image: url(https://i.postimg.cc/j2yYxd74/PPBG.jpg);
     background-size: cover;

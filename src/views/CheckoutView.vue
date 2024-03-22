@@ -18,7 +18,7 @@
                   </div>
                 </div>
 
-                <div class="card mb-3 mt-2" v-for="product in $store.state.cart" :key="product.prodID">
+                <div class="card mb-3 mt-2 caption-top" v-for="product in $store.state.cart" :key="product.userID">
                   <div class="card-body">
                     <div class="d-flex justify-content-between">
                       <div class="d-flex flex-row align-items-center">
@@ -27,7 +27,7 @@
                         </div>
                         <div class="ms-3">
                           <p class="text">{{ product.prodName }}</p>
-                          <p class="small mb-0">{{product.category}}</p>
+                          <p class="small mb-0 fst-italic">{{product.category}}</p>
                         </div>
                       </div>
                       <div class="d-flex flex-column align-items-center">
@@ -37,7 +37,7 @@
                         <div style="width: 110px;">
                           <p class="mb-0 ">R {{ product.price }}</p>
                         </div>
-                        <a href="#!" style="color: #cecece;" @click="deleteItem(product.cartID)"><i class="fas fa-trash-alt"></i></a>
+                        <a href="#!" style="color: #cecece;" @click="deleteProduct(product.cartID)"><i class="text-dark fas fa-trash-alt"></i></a>
                       </div>
                     </div>
                   </div>
@@ -114,11 +114,30 @@ export default {
 
   methods: {
 
-    deleteItem(cartID) {
+    async deleteProduct(cartID) {
 
-      this.$store.dispatch('deleteFromCart', cartID)
+      
 
-    },
+  try {
+
+    const deleted = await this.$store.dispatch('deleteFromCart', cartID);
+
+    if (deleted) {
+
+      console.log("Product deleted successfully.");
+
+      await this.$store.dispatch('getCart'); 
+
+    } else {
+
+      console.error("Failed to delete product.");
+    }
+  } catch (error) {
+
+    console.error("Error deleting product:", error);
+
+  }
+},
     users() {
 
     return this.$store.state.users || []; 
@@ -145,7 +164,7 @@ export default {
 
     this.getCart
 
-    this.deleteItem
+    this.deleteProduct
 
     this.users
 
@@ -154,10 +173,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
  .checkout-background {
-  min-height: 80vh;
+  min-height: 60vh;
   position: relative;
   background: linear-gradient(-45deg, #1E1E1E, rgb(68, 68, 68), #575a59, rgb(167, 157, 157));
   background-size: 400% 400%;

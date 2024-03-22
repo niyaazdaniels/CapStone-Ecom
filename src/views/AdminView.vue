@@ -258,16 +258,20 @@
 
   }
 
-  @media screen and (max-width: 300px) {
+@media screen and (max-width: 300px) {
     .table {
       width: 280px !important;
     }
+    td {
+      font-size: 12px;
+
+    }
   }
-  @media  (max-width: 980px ) {
+
+@media  (max-width: 980px ) {
 
 .table thead{
   display: none !important;
-
 }
 
 .table, .table tbody, .table tr, .table td{

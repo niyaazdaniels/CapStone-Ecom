@@ -41,38 +41,46 @@ export default createStore({
 
     setUsers(state, users) {
 
-      state.users = users; 
+      state.users = users
+      ; 
     },
 
     setUser(state, user) {
 
       state.user = user;
+
     },
 
     setProducts(state, products) {
 
       state.products = products; 
+
     },
 
     setProduct(state, product) {
 
       state.product = product;
+
     },
 
     setSelectedProduct(state, product) {
 
       state.selectedProduct = product; 
+
     },
 
     setLoggedIn(state, LoggedIn) {
 
       state.LoggedIn = LoggedIn;
+
     },
 
     setCart: (state, value) => {
 
       state.cart = value
-      }
+
+    },
+
     },
 
   actions: {
@@ -265,6 +273,27 @@ export default createStore({
 
       }
     },    
+
+    async updateUserProfile({ commit, state }, payload) { 
+
+      try {
+        
+        const res = await axios.patch(`${DB}users/${state.user.userID}`, payload); 
+
+        if (res.data) {
+
+          commit("setUser", res.data);
+
+          sweet("Update Successful");
+
+        }
+      } catch (e) {
+
+        console.error(e);
+
+        sweet("Request Failed: An error occurred while trying to update the user.");
+      }
+    },
 
     // function to delete a user
     async deleteUser({ commit }, id) {
@@ -562,14 +591,15 @@ async logOut (context) {
   }
 },
 
+// add items to cart
 async addToCart({ commit }, payload) {
 
   try {
-
+    
     let { data } = await axios.post(`${DB}cart/${payload.prodID}?user=${payload.userID}`);
-
+    
     console.log(data);
-
+    
     Swal.fire({
 
       icon: 'success',
@@ -597,6 +627,7 @@ async addToCart({ commit }, payload) {
   }
 },
 
+// get cart on cart page
 async getCart({ commit }, userID) {
 
   try {
@@ -623,14 +654,15 @@ async getCart({ commit }, userID) {
   }
 },
  
+// delete item from cart
 async deleteFromCart({ commit }, cartID) {
 
     try {
 
-      let { data } = await axios.delete(`${DB}cart/${cartID}`);
+        let {data} = await axios.delete(`${DB}cart/${cartID}`)
 
-      console.log(data);
-
+        console.log(data);
+        
       Swal.fire({
 
         icon: 'success',
@@ -641,7 +673,7 @@ async deleteFromCart({ commit }, cartID) {
 
       }).then(() => {
 
-        window.location.reload();
+        // window.location.reload();
       });
 
     } catch (error) {
@@ -659,6 +691,7 @@ async deleteFromCart({ commit }, cartID) {
       });
     }
   },
+
   purchaseItem() {
 
     return new Promise((resolve) => {
@@ -676,7 +709,7 @@ async deleteFromCart({ commit }, cartID) {
         }).then(() => {
 
             resolve();
-            
+
         });
     });
 },
