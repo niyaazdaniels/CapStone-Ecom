@@ -132,19 +132,18 @@ const dropCart = async (prodID) => {
     }
 }
 
-const deleteCart = async (prodID) => {
+const deleteCart = async (prodID,userID) => {
 
     try {
 
         const query = `
 
-            DELETE FROM cart
-
-            WHERE prodID = ?
+        DELETE FROM cart WHERE prodID = ? 
+        AND userID = ?
 
         `;
         
-        const [result] = await pool.query(query, [prodID]);
+        const [result] = await pool.query(query, [prodID,userID]);
 
         return result;
 
