@@ -132,7 +132,7 @@ const dropCart = async (prodID) => {
     }
 }
 
-const deleteCart = async (prodID,userID) => {
+const deleteCart = async (userID, prodID) => {
 
     try {
 
@@ -143,7 +143,7 @@ const deleteCart = async (prodID,userID) => {
 
         `;
         
-        const [result] = await pool.query(query, [prodID,userID]);
+        const [result] = await pool.query(query, [userID,prodID,]);
 
         return result;
 

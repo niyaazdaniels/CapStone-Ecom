@@ -22,7 +22,7 @@ export default {
 
    deleteItemsInCart: async (req,res)=> {
 
-    await deleteCart(+req.params.prodID, +req.body.userID);
+    await deleteCart(+req.body.userID, +req.params.prodID);
 
     res.send(await getManyCarts())
  
