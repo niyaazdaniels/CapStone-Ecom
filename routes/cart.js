@@ -15,8 +15,10 @@ router
     
     .patch(controller.updateItemInCart)
     
-    .delete(controller.deleteItemsInCart)
-
     .delete(controller.deleteCart)
+    
+    .route('/:prodID/:userID')
 
+    .delete(controller.deleteItemsInCart)
+    
     export default router  
