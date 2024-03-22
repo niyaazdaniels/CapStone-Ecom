@@ -476,6 +476,8 @@ async logOut (context) {
 
       $cookies.remove('userID');
 
+      $cookies.remove('cartID');
+
 
       await Swal.fire({
 
@@ -621,11 +623,11 @@ async getCart({ commit }, userID) {
   }
 },
  
-async deleteFromCart({ commit }, prodID) {
+async deleteFromCart({ commit }, cartID) {
 
     try {
 
-      let { data } = await axios.delete(`${DB}cart/${prodID}`);
+      let { data } = await axios.delete(`${DB}cart/${cartID}`);
 
       console.log(data);
 

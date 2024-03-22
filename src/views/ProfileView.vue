@@ -48,10 +48,15 @@
 
 
 <script>
+
 import SpinnerComp from '@/components/SpinnerComp.vue';
+
 export default {
+
   components: {
+
     SpinnerComp
+
   },
 
 
@@ -110,25 +115,21 @@ export default {
 .btn {
   margin-left: 16px;
   background: #7A0000;
+  box-shadow: 2px 8px 16px grey;
 }
-
 .card{
     max-width: 100%;
+    box-shadow: 2px 8px 16px grey
 }
-
 .card-body{
     height: 500px;
     background-color: #7A0000;
     color: white;
 }
-
 .card-body img{
     width: 190px;
     height: auto;
     border-radius: 40%;
-}
-.about{
-    max-width: 100%;
 }
 p {
   font-size: 16px;

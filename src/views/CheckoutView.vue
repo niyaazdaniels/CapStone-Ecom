@@ -11,6 +11,7 @@
                                <th>Category</th>
                                <th>Image</th>
                                <th>Action</th>
+                               <th>Total</th>
                            </tr>
                        </thead>
                        <tbody>
@@ -22,6 +23,8 @@
                                <td data-label="Image"><img :src="product.prodImage" alt= "product.prodName" id="product-image" class=" img-fluid"></td>
                                <td data-label="Actions"><button class="btn" @click="deleteItem(product.prodID)">Delete</button>
                                <button class="btn" @click="deleteItem(product.cartID)">Update</button></td>
+
+                                 <td data-label="Total">{{ product.totalAmount }}</td>
                               </tr>
              </tbody>
           </table>

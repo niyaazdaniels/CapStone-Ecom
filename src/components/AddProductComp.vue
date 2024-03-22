@@ -73,10 +73,10 @@ export default {
 
 <style scoped>
 .btn {
-  border: 2px solid #f7f4f1;
   background-color: #7A0000;
   margin-bottom: 1rem;
   color: white;
+  box-shadow: 4px 8px 12px grey;
 }
 
 input {
