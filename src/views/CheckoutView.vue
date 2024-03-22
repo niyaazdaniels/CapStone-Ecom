@@ -116,22 +116,10 @@ export default {
 
     async deleteProduct(cartID) {
 
-      
-
   try {
 
-    const deleted = await this.$store.dispatch('deleteFromCart', cartID);
+     this.$store.dispatch('deleteFromCart', cartID);
 
-    if (deleted) {
-
-      console.log("Product deleted successfully.");
-
-      await this.$store.dispatch('getCart'); 
-
-    } else {
-
-      console.error("Failed to delete product.");
-    }
   } catch (error) {
 
     console.error("Error deleting product:", error);
@@ -146,7 +134,7 @@ export default {
 
     async purchaseCart() {
 
-        await this.$store.dispatch('purchaseItem'); 
+        await this.$store.dispatch('clearCart'); 
 
     }
   },

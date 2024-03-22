@@ -10,7 +10,8 @@ import Swal from "sweetalert2";
 
 axios.defaults.withCredentials = true;
 
-const DB = "https://capstone-ecom.onrender.com/";
+// const DB = "https://capstone-ecom.onrender.com/";
+ const DB = "http://localhost:4000/";
 
 
 export default createStore({
@@ -656,10 +657,10 @@ async getCart({ commit }, userID) {
  
 // delete item from cart
 async deleteFromCart({ commit }, cartID) {
-
+        console.log(cartID);
     try {
 
-        let {data} = await axios.delete(`${DB}cart/${cartID}`)
+        let {data} = await axios.delete(`${DB}cart/delete/${cartID}`)
 
         console.log(data);
         
@@ -673,7 +674,8 @@ async deleteFromCart({ commit }, cartID) {
 
       }).then(() => {
 
-        // window.location.reload();
+        window.location.reload();
+        
       });
 
     } catch (error) {
@@ -692,31 +694,32 @@ async deleteFromCart({ commit }, cartID) {
     }
   },
 
-  purchaseItem() {
+  async clearCart(){
 
-    return new Promise((resolve) => {
+    const userID = +$cookies.get('userID')
 
-        swal({
+    await axios.delete(`${DB}cart/drop/${userID}`)
 
-            title: "Thank You!",
+    swal({
+        title: "Thank You for Your Purchase!",
 
-            text: "Your purchase was successful. Thank you for shopping with us!",
+        text: "Redirecting to Products Page...",
 
-            icon: "success",
+        icon: "success",
 
-            button: "OK",
+        buttons: false,
 
-        }).then(() => {
-
-            resolve();
-
-        });
+        timer: 2000 
     });
-},
-  clearCart(){
 
-  }
-},
+    setTimeout(() => {
+
+        window.location.href = "/products"; 
+
+    }, 2000);
+}
+  },
+
 
   modules: {
 
