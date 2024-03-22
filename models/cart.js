@@ -108,6 +108,30 @@ const getCart = async(cartID) => {
   return cart
 }
 
+const dropCart = async (prodID) => {
+
+    try {
+
+        const query = `
+        
+        DROP cart
+
+        wHERE userID = ?
+
+        `;
+
+        const [result] = await pool.query (query, [prodID])
+        
+        return result
+
+    } catch (error) {
+
+        console.error ("Error deleting cart:", error);
+
+        throw error;
+    }
+}
+
 const deleteCart = async (prodID) => {
 
     try {
@@ -134,4 +158,4 @@ const deleteCart = async (prodID) => {
 
 
 
-export {getManyCarts, getCart, updateCart, deleteCart, insertCart, addToCart}
+export {getManyCarts, getCart, updateCart, deleteCart, insertCart, addToCart, dropCart}
